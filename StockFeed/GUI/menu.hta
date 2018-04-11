@@ -1,0 +1,75 @@
+<head>
+<title>Stock File Fetcher</title>
+	<HTA:APPLICATION
+		APPLICATIONNAME="Stock File Fetcher"
+		SCROLL="no"
+		SINGLEINSTANCE="yes"
+		WINDOWSTATE="normal"
+		SELECTION="NO"
+	  CONTEXTMENU = "NO"
+	  BORDER="Thin"
+	  BORDERStyle = "Normal"
+	  INNERBORDER = "YES"
+	  MAXIMIZEBUTTON = "NO"
+	  MINIMIZEBUTTON = "NO"
+	>
+
+	<script type="text/javascript" src="mScript.js"></script>
+
+</head>
+<!-- This sets up the dimensions of the application window-->
+
+<style>
+	p {
+	  font-family: Arial, Helvetica, sans-serif;
+		float:right;
+		margin-left: 5px;
+	}
+</style>
+<!-- This is the style sheet. There are many out there but this one is definitely the most stylish. This is responsible for the font.-->
+
+<body bgcolor="rgb(225,225,225)">
+	<div style="overflow-y:scroll; height:160; background-color:rgb(255,255,255)">
+		<p>
+		<form method="post" name="Suppliers">
+			<input type="checkbox" id="checkstax" name="supplier">
+			<label for="checkstax">Stax</label>
+			<BR>
+			<input type="checkbox" id="checktoolbank" name="supplier">
+			<label for="checktoolbank">ToolBank</label>
+			<BR>
+			<input type="checkbox" id="checkhomehardware" name="supplier">
+			<label for="checkhomehardware">Home Hardware</label>
+			<BR>
+			<input type="checkbox" id="checktoolstream" name="supplier">
+			<label for="checktoolstream">ToolStream</label>
+			<BR>
+			<input type="checkbox" id="checkdraper" name="supplier">
+			<label for="checkdraper">Draper</label>
+			<BR>
+			<input type="checkbox" id="checkvaleo" name="supplier">
+			<label for="checkvaleo">Valeo</label>
+			<BR>
+			<input type="checkbox" id="checktetrosyl" name="supplier">
+			<label for="checktetrosyl">Tetrosyl</label>
+			<BR>
+			<input type="checkbox" id="checkkyb" name="supplier">
+			<label for="checkkyb">KYB</label>
+			<BR>
+			<input type="checkbox" id="checkdecco" name="supplier">
+			<label for="checkdecco">Decco</label>
+		</p>
+	</div>
+	<br>
+	<div>
+		<button style="height:30px;width:90px" onClick="checkall('Suppliers','supplier',true)">Check All</button>
+		<button style="height:30px;width:90px" onClick="checkall('Suppliers','supplier',false)">Uncheck All</button><br>
+		<button style="height:30px;width:180px" onClick="checkEm()">Download Files</button><br>
+		<button style="height:30px;width:180px" onClick="email()">Download Email</button><br>
+		<button style="height:30px;width:180px" onclick="openURL()">Open Upload Page</button><br>
+		<button style="height:30px;width:180px" onClick="openFolder()">Open Upload Folder</button><br>
+		<button style="height:30px;width:90px;bgcolor:red;" onClick="runBat('push')">Push Drive</button>
+		<button style="height:30px;width:90px;bgcolor:red;" onClick="runBat('pop')">Pop Drive</button><br>
+	</div>
+</body>
+<!-- This creates the layout for the menu-->
