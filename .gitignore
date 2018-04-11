@@ -1,0 +1,14 @@
+
+*.xlsx
+
+*.txt
+
+*.csv
+
+*.xlsm
+
+*.xls
+
+*.zip
+
+StockFeed/email/attachments/
