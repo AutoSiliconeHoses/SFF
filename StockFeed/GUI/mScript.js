@@ -30,19 +30,23 @@ function runBat(name) {
     shell.run("explorer " + path, 0, true);
   }
   else if (name == "pop") {
-    var tmp = 0;
     while (getCount("Z:\\Stock File Fetcher\\StockFeed\\GUI\\Output") != count) {
       getCount("Z:\\Stock File Fetcher\\StockFeed\\GUI\\Output");
     }
+
     scrap();
+    compile();
+
+    // Checks if amazon.txt is in Upload
     while (getCount("Z:\\Stock File Fetcher\\Upload") != 1) {
       getCount("Z:\\Stock File Fetcher\\Upload");
     }
-    compile();
 
     shell = new ActiveXObject("WScript.Shell");
     path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\" + name + ".bat");
     shell.run("explorer " + path, 0, true);
+
+    window.resizeTo(220, 425);
     window.focus();
     window.alert("Process Complete");
   }
@@ -62,7 +66,7 @@ function openFolder() {
 function getCount(path) {
   var myObject, f, filesCount;
   myObject = new ActiveXObject("Scripting.FileSystemObject");
-  f = myObject.GetFolder();
+  f = myObject.GetFolder(path);
   filesCount = f.files.Count;
   return filesCount;
 }
@@ -71,9 +75,6 @@ function scrap() {
   shell = new ActiveXObject("WScript.Shell");
   path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\scrap.bat");
   shell.run("explorer " + path, 0, false);
-
-  path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\Output")
-  shell.run("explorer " + path, 0, true);
 }
 
 function compile() {
@@ -83,6 +84,7 @@ function compile() {
 }
 
 function checkEm() {
+  window.resizeTo(220, 0);
   count = 0;
 
   runBat("push");
