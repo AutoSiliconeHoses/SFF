@@ -31,10 +31,14 @@ function runBat(name) {
   }
   else if (name == "pop") {
     var tmp = 0;
-    while (getCount() != count) {
-      getCount();
+    while (getCount("Z:\\Stock File Fetcher\\StockFeed\\GUI\\Output") != count) {
+      getCount("Z:\\Stock File Fetcher\\StockFeed\\GUI\\Output");
     }
     scrap();
+    while (getCount("Z:\\Stock File Fetcher\\Upload") != 1) {
+      getCount("Z:\\Stock File Fetcher\\Upload");
+    }
+    compile();
 
     shell = new ActiveXObject("WScript.Shell");
     path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\" + name + ".bat");
@@ -55,10 +59,10 @@ function openFolder() {
   shell.run("explorer " + path, 1, true);
 }
 
-function getCount() {
+function getCount(path) {
   var myObject, f, filesCount;
   myObject = new ActiveXObject("Scripting.FileSystemObject");
-  f = myObject.GetFolder("Z:\\Stock File Fetcher\\StockFeed\\GUI\\Output");
+  f = myObject.GetFolder();
   filesCount = f.files.Count;
   return filesCount;
 }
@@ -70,6 +74,12 @@ function scrap() {
 
   path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\Output")
   shell.run("explorer " + path, 0, true);
+}
+
+function compile() {
+  shell = new ActiveXObject("WScript.Shell");
+  path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\compile.bat");
+  shell.run("explorer " + path, 0, false);
 }
 
 function checkEm() {
