@@ -1,42 +1,11 @@
-C:
-cd %userprofile%\Downloads
-if exist "file.zip" (del "file.zip")
-::This checks the Downloads folder for the stock file and deletes it, for all must serve the cycle
-
 Z:
-
 cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts"
-start download.html
+ftp -s:login.txt ftp.toolstream.com
 ::This script opens up s browser window so the user can add the stock file to their basket and download it, which is quite frankly the daftest system I've seen while making these
-
-C:
-
-cd %userprofile%\Downloads
-:waitloop
-if exist "file.zip" goto waitloopend
-goto waitloop
-:waitloopend
-::This loop eagerly awaits the new stock file's arrival in the Downloads folder
-
-move file.zip "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed"
-::This moves the new stock file to the Scripts folder
-
-Z:
 
 cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed"
 If exist toolstream.txt del toolstream.txt
 ::This deletes the existing upload file if it exists
-
-"Z:\Stock File Fetcher\StockFeed\Programs\unzip.exe" "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\file.zip"
-::This uses an open-source tool to unzip the stock file
-
-cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed"
-del file.zip
-cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\pricing"
-move "Product Content And Pricing Information ENGLISH.xls" "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts"
-cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts"
-rd /s /q "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\pricing"
-::This moves the stock sheet out of its folder and deletes the folder because it looks unsightly, and we can't have that now can we
 
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\OpenAndSave.vbs"
 ::This is a .vbs script that opens and saves reference.xlsx in order to update its values according to the new stock file
