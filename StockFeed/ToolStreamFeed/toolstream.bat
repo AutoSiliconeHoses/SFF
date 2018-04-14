@@ -23,10 +23,10 @@ move toolstream.txt "Z:\Stock File Fetcher\Upload"
 ::This uses an open-source tool to find all the "FALSE" records and delete them, leaving a blank space
 
 cd "Z:\Stock File Fetcher\Upload"
-findstr "[[A-Z] [0-9] ,]" toolstream.txt > grep.txt
+findstr "[[A-Z] [0-9] ,]" toolstream.txt > toolstreamgrep.txt
 del toolstream.txt
-ren grep.txt toolstream.txt
-del grep.txt
+ren toolstreamgrep.txt toolstream.txt
+del toolstreamgrep.txt
 ::This uses the Windows equivalent of the GREP function found in UNIX to remove all empty lines from the upload file
 
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"

@@ -44,15 +44,15 @@ If exist tetrosyl.txt del tetrosyl.txt
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\SaveAsTxt.vbs"
 ::This is a .vbs script that saves reference.xlsx as a .txt file using the "Save As" function without opening the interface
 
-"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\tetrosylFeed" --fileMask "*upload.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	4" --replace ""
-"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\tetrosylFeed" --fileMask "*upload.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "?-TL				0	4" --replace ""
+"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\tetrosylFeed" --fileMask "*tetrosyl.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	4" --replace ""
+"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\tetrosylFeed" --fileMask "*tetrosyl.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "?-TL				0	4" --replace ""
 ::This uses an open-source tool to find all the "FALSE" records and delete them, leaving a blank space
 
 cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed"
-findstr "[[A-Z] [0-9] ,]" upload.txt > grep.txt
-del upload.txt
-ren grep.txt tetrosyl.txt
-del grep.txt
+findstr "[[A-Z] [0-9] ,]" tetrosyl.txt > tetrosylgrep.txt
+del tetrosyl.txt
+ren tetrosylgrep.txt tetrosyl.txt
+del tetrosylgrep.txt
 ::This uses the Windows equivalent of the GREP function found in UNIX to remove all empty lines from the upload file
 
 move tetrosyl.txt "Z:\Stock File Fetcher\Upload"
