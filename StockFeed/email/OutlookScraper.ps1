@@ -28,7 +28,10 @@ foreach ($email in $inbox) {
     echo ($email.receivedTime)
 		if (($email.receivedTime.GetDateTimeFormats()[5]) -eq ($Today)) {
 			foreach ($attachment in $email.attachments) {
-        if ($attachment.filename.contains(".CSV") -or $attachment.filename.contains(".csv") -or $attachment.filename.contains(".xlsx")) {
+        if ($attachment.filename.contains(".CSV") `
+        -or $attachment.filename.contains(".csv") `
+        -or $attachment.filename.contains(".xlsx") `
+        -or $attachment.filename.contains(".zip")) {
           $supplier = $email.SenderName
           $filename = $attachment.filename
           echo ($filename + " saved from " + $supplier)
