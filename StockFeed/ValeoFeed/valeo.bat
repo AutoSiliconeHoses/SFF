@@ -32,16 +32,16 @@ If exist valeo.txt del valeo.txt
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\SaveAsTxt.vbs"
 ::This is a .vbs script that saves reference.xlsx as a .txt file using the "Save As" function without opening the interface
 
-"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\ValeoFeed" --fileMask "*upload.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	4" --replace ""
-"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\ValeoFeed" --fileMask "*upload.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "#VALUE!				20	4" --replace ""
-"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\ValeoFeed" --fileMask "*upload.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "C				20	4" --replace ""
+"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\ValeoFeed" --fileMask "*valeo.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	4" --replace ""
+"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\ValeoFeed" --fileMask "*valeo.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "#VALUE!				20	4" --replace ""
+"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\ValeoFeed" --fileMask "*valeo.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "C				20	4" --replace ""
 ::This uses an open-source tool to find all the "FALSE", "VALUE" & "C" records and deletes them, leaving a blank space
 
 cd "Z:\Stock File Fetcher\StockFeed\ValeoFeed"
-findstr "[[A-Z] [0-9] ,]" upload.txt > grep.txt
-del upload.txt
-ren grep.txt valeo.txt
-del grep.txt
+findstr "[[A-Z] [0-9] ,]" valeo.txt > valeogrep.txt
+del valeo.txt
+ren valeogrep.txt valeo.txt
+del valeogrep.txt
 ::This uses the Windows equivalent of the GREP function found in UNIX to remove all empty lines from the upload file
 
 move valeo.txt "Z:\Stock File Fetcher\Upload"

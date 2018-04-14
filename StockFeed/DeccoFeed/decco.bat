@@ -24,3 +24,23 @@ ren *.zip file.zip
 
 "Z:\Stock File Fetcher\StockFeed\Programs\unzip.exe" "Z:\Stock File Fetcher\StockFeed\DeccoFeed\file.zip"
 ::This uses an open-source tool to unzip the stock file
+
+del file.zip
+ren *xls stock.xls
+move stock.xls "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
+cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
+
+%comspec% /C "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\OpenAndSave.vbs"
+
+%comspec% /C "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\SaveAsTxt.vbs"
+
+cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
+move decco.txt "Z:\Stock File Fetcher\Upload"
+
+findstr "[[A-Z] [0-9] ,]" decco.txt > deccogrep.txt
+del decco.txt
+ren deccogrep.txt decco.txt
+del deccogrep.txt
+
+cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"
+echo .>> decco.txt

@@ -23,14 +23,14 @@ If exist toolbank.txt del toolbank.txt
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\SaveAsTxt.vbs"
 ::This is a .vbs script that saves reference.xlsx as a .txt file using the "Save As" function without opening the interface
 
-"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\ToolBankFeed" --fileMask "*upload.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	4" --replace ""
+"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\ToolBankFeed" --fileMask "*toolbank.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	4" --replace ""
 ::This uses an open-source tool to find all the "FALSE" records and delete them, leaving a blank space
 
 cd "Z:\Stock File Fetcher\StockFeed\ToolBankFeed"
-findstr "[[A-Z] [0-9] ,]" upload.txt > grep.txt
-ren grep.txt toolbank.txt
-del grep.txt
-del upload.txt
+findstr "[[A-Z] [0-9] ,]" toolbank.txt > toolbankgrep.txt
+ren toolbankgrep.txt toolbank.txt
+del toolbankgrep.txt
+del toolbank.txt
 ::This uses the Windows equivalent of the GREP function found in UNIX to remove all empty lines from the upload file
 
 move toolbank.txt "Z:\Stock File Fetcher\Upload"

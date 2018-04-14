@@ -16,14 +16,14 @@ If exist draper.txt del draper.txt
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts\SaveAsTxt.vbs"
 ::This is a .vbs script that saves reference.xlsx as a .txt file using the "Save As" function without opening the interface
 
-"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\DraperFeed" --fileMask "*upload.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	4" --replace ""
+"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\DraperFeed" --fileMask "*draper.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	4" --replace ""
 ::This uses an open-source tool to find all the "FALSE" records and delete them, leaving a blank space
 
 cd "Z:\Stock File Fetcher\StockFeed\DraperFeed"
-findstr "[[A-Z] [0-9] ,]" upload.txt > grep.txt
-del upload.txt
-ren grep.txt draper.txt
-del grep.txt
+findstr "[[A-Z] [0-9] ,]" draper.txt > drapergrep.txt
+del draper.txt
+ren drapergrep.txt draper.txt
+del drapergrep.txt
 ::This uses the Windows equivalent of the GREP function found in UNIX to remove all empty lines frome the upload file
 
 move draper.txt "Z:\Stock File Fetcher\Upload"
