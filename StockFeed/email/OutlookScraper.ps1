@@ -4,7 +4,7 @@ $Outlook = New-Object -ComObject Outlook.Application
 $Namespace = $Outlook.GetNameSpace("MAPI")
 
 # Enters the inbox
-$inbox = $NameSpace.GetDefaultFolder(6).Items
+$inbox = $NameSpace.Folders.Item('stock@autosiliconehoses.com')
 
 # Gets today's date and formats it
 $Today = (Get-Date).tostring("yy-MM-dd")
