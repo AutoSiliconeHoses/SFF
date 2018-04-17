@@ -4,7 +4,7 @@ $Outlook = New-Object -ComObject Outlook.Application
 $Namespace = $Outlook.GetNameSpace("MAPI")
 
 # Enters the inbox
-$inbox = $NameSpace.Folders.Item('stock@autosiliconehoses.com')
+$inbox = $NameSpace.GetDefaultFolder(6).Items
 
 # Gets today's date and formats it
 $Today = (Get-Date).tostring("yy-MM-dd")
@@ -24,18 +24,20 @@ $saveFilePath = ('Z:\Stock File Fetcher\StockFeed\email\attachments\' + $Today)
 
 # Begins the search
 foreach ($email in $inbox) {
-	if ($email.attachments.count -ge 1) {
-    echo ($email.receivedTime)
-		if (($email.receivedTime.GetDateTimeFormats()[5]) -eq ($Today)) {
-			foreach ($attachment in $email.attachments) {
-        if ($attachment.filename.contains(".CSV") `
-        -or $attachment.filename.contains(".csv") `
-        -or $attachment.filename.contains(".xlsx") `
-        -or $attachment.filename.contains(".zip")) {
-          $supplier = $email.SenderName
-          $filename = $attachment.filename
-          echo ($filename + " saved from " + $supplier)
-  	  		$attachment.saveasfile((join-path $savefilepath $filename))
+  if ($email.ReceivedByName -eq "stock") {
+  	if ($email.attachments.count -ge 1) {
+      echo ($email.receivedTime)
+  		if (($email.receivedTime.GetDateTimeFormats()[5]) -eq ($Today)) {
+  			foreach ($attachment in $email.attachments) {
+          if ($attachment.filename.contains(".CSV") `
+          -or $attachment.filename.contains(".csv") `
+          -or $attachment.filename.contains(".xlsx") `
+          -or $attachment.filename.contains(".zip")) {
+            $supplier = $email.SenderName
+            $filename = $attachment.filename
+            echo ($filename + " saved from " + $supplier)
+    	  		$attachment.saveasfile((join-path $savefilepath $filename))
+          }
         }
 			}
 		}

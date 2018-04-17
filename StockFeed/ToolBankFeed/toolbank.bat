@@ -30,7 +30,6 @@ cd "Z:\Stock File Fetcher\StockFeed\ToolBankFeed"
 findstr "[[A-Z] [0-9] ,]" toolbank.txt > toolbankgrep.txt
 ren toolbankgrep.txt toolbank.txt
 del toolbankgrep.txt
-del toolbank.txt
 ::This uses the Windows equivalent of the GREP function found in UNIX to remove all empty lines from the upload file
 
 move toolbank.txt "Z:\Stock File Fetcher\Upload"
