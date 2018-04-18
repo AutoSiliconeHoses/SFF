@@ -1,24 +1,10 @@
 TITLE StaxFeed
-C:
-cd %userprofile%\Downloads
-if exist "stock.csv" (del "stock.csv")
+Z:
 
-C:
-cd %userprofile%\Downloads
+cd "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts"
 powershell -command "Invoke-RestMethod https://www.staxtradecentres.co.uk/feeds/1.3/stock.csv?key=6p5x4hytd6 -OutFile stock.csv"
 ::This uses powershell to download the stock.csv using cURL
 
-:waitloop
-if exist "stock.csv" goto waitloopend
-goto waitloop
-:waitloopend
-::This loop checks for the new stock file to appear in the Downloads folder
-
-move stock.csv "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts"
-::This moves the new stock file to the Scripts folder
-
-Z:
-cd "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts"
 "Z:\Stock File Fetcher\StockFeed\Programs\csv2xlsx_386.exe" -infile "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stock.csv" -outfile "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stock.xlsx" -colsep ","
 del stock.csv
 ::This converts the stock file to .xlsx format so that it can be referred to by the "reference" files
