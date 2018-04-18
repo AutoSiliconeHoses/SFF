@@ -1,3 +1,4 @@
+TITLE TetrosylFeed
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Tetrosyl
 if exist parts_stock.csv (del "parts_stock.csv")

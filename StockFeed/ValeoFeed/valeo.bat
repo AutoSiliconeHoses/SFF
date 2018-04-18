@@ -1,3 +1,4 @@
+TITLE ValeoFeed
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Valeo"
 if exist "VALEO_stock.csv" (del "VALEO_stock.csv")

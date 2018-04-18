@@ -1,3 +1,4 @@
+TITLE KYBFeed
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\KYB"
 if exist "KYBSTOCK.csv" (del "KYBSTOCK.csv")

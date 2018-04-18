@@ -1,3 +1,4 @@
+TITLE ToolStreamFeed
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts"
 ftp -s:login.txt ftp.toolstream.com

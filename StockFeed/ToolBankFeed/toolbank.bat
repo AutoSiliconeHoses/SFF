@@ -1,3 +1,4 @@
+TITLE ToolBankFeed
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts"
 ftp -s:login.txt 195.74.141.134

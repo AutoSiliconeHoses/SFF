@@ -1,3 +1,4 @@
+TITLE HomeHardwareFeed
 Z:
 cd "Z:\Stock File Fetcher\Upload"
 If exist homehardware.txt del homehardware.txt

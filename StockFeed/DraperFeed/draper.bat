@@ -1,3 +1,4 @@
+TITLE DraperFeed
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts"
 ftp -s:login.txt 62.255.240.235

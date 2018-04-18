@@ -1,3 +1,4 @@
+TITLE DeccoFeed
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Decco"
 del *.xls

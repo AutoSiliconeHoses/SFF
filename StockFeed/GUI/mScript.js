@@ -1,4 +1,4 @@
-window.resizeTo(220, 425);
+window.resizeTo(220, 365);
 window.focus();
 
 //Define Global Variables
@@ -14,12 +14,6 @@ function checkall(formname, checkname, thestate) {
   for (c = 0; c < el_collection.length; c++) {
     el_collection[c].checked = thestate;
   }
-}
-
-function email() {
-  shell = new ActiveXObject("WScript.Shell");
-  path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\email\\Outlook Scraper.lnk");
-  shell.run("explorer " + path, 0, true);
 }
 
 function runBat(name) {
@@ -46,7 +40,7 @@ function runBat(name) {
     path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\" + name + ".bat");
     shell.run("explorer " + path, 0, true);
 
-    window.resizeTo(220, 425);
+    window.resizeTo(220, 365);
     window.focus();
     window.alert("Process Complete");
   }
