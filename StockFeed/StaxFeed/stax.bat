@@ -1,16 +1,13 @@
+TITLE StaxFeed
 C:
 cd %userprofile%\Downloads
 if exist "stock.csv" (del "stock.csv")
 
-Z:
-
-cd "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts"
-start /min download.html
-::This checks the Downloads folder for the stock file and deletes it, downloading a new one and closing the Chrome window after 10 seconds
-
 C:
-
 cd %userprofile%\Downloads
+powershell -command "Invoke-RestMethod https://www.staxtradecentres.co.uk/feeds/1.3/stock.csv?key=6p5x4hytd6 -OutFile stock.csv"
+::This uses powershell to download the stock.csv using cURL
+
 :waitloop
 if exist "stock.csv" goto waitloopend
 goto waitloop
@@ -21,7 +18,6 @@ move stock.csv "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts"
 ::This moves the new stock file to the Scripts folder
 
 Z:
-
 cd "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts"
 "Z:\Stock File Fetcher\StockFeed\Programs\csv2xlsx_386.exe" -infile "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stock.csv" -outfile "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stock.xlsx" -colsep ","
 del stock.csv
@@ -43,14 +39,14 @@ If exist stax.txt del stax.txt
 move stax.txt "Z:\Stock File Fetcher\Upload"
 ::This moves the final upload file to the Stock File Fetcher folder so that it can be submitted to Amazon
 
-"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\Upload" --fileMask "*stax.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	4" --replace ""
+"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\Upload" --fileMask "*stax.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	5" --replace ""
 ::This uses an open-source tool to find all the "FALSE" records and delete them, leaving a blank space
 
 cd "Z:\Stock File Fetcher\Upload"
-findstr "[[A-Z] [0-9] ,]" stax.txt > grep.txt
+findstr "[[A-Z] [0-9] ,]" stax.txt > staxgrep.txt
 del stax.txt
-ren grep.txt stax.txt
-del grep.txt
+ren staxgrep.txt stax.txt
+del staxgrep.txt
 ::This uses the Windows equivalent of the GREP function found in UNIX to remove all empty lines from the upload file
 
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"

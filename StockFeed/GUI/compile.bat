@@ -8,6 +8,10 @@ IF "%cd%"=="Z:\Stock File Fetcher\Upload" (
   move amazon.txt "Z:\Stock File Fetcher\Upload\Amazon"
   del *.txt
   cd "Z:\Stock File Fetcher\Upload\Amazon"
+  REM findstr "[[A-Z] [0-9] ,]" amazon.txt > amazongrep.txt
+  REM del amazon.txt
+  REM ren amazongrep.txt amazon.txt
+  REM del amazongrep.txt
   move amazon.txt "Z:\Stock File Fetcher\Upload"
   cd "Z:\Stock File Fetcher\Upload"
   rmdir "Z:\Stock File Fetcher\Upload\Amazon"
