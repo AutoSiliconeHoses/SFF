@@ -1,9 +1,18 @@
 TITLE StaxFeed
-Z:
 
+Z:
 cd "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts"
 powershell -command "Invoke-RestMethod https://www.staxtradecentres.co.uk/feeds/1.3/stock.csv?key=6p5x4hytd6 -OutFile stock.csv"
 ::This uses powershell to download the stock.csv using cURL
+
+If NOT exist "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stock.csv" (
+  echo "There has been an issue collecting the stock file."
+  PAUSE
+  cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"
+  echo .>> stax.txt
+  EXIT
+)
+::This handles any errors that may appear
 
 "Z:\Stock File Fetcher\StockFeed\Programs\csv2xlsx_386.exe" -infile "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stock.csv" -outfile "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stock.xlsx" -colsep ","
 del stock.csv
