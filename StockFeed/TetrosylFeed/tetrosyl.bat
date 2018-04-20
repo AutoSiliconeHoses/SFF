@@ -1,14 +1,8 @@
 TITLE TetrosylFeed
 Z:
-cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Tetrosyl
-if exist parts_stock.csv (del "parts_stock.csv")
-if exist ASH-STOCK.csv (del "ASH-STOCK.csv")
-if exist non_parts_stock.csv (del "non_parts_stock.csv")
+cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Tetrosyl"
 if exist combine.csv (del "combine.csv")
 ::This deletes any old Tetrosyl stock files from the Dropzone
-
-%SystemRoot%\explorer.exe "z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Tetrosyl"
-::This opens the correct Dropzone folder in Explorer on the newly-mapped network drive
 
 :parts
 if exist "parts_stock.csv" goto partsend

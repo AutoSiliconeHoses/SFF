@@ -1,11 +1,6 @@
 TITLE KYBFeed
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\KYB"
-if exist "KYBSTOCK.csv" (del "KYBSTOCK.csv")
-::This deletes any old KYB stock files from the Dropzone
-
-%SystemRoot%\explorer.exe "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\KYB"
-::This opens the correct Dropzone folder in Explorer on the newly-mapped network drive
 
 :waitloop
 if exist "KYBSTOCK.csv" goto waitloopend
@@ -13,7 +8,7 @@ goto waitloop
 :waitloopend
 ::This loop waits for the new stock file to be moved to the Dropzone
 
-move "KYBSTOCK.csv" "Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts"
+copy "KYBSTOCK.csv" "Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts"
 
 cd "Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts"
 "Z:\Stock File Fetcher\StockFeed\Programs\csv2xlsx_386.exe" -infile "KYBSTOCK.csv" -outfile stock.xlsx -colsep ","

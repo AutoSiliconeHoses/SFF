@@ -1,11 +1,6 @@
 TITLE ValeoFeed
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Valeo"
-if exist "VALEO_stock.csv" (del "VALEO_stock.csv")
-::This deletes any old Valeo stock files from the Dropzone
-
-%SystemRoot%\explorer.exe "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Valeo"
-::This opens the correct Dropzone folder in Explorer on the newly-mapped network drive
 
 :waitloop
 if exist "VALEO_stock.csv" goto waitloopend
@@ -13,7 +8,7 @@ goto waitloop
 :waitloopend
 ::This loop waits for the new stock file to be moved to the Dropzone
 
-move "VALEO_stock.csv" "Z:\Stock File Fetcher\StockFeed\ValeoFeed\Scripts"
+copy "VALEO_stock.csv" "Z:\Stock File Fetcher\StockFeed\ValeoFeed\Scripts"
 
 cd "Z:\Stock File Fetcher\StockFeed\ValeoFeed\Scripts"
 "Z:\Stock File Fetcher\StockFeed\Programs\csv2xlsx_386.exe" -infile "VALEO_stock.csv" -outfile stock.xlsx -colsep ","
