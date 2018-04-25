@@ -20,7 +20,7 @@ cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\OpenAndSave2.vbs"
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\SaveAsTxt.vbs"
 
-"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\DeccoFeed" --fileMask "*decco.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	4" --replace ""
+"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\DeccoFeed" --fileMask "*decco.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	5" --replace ""
 
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 findstr "[[A-Z] [0-9] ,]" decco.txt > deccogrep.txt
