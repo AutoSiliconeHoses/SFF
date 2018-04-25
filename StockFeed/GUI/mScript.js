@@ -1,4 +1,4 @@
-window.resizeTo(220, 365);
+window.resizeTo(240, 385);
 window.focus();
 
 //Define Global Variables
@@ -40,13 +40,18 @@ function runBat(name) {
     path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\" + name + ".bat");
     shell.run("explorer " + path, 0, true);
 
-    window.resizeTo(220, 365);
+    window.resizeTo(240, 385);
     window.focus();
     window.alert("Process Complete");
   }
+  // else if (name == "toolbank") {
+  //   shell = new ActiveXObject("WScript.Shell");
+  //   path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\" + name + ".lnk");
+  //   shell.run("explorer " + path, 1, true);
+  // }
   else {
-    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\" + name + "Feed\\" + name + ".bat");
     shell = new ActiveXObject("WScript.Shell");
+    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\" + name + "Feed\\" + name + ".bat");
     shell.run("explorer " + path, 0, true);
   }
 }
@@ -78,7 +83,7 @@ function compile() {
 }
 
 function checkEm() {
-  window.resizeTo(220, 0);
+  window.resizeTo(240, 0);
   count = 0;
 
   runBat("push");
