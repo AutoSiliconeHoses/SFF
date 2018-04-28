@@ -7,9 +7,6 @@ rename Availability20D.csv stock.csv
 "Z:\Stock File Fetcher\StockFeed\Programs\csv2xlsx_386.exe" -infile stock.csv -outfile stock.xlsx -colsep ","
 del stock.csv
 
-cd "Z:\Stock File Fetcher\Upload"
-If exist toolbank.txt del toolbank.txt
-
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\OpenAndSave2.vbs"
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\OpenAndSave.vbs"
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\SaveAsTxt.vbs"
