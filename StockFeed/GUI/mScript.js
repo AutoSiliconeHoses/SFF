@@ -20,7 +20,7 @@ function runBat(name) {
   var shell, path;
   if (name == "push") {
     shell = new ActiveXObject("WScript.Shell");
-    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\" + name + ".bat");
+    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Drives" + name + ".ps1");
     shell.run("explorer " + path, 0, true);
   }
   else if (name == "pop") {
@@ -37,18 +37,18 @@ function runBat(name) {
     }
 
     shell = new ActiveXObject("WScript.Shell");
-    path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\" + name + ".bat");
+    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Drives" + name + ".ps1");
     shell.run("explorer " + path, 0, true);
 
     window.resizeTo(240, 385);
     window.focus();
     window.alert("Process Complete");
   }
-  // else if (name == "toolbank") {
-  //   shell = new ActiveXObject("WScript.Shell");
-  //   path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\" + name + ".lnk");
-  //   shell.run("explorer " + path, 1, true);
-  // }
+  else if (name == "toolbank") {
+    shell = new ActiveXObject("WScript.Shell");
+    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\" + name + ".lnk");
+    shell.run("explorer " + path, 1, true);
+  }
   else {
     shell = new ActiveXObject("WScript.Shell");
     path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\" + name + "Feed\\" + name + ".bat");
