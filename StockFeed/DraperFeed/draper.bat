@@ -3,13 +3,6 @@ Z:
 cd "Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts"
 ftp -s:login.txt 62.255.240.235
 
-"Z:\Stock File Fetcher\StockFeed\Programs\csv2xlsx_386.exe" -infile stock.csv -outfile stock.xlsx -colsep ","
-del stock.csv
-
-cd "Z:\Stock File Fetcher\Upload"
-If exist draper.txt del draper.txt
-
-%comspec% /C "Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts\OpenAndSave.vbs"
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts\SaveAsTxt.vbs"
 
 "Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\DraperFeed" --fileMask "*draper.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	5" --replace ""

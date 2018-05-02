@@ -19,8 +19,6 @@ del Primary15.csv
 cd "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
 "Z:\Stock File Fetcher\StockFeed\Programs\csv2xlsx_386.exe" -infile combine.csv -outfile combine.xlsx -colsep ","
 
-
-
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\OpenAndSave.vbs"
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\OpenAndSave2.vbs"
 

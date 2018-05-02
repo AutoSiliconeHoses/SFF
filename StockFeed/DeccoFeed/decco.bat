@@ -5,9 +5,6 @@ cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Decco"
 copy decco.zip "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
-If exist decco.txt del decco.txt
-
-cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 ren decco.zip file.zip
 "Z:\Stock File Fetcher\StockFeed\Programs\unzip.exe" "Z:\Stock File Fetcher\StockFeed\DeccoFeed\file.zip"
 
