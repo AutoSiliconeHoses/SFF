@@ -14,6 +14,7 @@ move toolstream.txt "Z:\Stock File Fetcher\Upload"
 
 "Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\Upload" --fileMask "*toolstream.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	5" --replace ""
 "Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\Upload" --fileMask "*toolstream.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				20	5" --replace ""
+"Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\Upload" --fileMask "*toolstream.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				#REF!	5" --replace ""
 "Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\Upload" --fileMask "*toolstream.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "#REF!				#REF!	5" --replace ""
 
 cd "Z:\Stock File Fetcher\Upload"

@@ -20,12 +20,12 @@ function runBat(name) {
   var shell, path;
   if (name == "push") {
     shell = new ActiveXObject("WScript.Shell");
-    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Drives" + name + ".ps1");
+    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Drives\\" + name + ".lnk");
     shell.run("explorer " + path, 0, true);
   }
   else if (name == "pop") {
-    while (getCount("Z:\\Stock File Fetcher\\StockFeed\\GUI\\Output") != count) {
-      getCount("Z:\\Stock File Fetcher\\StockFeed\\GUI\\Output");
+    while (getCount("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Output") != count) {
+      getCount("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Output");
     }
 
     scrap();
@@ -37,18 +37,18 @@ function runBat(name) {
     }
 
     shell = new ActiveXObject("WScript.Shell");
-    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Drives" + name + ".ps1");
+    path = ("\\\\DISKSTATION\\Feeds\\Stoc k File Fetcher\\StockFeed\\GUI\\Shortcuts\\Drives\\" + name + ".lnk");
     shell.run("explorer " + path, 0, true);
 
     window.resizeTo(240, 385);
     window.focus();
     window.alert("Process Complete");
   }
-  else if (name == "toolbank") {
-    shell = new ActiveXObject("WScript.Shell");
-    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\" + name + ".lnk");
-    shell.run("explorer " + path, 1, true);
-  }
+  // else if (name == "toolbank" || name == "toolstream") {
+  //   shell = new ActiveXObject("WScript.Shell");
+  //   path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Suppliers\\" + name + ".lnk");
+  //   shell.run("explorer " + path, 1, true);
+  // }
   else {
     shell = new ActiveXObject("WScript.Shell");
     path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\" + name + "Feed\\" + name + ".bat");

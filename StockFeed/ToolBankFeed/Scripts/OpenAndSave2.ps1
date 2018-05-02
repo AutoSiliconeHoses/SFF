@@ -2,7 +2,7 @@ $file = Dir 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\' -Recurse | ?
 $excl = New-Object -ComObject "Excel.Application"
 $wrkb = $excl.Workbooks.Open($file)
 
-$excl.DisplayAlerts = $TRUE
+$excl.DisplayAlerts = $FALSE
 $wrkb.Save()
 
 $wrkb.Close()
