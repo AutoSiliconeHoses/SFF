@@ -5,9 +5,10 @@ powershell -command "Invoke-RestMethod https://www.staxtradecentres.co.uk/feeds/
 
 If NOT exist "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stock.csv" (
   echo "There has been an issue collecting the stock file."
-  PAUSE
+
   cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"
   echo .>> stax.txt
+  PAUSE
   EXIT
 )
 

@@ -20,7 +20,7 @@ function runBat(name) {
   var shell, path;
   if (name == "push") {
     shell = new ActiveXObject("WScript.Shell");
-    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Drives\\" + name + ".lnk");
+    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\" + name + ".bat");
     shell.run("explorer " + path, 0, true);
   }
   else if (name == "pop") {
@@ -37,7 +37,7 @@ function runBat(name) {
     }
 
     shell = new ActiveXObject("WScript.Shell");
-    path = ("\\\\DISKSTATION\\Feeds\\Stoc k File Fetcher\\StockFeed\\GUI\\Shortcuts\\Drives\\" + name + ".lnk");
+    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Drives\\" + name + ".lnk");
     shell.run("explorer " + path, 0, true);
 
     window.resizeTo(240, 385);
