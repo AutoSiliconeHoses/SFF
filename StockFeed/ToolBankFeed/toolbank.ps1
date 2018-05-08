@@ -1,4 +1,4 @@
-$Host.UI.RawUI.WindowTitle = "ToolBankFeed"
+$Host.UI.RawUI.WindowTitle = 'ToolBankFeed'
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts"
 
@@ -22,7 +22,7 @@ cd "Z:\Stock File Fetcher\StockFeed\ToolBankFeed"
 
 "Cleaning files"
 del "Scripts\stock.csv"
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\toolbank.txt').replace("FALSE`t`t`t`t0`t5", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\toolbank.txt' -encoding ASCII
+(Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\toolbank.txt').replace("FALSE`t`t`t`t0`t5", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\toolbank.txt'
 
 If (Test-Path -Path "toolbankgrep.txt") {
   del toolbankgrep.txt

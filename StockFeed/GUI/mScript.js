@@ -44,7 +44,7 @@ function runBat(name) {
     window.focus();
     window.alert("Process Complete");
   }
-  // else if (name == "toolbank" || name == "toolstream") {
+  // else if (name == "toolbank" || name == "toolstream" || name == "valeo") {
   //   shell = new ActiveXObject("WScript.Shell");
   //   path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Suppliers\\" + name + ".lnk");
   //   shell.run("explorer " + path, 1, true);

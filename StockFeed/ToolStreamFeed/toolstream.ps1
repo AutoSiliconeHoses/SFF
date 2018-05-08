@@ -4,9 +4,7 @@ cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts"
 ftp -s:login.txt ftp.toolstream.com
 
 cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed"
-If (Test-Path -Path "toolstream.txt") {
-  del toolstream.txt
-}
+If (Test-Path -Path "toolstream.txt") {del toolstream.txt}
 "OpenAndSave.ps1"
 & "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\OpenAndSave.ps1" /C
 "SaveAsTxt.ps1"
@@ -26,9 +24,7 @@ If (Test-Path -Path "toolstreamgrep.txt") {
 
 findstr "[[A-Z] [0-9] ,]" toolstream.txt > toolstreamgrep.txt
 
-If (Test-Path -Path "toolstream.txt") {
-  del toolstream.txt
-}
+If (Test-Path -Path "toolstream.txt") {del toolstream.txt}
 
 Rename-Item toolstreamgrep.txt toolstream.txt
 
