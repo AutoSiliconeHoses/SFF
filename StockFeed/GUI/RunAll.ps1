@@ -1,3 +1,4 @@
+$Host.UI.RawUI.WindowTitle = "StockFeed"
 Set-PSDebug -Trace 0
 "Pushing Drive"
 Write-Progress -Activity 'Pushing Drive' -Status "Pushing..."
@@ -30,6 +31,22 @@ Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\tetrosyl.lnk'
 $i++
 Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
+
+"Loading Stax"
+& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\stax.lnk'
+$i++
+Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
+
+"Loading KYB"
+& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\kyb.lnk'
+$i++
+Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
+
+"Loading HomeHardware"
+& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\homehardware.lnk'
+$i++
+Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
+
 Write-Progress -Activity 'Loading Scripts' -Status "Loaded"
 
 "Waiting for Scripts to finish"

@@ -20,8 +20,8 @@ cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed"
 & "Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\SaveAsTxt.ps1" /C
 
 "Cleaning Files"
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("FALSE`t`t`t`t0`t5", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("?-TL`t`t`t`t0`t5", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
+(Get-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("FALSE`t`t`t`t0`t4", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
+(Get-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("?-TL`t`t`t`t0`t4", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
 
 cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed"
 findstr "[[A-Z] [0-9] ,]" tetrosyl.txt > tetrosylgrep.txt

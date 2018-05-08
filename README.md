@@ -15,12 +15,12 @@ Make sure to report any bugs or inconsistencies.
 Batch:
   Decco
   Draper
+
+PowerShell:
   HomeHardware
   KYB
   Stax
   Tetrosyl
-
-PowerShell:
   ToolBank
   ToolStream
   Valeo

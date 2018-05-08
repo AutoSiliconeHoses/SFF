@@ -15,9 +15,9 @@ If (Test-Path -Path 'valeo.txt') {del valeo.txt}
 & "Z:\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\SaveAsTxt.ps1" /C
 
 "Cleaning Files"
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("FALSE`t`t`t`t0`t5", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("#VALUE!`t`t`t`t20`t5", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("C`t`t`t`t20`t5", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
+(Cat 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("FALSE`t`t`t`t0`t4", "") | SC 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
+(Cat 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("#VALUE!`t`t`t`t20`t4", "") | SC 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
+(Cat 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("C`t`t`t`t20`t4", "") | SC 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
 
 cd "Z:\Stock File Fetcher\StockFeed\ValeoFeed"
 findstr "[[A-Z] [0-9] ,]" valeo.txt > valeogrep.txt
