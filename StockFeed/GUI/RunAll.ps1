@@ -1,3 +1,4 @@
+$computer = $osInfo = $compOSInfo = $null
 $Host.UI.RawUI.WindowTitle = "StockFeed"
 Set-PSDebug -Trace 0
 "Pushing Drive"
@@ -44,6 +45,16 @@ Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 
 "Loading HomeHardware"
 & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\homehardware.lnk'
+$i++
+Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
+
+"Loading Draper"
+& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\draper.lnk'
+$i++
+Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
+
+"Loading Decco"
+& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\decco.lnk'
 $i++
 Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 

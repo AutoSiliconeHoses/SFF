@@ -18,3 +18,5 @@ StockFeed/email/attachments/
 StockFeed/Programs
 
 StockFeed/GUI/Dropzone/email\.ps1
+
+*.tmp

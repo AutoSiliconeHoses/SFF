@@ -1,4 +1,4 @@
-$file = Dir 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\reference.xlsx'
+$file = Dir 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\reference3.xlsx'
 $excl = New-Object -ComObject "Excel.Application"
   $wrkb = $excl.Workbooks.Open($file)
     $excl.DisplayAlerts = $FALSE

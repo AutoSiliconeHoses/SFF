@@ -24,10 +24,7 @@ findstr "[[A-Z] [0-9] ,]" valeo.txt > valeogrep.txt
 del valeo.txt
 
 Rename-Item valeogrep.txt valeo.txt
-If (Test-Path -Path "toolbank.txt") {
-  'It does stick around'
-  del toolbank.txt
-}
+If (Test-Path -Path "toolbank.txt") {del toolbank.txt}
 
 move valeo.txt "Z:\Stock File Fetcher\Upload"
 
