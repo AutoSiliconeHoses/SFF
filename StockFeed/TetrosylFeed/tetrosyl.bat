@@ -6,6 +6,7 @@ if exist combine.csv (del "combine.csv")
 copy *.csv combine.csv
 move combine.csv "Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
 
+cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
 copy macro.xlsm macro2.xlsm
 
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\RunMacro.vbs"
