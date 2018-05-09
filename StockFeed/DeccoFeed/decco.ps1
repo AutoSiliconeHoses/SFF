@@ -2,6 +2,8 @@ $Host.UI.RawUI.WindowTitle = "DeccoFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
 If (Test-Path -Path stock.xml) {del stock.xml}
+cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
+If (Test-Path -Path stock.xml) {del decco.zip}
 
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Decco"
 copy decco.zip "Z:\Stock File Fetcher\StockFeed\DeccoFeed"

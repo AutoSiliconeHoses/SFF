@@ -44,15 +44,10 @@ function runBat(name) {
     window.focus();
     window.alert("Process Complete");
   }
-  // else if (name == "toolbank" || name == "toolstream" || name == "valeo") {
-  //   shell = new ActiveXObject("WScript.Shell");
-  //   path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Suppliers\\" + name + ".lnk");
-  //   shell.run("explorer " + path, 1, true);
-  // }
   else {
     shell = new ActiveXObject("WScript.Shell");
-    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\" + name + "Feed\\" + name + ".bat");
-    shell.run("explorer " + path, 0, true);
+    path = ("\\\\DISKSTATION\\Feeds\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Suppliers\\" + name + ".lnk");
+    shell.run("explorer " + path, 1, true);
   }
 }
 
@@ -72,13 +67,13 @@ function getCount(path) {
 
 function scrap() {
   shell = new ActiveXObject("WScript.Shell");
-  path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\scrap.bat");
+  path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Drives\\scrap.lnk");
   shell.run("explorer " + path, 0, false);
 }
 
 function compile() {
   shell = new ActiveXObject("WScript.Shell");
-  path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\compile.bat");
+  path = ("Z:\\Stock File Fetcher\\StockFeed\\GUI\\Shortcuts\\Drives\\compile.lnk");
   shell.run("explorer " + path, 0, false);
 }
 
