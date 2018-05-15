@@ -16,11 +16,12 @@ move combine.csv "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
 del Primary1.csv
 del Primary15.csv
 
-if exist macro2.xlsm (del macro2.xlsm)
 copy macro.xlsm macro2.xlsm
 
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\RunMacro.vbs"
 %comspec% /C "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\SaveAsTxt.vbs"
+
+del macro2.xlsm
 
 "Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed" --fileMask "*homehardware.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "FALSE				0	4" --replace ""
 "Z:\Stock File Fetcher\StockFeed\Programs\fnr.exe" --cl --dir "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed" --fileMask "*homehardware.txt*" --excludeFileMask "*.dll, *.exe" --caseSensitive --find "?stock_no-HH				0	4" --replace ""

@@ -120,6 +120,10 @@ function checkEm() {
     count++;
     runBat("decco");
   }
+  if (document.getElementById("checkkilen").checked) {
+    count++;
+    runBat("kilen");
+  }
   setTimeout(function() {
     runBat("pop");
   }, 1000);

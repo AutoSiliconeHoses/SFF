@@ -7,13 +7,8 @@ cat *.csv | sc combine.csv
 If (Test-Path -Path 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\combine.csv') {del 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\combine.csv'}
 move combine.csv "Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
 
-cd "Z:\Stock File Fetcher\Upload"
-If (Test-Path -Path 'Z:\Stock File Fetcher\Upload\tetrosyl.txt') {del 'Z:\Stock File Fetcher\Upload\tetrosyl.txt'}
-
 cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed"
 
-"OpenAndSave.ps1"
-& "Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\OpenAndSave.ps1" /C
 "RunMacro.ps1"
 & "Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\RunMacro.ps1" /C
 "SaveAsTxt.ps1"

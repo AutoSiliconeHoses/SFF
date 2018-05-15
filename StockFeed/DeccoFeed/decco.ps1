@@ -43,5 +43,3 @@ If (Test-Path -Path decco.txt) {del decco.txt}
 
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"
 New-Item decco.txt -ItemType file
-
-cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
