@@ -6,10 +6,12 @@ If (Test-Path -Path homehardware.txt) {del homehardware.txt}
 cd "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
 If (Test-Path -Path combine.csv) {del combine.csv}
 
+"Acquiring Files"
 ftp -s:login.txt 195.74.141.134
 move Primary1.csv "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed"
 move Primary15.csv "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed"
 
+"Combining Files"
 cd "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed"
 cat *.csv | sc ".\Scripts\combine.csv"
 
@@ -20,6 +22,9 @@ cd "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
 If (Test-Path -Path macro2.xlsm) {del macro2.xlsm}
 copy macro.xlsm macro2.xlsm
 
+"Processing File"
+"OpenAndSave.ps1"
+& "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\OpenAndSave.ps1" /C
 "RunMacro.ps1"
 & "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\RunMacro.ps1" /C
 "SaveAsTxt.ps1"
@@ -37,6 +42,7 @@ If (Test-Path -Path homehardware.txt) {del homehardware.txt}
 Rename-Item homehardwaregrep.txt homehardware.txt
 If (Test-Path -Path homehardwaregrep.txt) {del homehardwaregrep.txt}
 
+"Moving File to Upload folder"
 move homehardware.txt "Z:\Stock File Fetcher\Upload"
 
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"

@@ -1,10 +1,12 @@
 $Host.UI.RawUI.WindowTitle = "ToolStreamFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts"
+"Acquiring File"
 ftp -s:login.txt ftp.toolstream.com
 
 cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed"
 If (Test-Path -Path "toolstream.txt") {del toolstream.txt}
+"Processing File"
 "OpenAndSave.ps1"
 & "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\OpenAndSave.ps1" /C
 "SaveAsTxt.ps1"
@@ -12,7 +14,7 @@ If (Test-Path -Path "toolstream.txt") {del toolstream.txt}
 
 cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed"
 
-"Cleaning Files"
+"Cleaning File"
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("FALSE`t`t`t`t0`t4", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("FALSE`t`t`t`t20`t4", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("#REF!`t`t`t`t#REF!`t4", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
@@ -28,6 +30,7 @@ If (Test-Path -Path "toolstream.txt") {del toolstream.txt}
 
 Rename-Item toolstreamgrep.txt toolstream.txt
 
+"Moving File to Upload folder"
 move toolstream.txt "Z:\Stock File Fetcher\Upload"
 
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"

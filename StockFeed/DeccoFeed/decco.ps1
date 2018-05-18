@@ -5,9 +5,11 @@ If (Test-Path -Path stock.xml) {del stock.xml}
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 If (Test-Path -Path stock.xml) {del decco.zip}
 
+"Acquiring File"
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Decco"
 copy decco.zip "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 
+"Extracting File"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 Rename-Item decco.zip file.zip
 # If (Test-Path -Path .\file) {Remove-Item .\file -Force -Recurse}
@@ -15,7 +17,7 @@ Expand-Archive "Z:\Stock File Fetcher\StockFeed\DeccoFeed\file.zip" -Destination
 
 If (Test-Path -Path file.zip) {del file.zip}
 
-"Renaming Stock File"
+"Renaming File"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\unzipped"
 Get-ChildItem "Z:\Stock File Fetcher\StockFeed\DeccoFeed\unzipped\*.xls" | ForEach-Object{
     $a=$_.fullname
@@ -26,10 +28,12 @@ Get-ChildItem "Z:\Stock File Fetcher\StockFeed\DeccoFeed\unzipped\*.xls" | ForEa
 move stock.xml "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
 If (Test-Path -Path stock.xml) {del stock.xml}
 
-"Cleaning Files"
+"Processing File"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
+& "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\OpenAndSave.ps1" /C
 & "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\SaveAsTxt.ps1" /C
 
+"Cleaning File"
 (cat 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt').replace("FALSE`t`t`t`t0`t4", "") | sc 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt'
 
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
@@ -38,6 +42,7 @@ If (Test-Path -Path decco.txt) {del decco.txt}
 Rename-Item deccogrep.txt decco.txt
 If (Test-Path -Path deccogrep.txt) {del deccogrep.txt}
 
+"Moving File to Upload folder"
 move decco.txt "Z:\Stock File Fetcher\Upload"
 If (Test-Path -Path decco.txt) {del decco.txt}
 

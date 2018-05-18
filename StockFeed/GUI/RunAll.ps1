@@ -58,6 +58,11 @@ Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 $i++
 Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 
+"Loading Kilen"
+& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\kilen.lnk'
+$i++
+Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
+
 Write-Progress -Activity 'Loading Scripts' -Status "Loaded"
 
 "Waiting for Scripts to finish"

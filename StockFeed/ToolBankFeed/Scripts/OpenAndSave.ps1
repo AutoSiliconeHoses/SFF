@@ -1,4 +1,4 @@
-$file = Dir 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\' -Recurse | ? {$_.Name -eq "reference.xlsx"} | Select -ExpandProperty FullName
+$file = Dir 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\' -Recurse | ? {$_.Name -eq "stock.csv"} | Select -ExpandProperty FullName
 $excl = New-Object -ComObject "Excel.Application"
 $wrkb = $excl.Workbooks.Open($file)
 
