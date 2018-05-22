@@ -9,8 +9,6 @@ If (Test-Path -Path kyb.txt) {del kyb.txt}
 "Processing File"
 "OpenAndSave.ps1"
 & "Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts\OpenAndSave.ps1" /C
-"SaveAsTxt.ps1"
-& "Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts\SaveAsTxt.ps1" /C
 
 "Cleaning Files"
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\KYBFeed\kyb.txt').replace("FALSE`t`t`t`t0`t4", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\KYBFeed\kyb.txt'
@@ -27,4 +25,3 @@ move kyb.txt "Z:\Stock File Fetcher\Upload"
 
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"
 New-Item kyb.txt -ItemType file
-"Succesful"

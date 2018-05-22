@@ -28,6 +28,3 @@ If (Test-Path -Path "valeo.txt") {del toolbank.txt}
 
 "Moving File to Upload folder"
 move valeo.txt "Z:\Stock File Fetcher\Upload"
-
-cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"
-New-Item valeo.txt -ItemType file

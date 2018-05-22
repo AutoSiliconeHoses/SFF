@@ -32,6 +32,3 @@ Rename-Item toolstreamgrep.txt toolstream.txt
 
 "Moving File to Upload folder"
 move toolstream.txt "Z:\Stock File Fetcher\Upload"
-
-cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"
-New-Item toolstream.txt -ItemType file

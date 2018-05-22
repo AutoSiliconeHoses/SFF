@@ -28,6 +28,3 @@ If (Test-Path -Path staxgrep.txt) {del staxgrep.txt}
 
 "Moving File to Upload folder"
 move stax.txt "Z:\Stock File Fetcher\Upload"
-
-cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"
-New-Item stax.txt -ItemType file

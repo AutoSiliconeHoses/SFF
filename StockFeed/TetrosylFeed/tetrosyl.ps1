@@ -29,6 +29,3 @@ Rename-Item tetrosylgrep.txt tetrosyl.txt
 
 "Moving File to Upload folder"
 move tetrosyl.txt "Z:\Stock File Fetcher\Upload"
-
-cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"
-New-Item tetrosyl.txt -ItemType file

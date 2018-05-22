@@ -1,9 +1,17 @@
-$file = Dir 'Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts\' -Recurse | ? {$_.Name -eq "stock.csv"} | Select -ExpandProperty FullName
-$excl = New-Object -ComObject "Excel.Application"
-$wrkb = $excl.Workbooks.Open($file)
+$filedraper =  'Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts\stock.csv'
+$excldraper = New-Object -ComObject "Excel.Application"
+$wrkbdraper = $excldraper.Workbooks.Open($filedraper)
+$excldraper.DisplayAlerts = $FALSE
 
-$excl.DisplayAlerts = $FALSE
-$wrkb.Save()
+$wrkbdraper.Save()
 
-$wrkb.Close()
-$excl.Quit()
+Set-Variable -Name "filedraper" -Value 'Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts\reference2.xlsx'
+$wrkbdraper = $excldraper.Workbooks.Open($filedraper)
+$wrkbdraper.Save()
+
+Set-Variable -Name "filedraper" -Value 'Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts\reference.xlsx'
+$wrkbdraper = $excldraper.Workbooks.Open($filedraper)
+$wrkbdraper.SaveAs("Z:\Stock File Fetcher\StockFeed\DraperFeed\draper.txt", -4158)
+
+$wrkbdraper.Close()
+$excldraper.Quit()

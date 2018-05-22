@@ -3,11 +3,10 @@ Z:
 cd "Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts"
 
 If (Test-Path -Path "Availability20D.csv"){del Availability20D.csv}
-If (Test-Path -Path "stock.csv") {del stock.csv}
 
 "Acquiring File"
 ftp -s:login.txt 195.74.141.134
-Rename-Item Availability20D.csv stock.csv
+Rename-Item Availability20D.csv stock.csv -force
 
 cd "Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts"
 "Processing File"
@@ -30,6 +29,3 @@ Rename-Item toolbankgrep.txt toolbank.txt
 
 "Moving File to Upload folder"
 move toolbank.txt "Z:\Stock File Fetcher\Upload"
-
-cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"
-New-Item toolbank.txt -ItemType file

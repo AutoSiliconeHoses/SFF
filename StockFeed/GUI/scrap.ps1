@@ -1,3 +1,1 @@
-$Host.UI.RawUI.WindowTitle = "Scrap"
-cd 'Z:\Stock File Fetcher\StockFeed\GUI\Output'
-Remove-Item –path *.txt –recurse
+Get-ChildItem -Path "Z:\Stock File Fetcher\StockFeed\GUI\Output" -Include * -File -Recurse | foreach { $_.Delete()}
