@@ -13,14 +13,7 @@ Function String-Search($string, $target) {
 }
 
 "Pushing Drive"
-Write-Progress -Activity 'Pushing Drive' -Status "Pushing..."
-& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\push.bat' -WindowStyle Hidden /C
-Write-Progress -Activity 'Pushing Drive' -Status "Pushed"
-
-"Scrapping Old Files"
-Write-Progress -Activity 'Scrapping Files' -Status "Scrapping..."
-& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\scrap.bat' -WindowStyle Hidden /C
-Write-Progress -Activity 'Scrapping Files' -Status "Scrapped"
+net use z: "\\DISKSTATION\Feeds"
 
 Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 $i = 0
@@ -116,23 +109,16 @@ while (@(Get-Process | where-object {$_.ProcessName -like 'powershell'}).count -
   }
 }
 
-"Scrapping Old Files"
-Write-Progress -Activity 'Scrapping Files' -Status "Scrapping..."
-& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\scrap.ps1' /C
-Write-Progress -Activity 'Scrapping Files' -Status "Scrapped"
-
 "Compiling Output Files"
 Write-Progress -Activity 'Compiling' -Status "Compiling..."
 & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\compile.ps1' /C
 Write-Progress -Activity 'Compiling' -Status "Compiled"
 
 "Popping Drive"
-Write-Progress -Activity 'Popping Drive' -Status "Popping..."
-& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Drives\pop.lnk' /C
-Write-Progress -Activity 'Popping Drive' -Status "Popped"
+net use z: /delete /y
 
-
-$argResult = String-Search $argstring "on"
+$argResult = String-Search $argstring "op"
 if ($argResult) {
-  ii "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\amazon.txt"
+	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+  Start-Process excel amazon.txt -Windowstyle maximized
 }

@@ -15,8 +15,6 @@ If (Test-Path -Path stax.txt) {del stax.txt}
 "Processing File"
 "OpenAndSave.ps1"
 & "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\OpenAndSave.ps1" /C
-"SaveAsTxt.ps1"
-& "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\SaveAsTxt.ps1" /C
 
 "Cleaning File"
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\StaxFeed\stax.txt').replace("FALSE`t`t`t`t0`t4", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'

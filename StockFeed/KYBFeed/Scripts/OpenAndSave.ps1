@@ -1,9 +1,13 @@
-$file = Dir 'Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts\' -Recurse | ? {$_.Name -eq "KYBSTOCK.csv"} | Select -ExpandProperty FullName
-$excl = New-Object -ComObject "Excel.Application"
-$wrkb = $excl.Workbooks.Open($file)
+$filekyb =  'Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts\KYBSTOCK.CSV'
+$exclkyb = New-Object -ComObject "Excel.Application"
+$wrkbkyb = $exclkyb.Workbooks.Open($filekyb)
+$exclkyb.DisplayAlerts = $FALSE
 
-$excl.DisplayAlerts = $FALSE
-$wrkb.Save()
+$wrkbkyb.Save()
 
-$wrkb.Close()
-$excl.Quit()
+Set-Variable -Name "filekyb" -Value 'Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts\reference.xlsx'
+$wrkbkyb = $exclkyb.Workbooks.Open($filekyb)
+$wrkbkyb.SaveAs("Z:\Stock File Fetcher\StockFeed\KYBFeed\kyb.txt", -4158)
+
+$wrkbkyb.Close()
+$exclkyb.Quit()

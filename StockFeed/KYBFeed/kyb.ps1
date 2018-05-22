@@ -22,6 +22,3 @@ If (Test-Path -Path kybgrep.txt) {del kybgrep.txt}
 
 "Moving File to Upload folder"
 move kyb.txt "Z:\Stock File Fetcher\Upload"
-
-cd "Z:\Stock File Fetcher\StockFeed\GUI\Output"
-New-Item kyb.txt -ItemType file
