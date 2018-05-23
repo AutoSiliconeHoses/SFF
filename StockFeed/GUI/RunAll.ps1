@@ -122,3 +122,6 @@ if ($argResult) {
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
   Start-Process excel amazon.txt -Windowstyle maximized
 }
+
+$wshell = New-Object -ComObject Wscript.Shell
+$wshell.Popup("Operation Completed",0,"Done",0x0)
