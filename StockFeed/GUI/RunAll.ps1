@@ -1,12 +1,12 @@
 $computer = $osInfo = $compOSInfo = $null
 $Host.UI.RawUI.WindowTitle = "StockFeed"
+"Welcome to the Stock File Fetcher Script (SSF). Please don't touch anything."
 Set-PSDebug -Trace 0
-[Environment]::Is64BitProcess
 
 $argCount = $args.length
 $argString = $args
 
-Write-Host "Num Args:" $argsCount;
+Write-Host "Num Args: $argsCount"
 
 Function String-Search($string, $target) {
 	$result = Select-string -pattern $target -InputObject $string
@@ -17,8 +17,8 @@ Function Run-Supplier($supplier, $id) {
 	$argResult = String-Search $argstring $id
 	if ($argResult -or $RunAll) {
 	  "Loading $supplier"
-		$loadString = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\$supplier.lnk"
-		& $loadString
+		$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
+		Start PowerShell $loadstring -WindowStyle Hidden
 	  $i++
 	  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 	}

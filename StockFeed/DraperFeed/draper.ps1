@@ -5,6 +5,8 @@ cd "Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts"
 "Acquiring File"
 ftp -s:login.txt 62.255.240.235
 
+Rename-Item stock.csv draper.csv
+
 "Processing File"
 "OpenAndSave.ps1"
 & "Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts\OpenAndSave.ps1" /C

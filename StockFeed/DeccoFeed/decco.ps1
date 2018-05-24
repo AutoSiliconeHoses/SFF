@@ -10,21 +10,20 @@ copy decco.zip "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 
 "Extracting File"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
-Rename-Item decco.zip file.zip
-Expand-Archive "Z:\Stock File Fetcher\StockFeed\DeccoFeed\file.zip" -DestinationPath "Z:\Stock File Fetcher\StockFeed\DeccoFeed\unzipped" -Force
-
-If (Test-Path -Path file.zip) {del file.zip}
+Rename-Item decco.zip decco.zip
+Expand-Archive "Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.zip" -DestinationPath "Z:\Stock File Fetcher\StockFeed\DeccoFeed\unzipped" -Force
+If (Test-Path -Path decco.zip) {del decco.zip}
 
 "Renaming File"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\unzipped"
 Get-ChildItem "Z:\Stock File Fetcher\StockFeed\DeccoFeed\unzipped\*.xls" | ForEach-Object{
     $a=$_.fullname
-    $b="stock.xml"
+    $b="decco.xml"
     Rename-Item -path $a -NewName $b
 }
 
-move stock.xml "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts" -Force
-If (Test-Path -Path stock.xml) {del stock.xml}
+move decco.xml "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts" -Force
+If (Test-Path -Path decco.xml) {del decco.xml}
 
 "Processing File"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"

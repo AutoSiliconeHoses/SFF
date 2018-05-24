@@ -1,26 +1,21 @@
 $Host.UI.RawUI.WindowTitle = "HomeHardwareFeed"
 Z:
-cd "Z:\Stock File Fetcher\Upload"
-If (Test-Path -Path homehardware.txt) {del homehardware.txt}
-
 cd "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
-If (Test-Path -Path combine.csv) {del combine.csv}
-
 "Acquiring Files"
 ftp -s:login.txt 195.74.141.134
 move Primary1.csv "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed"
 move Primary15.csv "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed"
 
 "Combining Files"
-cd "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed"
-cat *.csv | sc ".\Scripts\combine.csv"
+cd "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
+cat *.csv | sc ".\Scripts\homehardware.csv"
 
 If (Test-Path -Path Primary1.csv) {del Primary1.csv}
 If (Test-Path -Path Primary15.csv) {del Primary15.csv}
 
 cd "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
-If (Test-Path -Path macro2.xlsm) {del macro2.xlsm}
-copy macro.xlsm macro2.xlsm
+If (Test-Path -Path hhmacro2.xlsm) {del hhmacro2.xlsm}
+copy hhmacro.xlsm hhmacro2.xlsm
 
 "Processing File"
 "OpenAndSave.ps1"
