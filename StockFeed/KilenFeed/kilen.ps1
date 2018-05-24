@@ -14,7 +14,7 @@ cd "Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
 & "Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts\OpenAndSave.ps1" /C
 
 "Cleaning File"
-(cat 'Z:\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt').replace("FALSE`t`t`t`t0`t4", "") | sc 'Z:\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt'
+(cat 'Z:\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt'
 
 cd "Z:\Stock File Fetcher\StockFeed\KilenFeed"
 findstr "[[A-Z] [0-9] ,]" kilen.txt > kilengrep.txt

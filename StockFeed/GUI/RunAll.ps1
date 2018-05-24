@@ -1,6 +1,7 @@
 $computer = $osInfo = $compOSInfo = $null
 $Host.UI.RawUI.WindowTitle = "StockFeed"
 Set-PSDebug -Trace 0
+[Environment]::Is64BitProcess
 
 $argCount = $args.length
 $argString = $args
@@ -12,92 +13,33 @@ Function String-Search($string, $target) {
 	If ($result) {return $true}
 }
 
+Function Run-Supplier($supplier, $id) {
+	$argResult = String-Search $argstring $id
+	if ($argResult -or $RunAll) {
+	  "Loading $supplier"
+		$loadString = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\$supplier.lnk"
+		& $loadString
+	  $i++
+	  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
+	}
+}
+
 "Pushing Drive"
 net use z: "\\DISKSTATION\Feeds"
 
 Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 $i = 0
-
-$argResult = String-Search $argstring "tb"
-if ($argResult) {
-  "Loading ToolBank"
-  & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\toolbank.lnk'
-  $i++
-  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-}
-
-$argResult = String-Search $argstring "ts"
-if ($argResult) {
-  "Loading ToolStream"
-  & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\toolstream.lnk'
-  $i++
-  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-}
-
-$argResult = String-Search $argstring "vo"
-if ($argResult) {
-  "Loading Valeo"
-  & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\valeo.lnk'
-  $i++
-  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-}
-
-$argResult = String-Search $argstring "tl"
-if ($argResult) {
-  "Loading Tetrosyl"
-  & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\tetrosyl.lnk'
-  $i++
-  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-}
-
-$argResult = String-Search $argstring "sx"
-if ($argResult) {
-  "Loading Stax"
-  & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\stax.lnk'
-  $i++
-  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-}
-
-$argResult = String-Search $argstring "kb"
-if ($argResult) {
-  "Loading KYB"
-  & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\kyb.lnk'
-  $i++
-  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-}
-
-$argResult = String-Search $argstring "hh"
-if ($argResult) {
-  "Loading HomeHardware"
-  & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\homehardware.lnk'
-  $i++
-  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-}
-
-$argResult = String-Search $argstring "dp"
-if ($argResult) {
-  "Loading Draper"
-  & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\draper.lnk'
-  $i++
-  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-}
-
-$argResult = String-Search $argstring "dc"
-if ($argResult) {
-  "Loading Decco"
-  & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\decco.lnk'
-  $i++
-  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-}
-
-$argResult = String-Search $argstring "kn"
-if ($argResult) {
-  "Loading Kilen"
-  & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Shortcuts\Suppliers\kilen.lnk'
-  $i++
-  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-}
-
+$RunAll = String-Search $argString all
+Run-Supplier ToolBank tb
+Run-Supplier ToolStream ts
+Run-Supplier Valeo vo
+Run-Supplier Tetrosyl tl
+Run-Supplier Stax sx
+Run-Supplier KYB kb
+Run-Supplier HomeHardware hh
+Run-Supplier Draper dp
+Run-Supplier Decco dc
+Run-Supplier Kilen kn
 Write-Progress -Activity 'Loading Scripts' -Status "Loaded"
 
 "Waiting for Scripts to finish"
@@ -111,7 +53,7 @@ while (@(Get-Process | where-object {$_.ProcessName -like 'powershell'}).count -
 
 "Compiling Output Files"
 Write-Progress -Activity 'Compiling' -Status "Compiling..."
-& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\compile.ps1' /C
+& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\compile.ps1' $args[0] /C
 Write-Progress -Activity 'Compiling' -Status "Compiled"
 
 "Popping Drive"

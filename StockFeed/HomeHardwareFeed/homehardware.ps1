@@ -27,11 +27,9 @@ copy macro.xlsm macro2.xlsm
 & "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\OpenAndSave.ps1" /C
 
 "Cleaning file"
-If (Test-Path -Path macro2.xlsm) {del macro2.xlsm}
-
-(cat 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt').replace("FALSE`t`t`t`t0`t4", "") | sc 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
-(cat 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt').replace("-HH`t`t`t`t0`t4", "") | sc 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
-(cat 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt').replace("stock_no-HH`t`t`t`t0`t4", "") | sc 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
+(cat 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
+(cat 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt').replace("-HH`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
+(cat 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt').replace("stock_no-HH`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
 
 cd "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed"
 findstr "[[A-Z] [0-9] ,]" homehardware.txt > homehardwaregrep.txt

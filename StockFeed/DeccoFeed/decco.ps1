@@ -23,7 +23,7 @@ Get-ChildItem "Z:\Stock File Fetcher\StockFeed\DeccoFeed\unzipped\*.xls" | ForEa
     Rename-Item -path $a -NewName $b
 }
 
-move stock.xml "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
+move stock.xml "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts" -Force
 If (Test-Path -Path stock.xml) {del stock.xml}
 
 "Processing File"
@@ -31,10 +31,13 @@ cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
 & "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\OpenAndSave.ps1" /C
 
 "Cleaning File"
-(cat 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt').replace("FALSE`t`t`t`t0`t4", "") | sc 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt'
+(cat 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt'
 
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 findstr "[[A-Z] [0-9] ,]" decco.txt > deccogrep.txt
 If (Test-Path -Path decco.txt) {del decco.txt}
 Rename-Item deccogrep.txt decco.txt
 If (Test-Path -Path deccogrep.txt) {del deccogrep.txt}
+
+"Moving File to Upload folder"
+move decco.txt "Z:\Stock File Fetcher\Upload"

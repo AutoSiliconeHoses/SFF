@@ -1,9 +1,18 @@
-$file = Dir 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\' -Recurse | ? {$_.Name -eq "stock.csv"} | Select -ExpandProperty FullName
-$excl = New-Object -ComObject "Excel.Application"
-$wrkb = $excl.Workbooks.Open($file)
+$filetoolbank =  'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\stock.csv'
+$excltoolbank = New-Object -ComObject "Excel.Application"
+$wrkbtoolbank = $excltoolbank.Workbooks.Open($filetoolbank)
+$excltoolbank.DisplayAlerts = $FALSE
 
-$excl.DisplayAlerts = $FALSE
-$wrkb.Save()
+$wrkbtoolbank.Save()
 
-$wrkb.Close()
-$excl.Quit()
+Set-Variable -Name "filetoolbank" -Value 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\reference2.xlsx'
+$wrkbtoolbank = $excltoolbank.Workbooks.Open($filetoolbank)
+$wrkbtoolbank.Save()
+
+
+Set-Variable -Name "filetoolbank" -Value 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\reference.xlsx'
+$wrkbtoolbank = $excltoolbank.Workbooks.Open($filetoolbank)
+$wrkbtoolbank.SaveAs("Z:\Stock File Fetcher\StockFeed\ToolBankFeed\toolbank.txt", -4158)
+
+$wrkbtoolbank.Close()
+$excltoolbank.Quit()

@@ -1,5 +1,6 @@
 Z:
 cd "Z:\Stock File Fetcher\Upload"
+
 $condition = (Get-Location) -like "Z:\Stock File Fetcher\Upload"
 If ($condition) {
   If (Test-Path -Path amazon.txt) {del amazon.txt}
@@ -12,6 +13,7 @@ If ($condition) {
   If (Test-path -Path amazon.txt) {del amazon.txt}
   cd "Z:\Stock File Fetcher\Upload"
   rmdir "Z:\Stock File Fetcher\Upload\Amazon"
+  (cat amazon.txt).replace("argreplace", $args[0]) | sc amazon.txt
   "Finished Compilation"
 }
 If (!$Condition) {

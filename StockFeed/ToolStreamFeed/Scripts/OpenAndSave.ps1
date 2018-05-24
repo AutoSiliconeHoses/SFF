@@ -1,9 +1,13 @@
-$file = Dir 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\' -Recurse | ? {$_.Name -eq "Product Content And Pricing Information ENGLISH.xls"} | Select -ExpandProperty FullName
-$excl = New-Object -ComObject "Excel.Application"
-$wrkb = $excl.Workbooks.Open($file)
+$filetoolstream = 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\Product Content And Pricing Information ENGLISH.xls'
+$excltoolstream = New-Object -ComObject "Excel.Application"
+$wrkbtoolstream = $excltoolstream.Workbooks.Open($filetoolstream)
+$excltoolstream.DisplayAlerts = $FALSE
 
-$excl.DisplayAlerts = $FALSE
-$wrkb.Save()
+$wrkbtoolstream.SaveAs("Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Product Content And Pricing Information ENGLISH.xlsx")
 
-$wrkb.Close()
-$excl.Quit()
+Set-Variable -Name "filetoolstream" -Value 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\reference.xlsx'
+$wrkbtoolstream = $excltoolstream.Workbooks.Open($filetoolstream)
+$wrkbtoolstream.SaveAs("Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt", -4158)
+
+$wrkbtoolstream.Close()
+$excltoolstream.Quit()

@@ -9,16 +9,14 @@ If (Test-Path -Path "toolstream.txt") {del toolstream.txt}
 "Processing File"
 "OpenAndSave.ps1"
 & "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\OpenAndSave.ps1" /C
-"SaveAsTxt.ps1"
-& "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\SaveAsTxt.ps1" /C
 
 cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed"
 
 "Cleaning File"
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("FALSE`t`t`t`t0`t4", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("FALSE`t`t`t`t20`t4", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("#REF!`t`t`t`t#REF!`t4", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("FALSE`t`t`t`t#REF!`t4", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
+(Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("FALSE`t`t`t`t0`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
+(Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("FALSE`t`t`t`t20`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
+(Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("#REF!`t`t`t`t#REF!`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
+(Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("FALSE`t`t`t`t#REF!`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
 
 If (Test-Path -Path "toolstreamgrep.txt") {
   del toolstreamgrep.txt
