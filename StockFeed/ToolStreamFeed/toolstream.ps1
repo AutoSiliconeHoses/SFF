@@ -17,16 +17,7 @@ cd "Z:\Stock File Fetcher\StockFeed\ToolStreamFeed"
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("FALSE`t`t`t`t20`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("#REF!`t`t`t`t#REF!`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt').replace("FALSE`t`t`t`t#REF!`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
-
-If (Test-Path -Path "toolstreamgrep.txt") {
-  del toolstreamgrep.txt
-}
-
-findstr "[[A-Z] [0-9] ,]" toolstream.txt > toolstreamgrep.txt
-
-If (Test-Path -Path "toolstream.txt") {del toolstream.txt}
-
-Rename-Item toolstreamgrep.txt toolstream.txt
+(GC 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'
 
 "Moving File to Upload folder"
 move toolstream.txt "Z:\Stock File Fetcher\Upload"

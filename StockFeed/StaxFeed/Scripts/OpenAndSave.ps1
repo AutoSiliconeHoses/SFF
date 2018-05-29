@@ -1,15 +1,15 @@
-$filestax =  'Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stock.csv'
+$filestax =  'Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stax.csv'
 $exclstax = New-Object -ComObject "Excel.Application"
 $wrkbstax = $exclstax.Workbooks.Open($filestax)
 $exclstax.DisplayAlerts = $FALSE
 
 $wrkbstax.Save()
 
-Set-Variable -Name "filestax" -Value 'Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\reference2.xlsx'
+Set-Variable -Name "filestax" -Value 'Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\sxreference2.xlsx'
 $wrkbstax = $exclstax.Workbooks.Open($filestax)
 $wrkbstax.Save()
 
-Set-Variable -Name "filestax" -Value 'Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\reference.xlsx'
+Set-Variable -Name "filestax" -Value 'Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\sxreference.xlsx'
 $wrkbstax = $exclstax.Workbooks.Open($filestax)
 $wrkbstax.SaveAs("Z:\Stock File Fetcher\StockFeed\StaxFeed\stax.txt", -4158)
 

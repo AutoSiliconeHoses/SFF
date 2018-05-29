@@ -4,7 +4,7 @@ cd "Z:\Stock File Fetcher\StockFeed\DraperFeed\Scripts"
 
 "Acquiring File"
 ftp -s:login.txt 62.255.240.235
-
+If (Test-Path -Path draper.csv) {del draper.csv}
 Rename-Item stock.csv draper.csv
 
 "Processing File"
@@ -13,12 +13,13 @@ Rename-Item stock.csv draper.csv
 
 "Cleaning File"
 (cat 'Z:\Stock File Fetcher\StockFeed\DraperFeed\draper.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\DraperFeed\draper.txt'
+(GC 'Z:\Stock File Fetcher\StockFeed\DraperFeed\draper.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\DraperFeed\draper.txt'
 
 cd "Z:\Stock File Fetcher\StockFeed\DraperFeed"
-findstr "[[A-Z] [0-9] ,]" draper.txt > drapergrep.txt
-If (Test-Path -Path draper.txt) {del draper.txt}
-Rename-Item drapergrep.txt draper.txt
-If (Test-Path -Path drapergrep.txt) {del drapergrep.txt}
+# findstr "[[A-Z] [0-9] ,]" draper.txt > drapergrep.txt
+# If (Test-Path -Path draper.txt) {del draper.txt}
+# Rename-Item drapergrep.txt draper.txt
+# If (Test-Path -Path drapergrep.txt) {del drapergrep.txt}
 
 "Moving File to Upload folder"
 move draper.txt "Z:\Stock File Fetcher\Upload"

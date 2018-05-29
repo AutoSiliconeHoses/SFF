@@ -5,12 +5,12 @@ $exclvaleo.DisplayAlerts = $FALSE
 
 $wrkbvaleo.Save()
 
-Set-Variable -Name "filevaleo" -Value 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\reference2.xlsx'
+Set-Variable -Name "filevaleo" -Value 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\voreference2.xlsx'
 $wrkbvaleo = $exclvaleo.Workbooks.Open($filevaleo)
 $wrkbvaleo.Save()
 
 
-Set-Variable -Name "filevaleo" -Value 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\reference.xlsx'
+Set-Variable -Name "filevaleo" -Value 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\voreference.xlsx'
 $wrkbvaleo = $exclvaleo.Workbooks.Open($filevaleo)
 $wrkbvaleo.SaveAs("Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt", -4158)
 

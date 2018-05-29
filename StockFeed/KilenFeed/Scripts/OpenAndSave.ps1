@@ -5,7 +5,7 @@ $exclkilen.DisplayAlerts = $FALSE
 
 $wrkbkilen.Save()
 
-Set-Variable -Name "filekilen" -Value 'Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts\reference.xlsx'
+Set-Variable -Name "filekilen" -Value 'Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts\knreference.xlsx'
 $wrkbkilen = $exclkilen.Workbooks.Open($filekilen)
 $wrkbkilen.SaveAs("Z:\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt", -4158)
 

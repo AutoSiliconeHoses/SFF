@@ -2,15 +2,15 @@ $Host.UI.RawUI.WindowTitle = "TetrosylFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Tetrosyl"
 "Acquiring File"
-if (Test-Path -Path 'combine.csv') {del combine.csv}
-cat *.csv | sc combine.csv
+if (Test-Path -Path 'tetrosyl.csv') {del tetrosyl.csv}
+cat *.csv | sc tetrosyl.csv
 
-If (Test-Path -Path 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\combine.csv') {del 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\combine.csv'}
-move combine.csv "Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
+If (Test-Path -Path 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tetrosyl.csv') {del 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tetrosyl.csv'}
+move tetrosyl.csv "Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
 
 cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
-If (Test-Path -Path macro2.xlsm) {del macro2.xlsm}
-copy macro.xlsm macro2.xlsm
+If (Test-Path -Path tlmacro2.xlsm) {del tlmacro2.xlsm}
+copy tlmacro.xlsm tlmacro2.xlsm
 
 "Processing File"
 "OpenAndSave.ps1"
@@ -20,11 +20,8 @@ cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed"
 "Cleaning File"
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("FALSE`t`t`t`t0`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("?-TL`t`t`t`t0`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
-
-cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed"
-findstr "[[A-Z] [0-9] ,]" tetrosyl.txt > tetrosylgrep.txt
-If (Test-Path -Path 'tetrosyl.txt') {del tetrosyl.txt}
-Rename-Item tetrosylgrep.txt tetrosyl.txt
+(GC 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
 
 "Moving File to Upload folder"
+cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed"
 move tetrosyl.txt "Z:\Stock File Fetcher\Upload"

@@ -9,6 +9,9 @@ If (!(Test-Path -Path "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stock.cs
   EXIT
 }
 
+If (Test-Path -Path stax.csv) {del stax.csv}
+Rename-Item stock.csv stax.csv
+
 cd "Z:\Stock File Fetcher\StockFeed\StaxFeed"
 If (Test-Path -Path stax.txt) {del stax.txt}
 
@@ -18,11 +21,7 @@ If (Test-Path -Path stax.txt) {del stax.txt}
 
 "Cleaning File"
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\StaxFeed\stax.txt').replace("FALSE`t`t`t`t0`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
-
-findstr "[[A-Z] [0-9] ,]" stax.txt > staxgrep.txt
-If (Test-Path -Path stax.txt) {del stax.txt}
-Rename-Item staxgrep.txt stax.txt
-If (Test-Path -Path staxgrep.txt) {del staxgrep.txt}
+(GC 'Z:\Stock File Fetcher\StockFeed\StaxFeed\stax.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
 
 "Moving File to Upload folder"
 move stax.txt "Z:\Stock File Fetcher\Upload"

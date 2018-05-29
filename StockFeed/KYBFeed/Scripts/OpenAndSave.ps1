@@ -5,7 +5,7 @@ $exclkyb.DisplayAlerts = $FALSE
 
 $wrkbkyb.Save()
 
-Set-Variable -Name "filekyb" -Value 'Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts\reference.xlsx'
+Set-Variable -Name "filekyb" -Value 'Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts\kbreference.xlsx'
 $wrkbkyb = $exclkyb.Workbooks.Open($filekyb)
 $wrkbkyb.SaveAs("Z:\Stock File Fetcher\StockFeed\KYBFeed\kyb.txt", -4158)
 
