@@ -5,6 +5,11 @@ If (Test-Path -Path kilen.csv) {del kilen.csv}
 
 "Acquiring File"
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Kilen"
+Get-ChildItem *.csv | ForEach-Object{
+    $a=$_.fullname
+    $b="kilen.csv"
+    Rename-Item -path $a -NewName $b
+}
 copy kilen.csv "Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
 
 cd "Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
