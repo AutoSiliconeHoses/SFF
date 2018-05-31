@@ -2,7 +2,7 @@ $Host.UI.RawUI.WindowTitle = "DeccoFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
-If (Test-Path -Path unzipped) {del unzipped}
+If (Test-Path -Path unzipped) {del unzipped -recurse}
 
 "Acquiring File"
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Decco"
@@ -23,20 +23,19 @@ Get-ChildItem "Z:\Stock File Fetcher\StockFeed\DeccoFeed\unzipped\*.xls" | ForEa
 }
 
 move decco.xml "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts" -Force
-If (Test-Path -Path decco.xml) {del decco.xml}
+cd ..\
+If (Test-Path -Path unzipped) {del unzipped -recurse}
 
 "Processing File"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
 & "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\OpenAndSave.ps1" /C
+If (Test-Path -Path decco.xml) {del decco.xml}
+If (Test-Path -Path decco.csv) {del decco.csv}
 
 "Cleaning File"
 (cat 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt'
-
-cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
-findstr "[[A-Z] [0-9] ,]" decco.txt > deccogrep.txt
-If (Test-Path -Path decco.txt) {del decco.txt}
-Rename-Item deccogrep.txt decco.txt
-If (Test-Path -Path deccogrep.txt) {del deccogrep.txt}
+(GC 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt'
 
 "Moving File to Upload folder"
+cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 move decco.txt "Z:\Stock File Fetcher\Upload"

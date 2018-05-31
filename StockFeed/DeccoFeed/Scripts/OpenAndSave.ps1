@@ -1,11 +1,10 @@
-$inputFile = Get-Content "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\decco.xml"
-$inputFile | ConvertTo-csv
-$inputFile | Set-Content "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\decco.csv"
-
-$filedecco =  'Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\decco.csv'
+$filedecco =  'Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\decco.xml'
 $excldecco = New-Object -ComObject "Excel.Application"
 $wrkbdecco = $excldecco.Workbooks.Open($filedecco)
 $excldecco.DisplayAlerts = $FALSE
+
+$wrkbdecco.SaveAs("Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\decco.csv", 6)
+$wrkbdecco = $excldecco.Workbooks.Open('Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\decco.csv')
 
 $wrkbdecco.Save()
 

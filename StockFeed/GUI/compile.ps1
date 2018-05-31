@@ -5,8 +5,10 @@ $condition = (Get-Location) -like "Z:\Stock File Fetcher\Upload"
 If ($condition) {
   If (Test-Path -Path amazon.txt) {del amazon.txt}
   If (Test-Path -Path .header.txt) {del .header.txt}
+
   copy 'Z:\Stock File Fetcher\StockFeed\GUI\.header.txt' .header.txt
   cat *.txt | sc amazon.txt
+  
   mkdir "Z:\Stock File Fetcher\Upload\Amazon"
   move amazon.txt "Z:\Stock File Fetcher\Upload\Amazon" -force
   del *.txt
