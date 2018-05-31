@@ -6,11 +6,6 @@ If (Test-Path -Path unzipped) {del unzipped -recurse}
 
 "Acquiring File"
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Decco"
-Get-ChildItem *.zip | ForEach-Object{
-    $a=$_.fullname
-    $b="decco.zip"
-    Rename-Item -path $a -NewName $b
-}
 copy decco.zip "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 
 "Extracting File"

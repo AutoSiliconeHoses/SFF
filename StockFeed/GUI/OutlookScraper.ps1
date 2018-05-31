@@ -4,6 +4,8 @@ Set-PSDebug -Trace 0
 Add-Type -Assembly "Microsoft.Office.Interop.Outlook"
 $Outlook = New-Object -ComObject Outlook.Application
 $Namespace = $Outlook.GetNameSpace("MAPI")
+$Namespace.logon()
+$Namespace.SendAndReceive($false)
 $inbox = $NameSpace.Folders.Item(1).Folders.Item('Inbox').Folders
 
 # Gets today's date and formats it
@@ -26,6 +28,10 @@ foreach ($supplier in $inbox) {
                     -or $attachment.filename.contains(".zip")) {
                         $supplier = $email.SenderName
                         $filename = $attachment.filename
+
+                        if ($supplierName -eq "Decco") {$filename = "decco.zip"}
+                        if ($supplierName -eq "KYB") {$filename = "kyb.csv"}
+
                         echo ($filename + " saved from " + $supplier + " time: " + $email.receivedTime)
                         $attachment.saveasfile((join-path $savefilepath $filename))
                     }

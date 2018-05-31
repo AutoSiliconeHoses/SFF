@@ -1,4 +1,4 @@
-$filekyb =  'Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts\KYBSTOCK.CSV'
+$filekyb =  'Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts\kyb.csv'
 $exclkyb = New-Object -ComObject "Excel.Application"
 $wrkbkyb = $exclkyb.Workbooks.Open($filekyb)
 $exclkyb.DisplayAlerts = $FALSE

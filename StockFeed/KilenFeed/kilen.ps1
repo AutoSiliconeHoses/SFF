@@ -5,11 +5,6 @@ If (Test-Path -Path kilen.csv) {del kilen.csv}
 
 "Acquiring File"
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Kilen"
-Get-ChildItem *.csv | ForEach-Object{
-    $a=$_.fullname
-    $b="kilen.csv"
-    Rename-Item -path $a -NewName $b
-}
 copy kilen.csv "Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
 
 cd "Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
@@ -22,12 +17,8 @@ cd "Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
 (cat 'Z:\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt'
 (GC 'Z:\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt'
 
-cd "Z:\Stock File Fetcher\StockFeed\KilenFeed"
-# findstr "[[A-Z] [0-9] ,]" kilen.txt > kilengrep.txt
-# If (Test-Path -Path kilen.txt) {del kilen.txt}
-# Rename-Item kilengrep.txt kilen.txt
-# If (Test-Path -Path kilengrep.txt) {del kilengrep.txt}
 
 "Moving File to Upload folder"
+cd "Z:\Stock File Fetcher\StockFeed\KilenFeed"
 move kilen.txt "Z:\Stock File Fetcher\Upload"
 If (Test-Path -Path kilen.txt) {del kilen.txt}

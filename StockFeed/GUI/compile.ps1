@@ -8,7 +8,7 @@ If ($condition) {
 
   copy 'Z:\Stock File Fetcher\StockFeed\GUI\.header.txt' .header.txt
   cat *.txt | sc amazon.txt
-  
+
   mkdir "Z:\Stock File Fetcher\Upload\Amazon"
   move amazon.txt "Z:\Stock File Fetcher\Upload\Amazon" -force
   del *.txt

@@ -19,10 +19,5 @@ cd "Z:\Stock File Fetcher\StockFeed\ToolBankFeed"
 (Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\toolbank.txt').replace("FALSE`t`t`t`t0`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\toolbank.txt'
 (GC 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\toolbank.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\toolbank.txt'
 
-# If (Test-Path -Path "toolbankgrep.txt") {del toolbankgrep.txt}
-# findstr "[[A-Z] [0-9] ,]" toolbank.txt > toolbankgrep.txt
-# If (Test-Path -Path "toolbank.txt") {del toolbank.txt}
-# Rename-Item toolbankgrep.txt toolbank.txt
-
 "Moving File to Upload folder"
 move toolbank.txt "Z:\Stock File Fetcher\Upload"

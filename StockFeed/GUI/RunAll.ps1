@@ -14,7 +14,7 @@ Function Run-Supplier($supplier, $id) {
 	if ($argResult -or $RunAll) {
 	  "Loading $supplier"
 		$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
-		Start PowerShell $loadstring #-WindowStyle Hidden
+		Start PowerShell $loadstring -WindowStyle Hidden
 	  $i++
 	  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 	}
