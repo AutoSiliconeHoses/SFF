@@ -22,11 +22,7 @@ copy hhmacro.xlsm hhmacro2.xlsm
 & "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\OpenAndSave.ps1" /C
 
 "Cleaning file"
-(cat 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
-(cat 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt').replace("-HH`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
-(cat 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt').replace("stock_no-HH`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
-(GC 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
-
+(cat 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt').replace("FALSE`t`t`t`t0`targreplace", "").replace("-HH`t`t`t`t0`targreplace", "").replace("stock_no-HH`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
 
 "Cleaning folder"
 cd "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed"

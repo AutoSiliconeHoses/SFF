@@ -1,6 +1,6 @@
 $computer = $osInfo = $compOSInfo = $null
 $Host.UI.RawUI.WindowTitle = "StockFeed"
-"Welcome to the Stock File Fetcher Script (SFF). Please don't touch anything.`n`n`n`n`n"
+"Welcome to the Stock File Fetcher Script (SFF). Don't click me.`n`n`n`n`n"
 Set-PSDebug -Trace 0
 $argString = $args
 
@@ -22,21 +22,25 @@ Function Run-Supplier($supplier, $id) {
 
 "Pushing Drive"
 net use z: "\\DISKSTATION\Feeds"
+cd '\\DISKSTATION\Feeds\Stock File Fetcher\Upload'
+If (Test-Path -Path *.txt) {del *.txt}
 
 Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 $i = 0
 $RunAll = String-Search $argString all-
-Run-Supplier ToolBank 'tb-'
-Run-Supplier ToolStream 'ts-'
-Run-Supplier Valeo 'vo-'
-Run-Supplier Tetrosyl 'tl-'
-Run-Supplier Stax 'sx-'
-Run-Supplier StaxPrime 'sxp-'
-Run-Supplier KYB 'kb-'
-Run-Supplier HomeHardware 'hh-'
-Run-Supplier Draper 'dp-'
-Run-Supplier Decco 'dc-'
-Run-Supplier Kilen 'kn-'
+.{
+	Run-Supplier ToolBank 'tb-'
+	Run-Supplier ToolStream 'ts-'
+	Run-Supplier Valeo 'vo-'
+	Run-Supplier Tetrosyl 'tl-'
+	Run-Supplier Stax 'sx-'
+	Run-Supplier StaxPrime 'sxp-'
+	Run-Supplier KYB 'kb-'
+	Run-Supplier HomeHardware 'hh-'
+	Run-Supplier Draper 'dp-'
+	Run-Supplier Decco 'dc-'
+	Run-Supplier Kilen 'kn-'
+}
 Write-Progress -Activity 'Loading Scripts' -Status "Loaded"
 
 "Waiting for Scripts to finish"
@@ -56,11 +60,22 @@ Write-Progress -Activity 'Compiling' -Status "Compiled"
 "Popping Drive"
 net use z: /delete /y
 
+"Counting records"
+$fileCheck = Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\amazon.txt"
+$wshell = New-Object -ComObject Wscript.Shell
+If ($fileCheck) {
+	$records = (Get-Content "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\amazon.txt" | Measure-Object -Line).Lines - 1
+	If ($records -eq 0) {$finished = "File empty"}
+	If ($records -gt 0)	{$finished = "Number of records processed: " + $records}
+	$wshell.Popup($finished,0,"Done",0x0)
+}
+If (!$fileCheck) {
+	$wshell.Popup("The amazon.txt file could not be found.",0,"Error",0x0)
+}
+
+"Done"
 $argResult = String-Search $argstring "op-"
 if ($argResult) {
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
   Start-Process excel amazon.txt -Windowstyle maximized
 }
-
-$wshell = New-Object -ComObject Wscript.Shell
-$wshell.Popup("Operation Completed",0,"Done",0x0)

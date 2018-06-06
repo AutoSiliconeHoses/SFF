@@ -13,7 +13,6 @@ Rename-Item stock.csv draper.csv
 
 "Cleaning File"
 (cat 'Z:\Stock File Fetcher\StockFeed\DraperFeed\draper.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\DraperFeed\draper.txt'
-(GC 'Z:\Stock File Fetcher\StockFeed\DraperFeed\draper.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\DraperFeed\draper.txt'
 
 "Moving File to Upload folder"
 cd "Z:\Stock File Fetcher\StockFeed\DraperFeed"

@@ -18,9 +18,9 @@ copy tlmacro.xlsm tlmacro2.xlsm
 
 cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed"
 "Cleaning File"
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("FALSE`t`t`t`t0`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("?-TL`t`t`t`t0`targreplace", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
-(GC 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
+(gc 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
+(gc 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("?-TL`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
+(gc 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt')|?{$_.Trim(" `t")}| sc 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
 
 "Moving File to Upload folder"
 cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed"

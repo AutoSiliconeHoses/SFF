@@ -1,6 +1,7 @@
 $Host.UI.RawUI.WindowTitle = "DeccoFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
+If (Test-Path -Path decco.csv) {del decco.csv}
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 If (Test-Path -Path unzipped) {del unzipped -recurse}
 
@@ -10,7 +11,7 @@ copy decco.zip "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 
 "Extracting File"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
-Rename-Item decco.zip decco.zip
+
 Expand-Archive "Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.zip" -DestinationPath "Z:\Stock File Fetcher\StockFeed\DeccoFeed\unzipped" -Force
 If (Test-Path -Path decco.zip) {del decco.zip}
 
@@ -30,11 +31,10 @@ If (Test-Path -Path unzipped) {del unzipped -recurse}
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
 & "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\OpenAndSave.ps1" /C
 If (Test-Path -Path decco.xml) {del decco.xml}
-If (Test-Path -Path decco.csv) {del decco.csv}
+
 
 "Cleaning File"
 (cat 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt'
-(GC 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt'
 
 "Moving File to Upload folder"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"

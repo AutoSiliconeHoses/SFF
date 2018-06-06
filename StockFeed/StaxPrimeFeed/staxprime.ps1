@@ -1,4 +1,12 @@
 $Host.UI.RawUI.WindowTitle = "StaxPrimeFeed"
+
+# Time check conditions
+$thistime = (Get-Date).Hour
+$day = (Get-Date).DayOfWeek.Value__
+$timecheck = (8 -le $thistime) -and ($thistime -lt 13)
+$daycheck = (1 -le $day) -and ($day -le 5)
+$result = $timecheck -and $daycheck
+
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts"
 "Acquiring File"
@@ -16,12 +24,21 @@ cd "Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed"
 If (Test-Path -Path staxprime.txt) {del staxprime.txt}
 
 "Processing File"
-"OpenAndSave.ps1"
-& "Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\OpenAndSave.ps1" /C
+"timecheck = $timecheck"
+"daycheck = $daycheck"
+"result = $result"
+If ($result) {
+  "SaveZero.ps1"
+  & "Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\SaveZero.ps1" /C
+}
+If (!$result) {
+  "OpenAndSave.ps1"
+  & "Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\OpenAndSave.ps1" /C
+}
 
 "Cleaning File"
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt').replace("FALSE`t`t`t`t0", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
-(GC 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
+(gc 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt').replace("FALSE`t`t`t`t0", "") | sc 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
+(gc 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt')|?{$_.Trim(" `t")}| sc 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
 
 "Moving File to Upload folder"
 move staxprime.txt "Z:\Stock File Fetcher\Upload"

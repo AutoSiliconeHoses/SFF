@@ -31,6 +31,7 @@ foreach ($supplier in $inbox) {
 
                         if ($supplierName -eq "Decco") {$filename = "decco.zip"}
                         if ($supplierName -eq "KYB") {$filename = "kyb.csv"}
+                        if ($supplierName -eq "Febi") {$filename = "febi.csv"}
 
                         echo ($filename + " saved from " + $supplier + " time: " + $email.receivedTime)
                         $attachment.saveasfile((join-path $savefilepath $filename))

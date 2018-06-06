@@ -1,7 +1,7 @@
 $Host.UI.RawUI.WindowTitle = "KYBFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\KYB"
-copy *.csv "Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts"
+copy kyb.csv "Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts"
 
 cd "Z:\Stock File Fetcher\Upload"
 If (Test-Path -Path kyb.txt) {del kyb.txt}
