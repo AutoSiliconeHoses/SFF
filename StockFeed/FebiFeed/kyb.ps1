@@ -1,3 +1,4 @@
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfebi.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = "FebiFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Febi
@@ -17,3 +18,4 @@ If (Test-Path -Path febi.txt) {del febi.txt}
 "Moving File to Upload folder"
 cd "Z:\Stock File Fetcher\StockFeed\FebiFeed"
 move febi.txt "Z:\Stock File Fetcher\Upload"
+Stop-Transcript

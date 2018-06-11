@@ -1,17 +1,17 @@
-$filestax =  'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\staxprime.csv'
-$exclstax = New-Object -ComObject "Excel.Application"
-$wrkbstax = $exclstax.Workbooks.Open($filestax)
-$exclstax.DisplayAlerts = $FALSE
+$filestaxprime =  'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\staxprime.csv'
+$exclstaxprime = New-Object -ComObject "Excel.Application"
+$wrkbstaxprime= $exclstaxprime.Workbooks.Open($filestaxprime)
+$exclstaxprime.DisplayAlerts = $FALSE
 
-$wrkbstax.Save()
+$wrkbstaxprime.Save()
 
-Set-Variable -Name "filestax" -Value 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxpreference2.xlsx'
-$wrkbstax = $exclstax.Workbooks.Open($filestax)
-$wrkbstax.Save()
+Set-Variable -Name "filestaxprime" -Value 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxpreference2.xlsx'
+$wrkbstaxprime= $exclstaxprime.Workbooks.Open($filestaxprime)
+$wrkbstaxprime.Save()
 
-Set-Variable -Name "filestax" -Value 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxpreference.xlsx'
-$wrkbstax = $exclstax.Workbooks.Open($filestax)
-$wrkbstax.SaveAs("Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt", -4158)
+Set-Variable -Name "filestaxprime" -Value 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxpreference.xlsx'
+$wrkbstaxprime= $exclstaxprime.Workbooks.Open($filestaxprime)
+$wrkbstaxprime.SaveAs("Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt", -4158)
 
-$wrkbstax.Close()
-$exclstax.Quit()
+$wrkbstaxprime.Close()
+$exclstaxprime.Quit()

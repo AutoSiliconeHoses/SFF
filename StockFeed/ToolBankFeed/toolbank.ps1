@@ -1,3 +1,4 @@
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbank.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = 'ToolBankFeed'
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts"
@@ -21,3 +22,4 @@ cd "Z:\Stock File Fetcher\StockFeed\ToolBankFeed"
 
 "Moving File to Upload folder"
 move toolbank.txt "Z:\Stock File Fetcher\Upload"
+Stop-Transcript

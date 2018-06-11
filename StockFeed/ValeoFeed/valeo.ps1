@@ -1,3 +1,4 @@
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSvaleo.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = 'ValeoFeed'
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Valeo"
@@ -18,3 +19,4 @@ cd "Z:\Stock File Fetcher\StockFeed\ValeoFeed\Scripts"
 "Moving File to Upload folder"
 cd "Z:\Stock File Fetcher\StockFeed\ValeoFeed"
 move valeo.txt "Z:\Stock File Fetcher\Upload"
+Stop-Transcript

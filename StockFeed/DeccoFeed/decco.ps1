@@ -1,3 +1,4 @@
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSdecco.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = "DeccoFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
@@ -26,16 +27,19 @@ Get-ChildItem "Z:\Stock File Fetcher\StockFeed\DeccoFeed\unzipped\*.xls" | ForEa
 move decco.xml "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts" -Force
 cd ..\
 If (Test-Path -Path unzipped) {del unzipped -recurse}
+cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
+If (Test-Path -Path dcmacro2.xlsm) {del dcmacro2.xlsm}
+copy dcmacro.xlsm dcmacro2.xlsm
 
 "Processing File"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
 & "Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\OpenAndSave.ps1" /C
 If (Test-Path -Path decco.xml) {del decco.xml}
 
-
 "Cleaning File"
 (cat 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt'
-
+(cat 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt').replace("FALSE-DC`t`t`t`t0`targreplace", "") | sc 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt'
 "Moving File to Upload folder"
 cd "Z:\Stock File Fetcher\StockFeed\DeccoFeed"
 move decco.txt "Z:\Stock File Fetcher\Upload"
+Stop-Transcript

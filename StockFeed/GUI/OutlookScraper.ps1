@@ -1,4 +1,8 @@
 Set-PSDebug -Trace 0
+If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {
+  del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt"
+}
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force -NoClobber
 
 # Creates MAPI workspace
 Add-Type -Assembly "Microsoft.Office.Interop.Outlook"
@@ -15,7 +19,14 @@ echo ($Today)
 # Begins the search
 foreach ($supplier in $inbox) {
     $supplierName = $supplier.FolderPath.replace("\\Personal Folders\Inbox\","").replace("2","")
+
+    $folderPath = ('\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\')
     $saveFilePath = ('\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\' + $supplierName)
+
+    If (!(Test-Path -Path $saveFilePath)) {
+      New-Item -Path $folderPath -Name $supplierName -ItemType "directory"
+    }
+
     $supplierCont = $supplier.Items
     $supplierName
     foreach ($email in $supplierCont) {
@@ -32,6 +43,8 @@ foreach ($supplier in $inbox) {
                         if ($supplierName -eq "Decco") {$filename = "decco.zip"}
                         if ($supplierName -eq "KYB") {$filename = "kyb.csv"}
                         if ($supplierName -eq "Febi") {$filename = "febi.csv"}
+                        if ($supplierName -eq "Kilen") {$filename = "kilen.csv"}
+                        if ($supplierName -eq "FPS") {$filename = "fps.xlsx"}
 
                         echo ($filename + " saved from " + $supplier + " time: " + $email.receivedTime)
                         $attachment.saveasfile((join-path $savefilepath $filename))
@@ -41,3 +54,4 @@ foreach ($supplier in $inbox) {
         }
     }
 }
+Stop-Transcript

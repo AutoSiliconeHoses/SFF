@@ -1,3 +1,4 @@
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSkilen.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = "KilenFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
@@ -22,3 +23,4 @@ cd "Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
 cd "Z:\Stock File Fetcher\StockFeed\KilenFeed"
 move kilen.txt "Z:\Stock File Fetcher\Upload"
 If (Test-Path -Path kilen.txt) {del kilen.txt}
+Stop-Transcript

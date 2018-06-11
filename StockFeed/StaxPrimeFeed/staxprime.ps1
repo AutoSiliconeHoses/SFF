@@ -1,3 +1,4 @@
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSstaxprime.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = "StaxPrimeFeed"
 
 # Time check conditions
@@ -42,3 +43,4 @@ If (!$result) {
 
 "Moving File to Upload folder"
 move staxprime.txt "Z:\Stock File Fetcher\Upload"
+Stop-Transcript
