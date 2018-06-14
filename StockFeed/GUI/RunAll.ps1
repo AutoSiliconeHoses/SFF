@@ -1,6 +1,5 @@
 cd '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts'
-If (Test-Path -Path *.txt) {del *.txt}
-
+If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt"}
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt" -Force -NoClobber
 $computer = $osInfo = $compOSInfo = $null
 $Host.UI.RawUI.WindowTitle = "StockFeed"
@@ -18,7 +17,7 @@ Function Run-Supplier($supplier, $id) {
 	if ($argResult -or $RunAll) {
 	  "Loading $supplier"
 		$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
-		Start PowerShell $loadstring #-WindowStyle Hidden
+		Start PowerShell $loadstring -WindowStyle Hidden
 	  $i++
 	  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 	}
@@ -33,18 +32,21 @@ Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 $i = 0
 $RunAll = String-Search $argString all-
 .{
+	Run-Supplier Decco 'dc-'
+	Run-Supplier Draper 'dp-'
+	Run-Supplier Febi 'fi-'
+	Run-Supplier HomeHardware 'hh-'
+	Run-Supplier Kilen 'kn-'
+	Run-Supplier KYB 'kb-'
+	Run-Supplier Stax 'sx-'
+	Run-Supplier StaxPrime 'sxp-'
+	Run-Supplier Tetrosyl 'tl-'
 	Run-Supplier ToolBank 'tb-'
 	Run-Supplier ToolBankPrime 'tbp-'
 	Run-Supplier ToolStream 'ts-'
 	Run-Supplier Valeo 'vo-'
-	Run-Supplier Tetrosyl 'tl-'
-	Run-Supplier Stax 'sx-'
-	Run-Supplier StaxPrime 'sxp-'
-	Run-Supplier KYB 'kb-'
-	Run-Supplier HomeHardware 'hh-'
-	Run-Supplier Draper 'dp-'
-	Run-Supplier Decco 'dc-'
-	Run-Supplier Kilen 'kn-'
+	Run-Supplier WorkshopWarehouse 'ww-'
+
 }
 Write-Progress -Activity 'Loading Scripts' -Status "Loaded"
 
@@ -71,4 +73,12 @@ if ($argResult) {
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
   Start-Process excel amazon.txt -Windowstyle maximized
 }
+
+$argResult = String-Search $argstring "up-"
+if ($argResult) {
+	"Moving to Upload Folder"
+	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+  copy amazon.txt "\\STOCKMACHINE\AmazonTransport\production\outgoing"
+}
+
 Stop-Transcript

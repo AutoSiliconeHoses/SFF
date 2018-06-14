@@ -15,6 +15,7 @@ $wrkbdecco.Save()
 "`tdcmacro2.xlsm"
 Set-Variable -Name "filedecco" -Value 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\dcmacro2.xlsm'
 $wrkbdecco = $excldecco.Workbooks.Open($filedecco)
+$worksheet = $wrkbdecco.worksheets.item(1)
 $excldecco.run("CombineRows")
 $wrkbdecco.Save()
 

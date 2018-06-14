@@ -1,15 +1,17 @@
+$Host.UI.RawUI.WindowTitle = "Outlook Scraper"
 Set-PSDebug -Trace 0
-If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {
-  del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt"
-}
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force -NoClobber
+# If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt"}
+# Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force -NoClobber
+
+#Open Outlook
+Start-Process -WindowStyle Hidden -filepath 'Outlook' -ErrorAction SilentlyContinue -ArgumentList '/profile "Stocks" '
 
 # Creates MAPI workspace
 Add-Type -Assembly "Microsoft.Office.Interop.Outlook"
 $Outlook = New-Object -ComObject Outlook.Application
 $Namespace = $Outlook.GetNameSpace("MAPI")
 $Namespace.logon()
-$Namespace.SendAndReceive($false)
+$Namespace.SendAndReceive($TRUE)
 $inbox = $NameSpace.Folders.Item(1).Folders.Item('Inbox').Folders
 
 # Gets today's date and formats it
@@ -35,6 +37,7 @@ foreach ($supplier in $inbox) {
                 foreach ($attachment in $email.attachments) {
                     if ($attachment.filename.contains(".CSV") `
                     -or $attachment.filename.contains(".csv") `
+                    -or $attachment.filename.contains(".xls") `
                     -or $attachment.filename.contains(".xlsx") `
                     -or $attachment.filename.contains(".zip")) {
                         $supplier = $email.SenderName
@@ -45,13 +48,29 @@ foreach ($supplier in $inbox) {
                         if ($supplierName -eq "Febi") {$filename = "febi.csv"}
                         if ($supplierName -eq "Kilen") {$filename = "kilen.csv"}
                         if ($supplierName -eq "FPS") {$filename = "fps.xlsx"}
+                        if ($supplierName -eq "Workshop Warehouse") {$filename = "workshopwarehouse.xls"}
 
-                        echo ($filename + " saved from " + $supplier + " time: " + $email.receivedTime)
-                        $attachment.saveasfile((join-path $savefilepath $filename))
+                        echo ($filename + " saved from " + $supplier + " @ " + $email.receivedTime)
+                        $filepath = (join-path $savefilepath $filename)
+                        $attachment.saveasfile($filepath)
+
+                        $file = Get-Item $filepath
+                        $file.LastWriteTime = $email.receivedTime
                     }
                 }
             }
         }
     }
 }
-Stop-Transcript
+# Stop Outlook
+$Outlook = Get-Process outlook -ErrorAction SilentlyContinue
+if ($Outlook) {
+  # try gracefully first
+  $Outlook.CloseMainWindow()
+  # kill after five seconds
+  Sleep 10
+  if (!$Outlook.HasExited) {
+    $Outlook | Stop-Process -Force
+  }
+}
+Remove-Variable Outlook
