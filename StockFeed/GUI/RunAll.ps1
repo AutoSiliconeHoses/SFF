@@ -1,11 +1,32 @@
-cd '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts'
-If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt"}
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt" -Force -NoClobber
-$computer = $osInfo = $compOSInfo = $null
 $Host.UI.RawUI.WindowTitle = "StockFeed"
+
+$process = get-process -Name 'powershell' | where {$_.mainWindowTitle -ne "StockFeed"}
+If($process) {
+	"PowerShell Already Running. Aborting"
+	Start-Sleep 3
+	Exit
+}
+
+$running = (Test-Path -Path '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp')
+If ($running) {
+	"Someone else is running the system, please try again later"
+	Start-Sleep 3
+	Exit
+}
+
+If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt" -ErrorAction SilentlyContinue}
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt" -Force -NoClobber -ErrorAction SilentlyContinue
+New-Item -Path '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp'
+$computer = $osInfo = $compOSInfo = $null
+
 "Welcome to the Stock File Fetcher Script (SFF). Don't click me.`n`n`n`n`n"
 Set-PSDebug -Trace 0
 $argString = $args
+$thistime = (Get-Date).Hour
+$day = (Get-Date).DayOfWeek.Value__
+$timecheck = (8 -le $thistime) -and ($thistime -lt 13)
+$daycheck = (1 -le $day) -and ($day -le 5)
+$result = $timecheck -and $daycheck
 
 Function String-Search($string, $target) {
 	$result = Select-string -pattern $target -InputObject $string
@@ -59,6 +80,18 @@ while (@(Get-Process | where-object {$_.ProcessName -like 'powershell'}).count -
   }
 }
 
+"Moving 'Constant' Files'"
+Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\Warehouse" |
+Foreach-Object {
+	$supplier = $_.name
+	$folderpath = $_.fullname
+	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\Warehouse\$_"
+	If ($result) {$file = $supplier + "-prime-zero.txt"}
+	If (!$result) {$file = $supplier + "-prime.txt"}
+	copy $file "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+	copy "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\Warehouse\$_\$_.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+}
+
 "Compiling Output Files"
 Write-Progress -Activity 'Compiling' -Status "Compiling..."
 & '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\compile.ps1' $args[0] /C
@@ -71,14 +104,22 @@ net use z: /delete /y
 $argResult = String-Search $argstring "op-"
 if ($argResult) {
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-  Start-Process excel amazon.txt -Windowstyle maximized
+	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
+  Foreach-Object {
+		Start-Process excel $_ -Windowstyle maximized
+  }
 }
 
 $argResult = String-Search $argstring "up-"
 if ($argResult) {
 	"Moving to Upload Folder"
+	# Maps network drive with username and password (In a seperate file for Security Reasons)
+	cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI"
+	$lines = Get-Content STOCKMACHINE.txt
+	$lines | ForEach-Object{Invoke-Expression $_}
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-  copy amazon.txt "\\STOCKMACHINE\AmazonTransport\production\outgoing"
+  copy *.txt "Y:\production\outgoing"
+	net use Y: /delete /y
 }
-
+del '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp'
 Stop-Transcript

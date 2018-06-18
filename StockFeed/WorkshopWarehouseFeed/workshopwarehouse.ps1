@@ -1,4 +1,4 @@
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSworkshopwarehouse.txt" -Force -NoClobber
+#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSworkshopwarehouse.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = "WorkshopWarehouseFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts"
@@ -21,4 +21,4 @@ cd "Z:\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts"
 cd "Z:\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed"
 move workshopwarehouse.txt "Z:\Stock File Fetcher\Upload"
 If (Test-Path -Path workshopwarehouse.txt) {del workshopwarehouse.txt}
-Stop-Transcript
+#Stop-Transcript

@@ -5,10 +5,6 @@ $exclstaxprime.DisplayAlerts = $FALSE
 
 $wrkbstaxprime.Save()
 
-Set-Variable -Name "filestaxprime" -Value 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxpreference2.xlsx'
-$wrkbstaxprime= $exclstaxprime.Workbooks.Open($filestaxprime)
-$wrkbstaxprime.Save()
-
 Set-Variable -Name "filestaxprime" -Value 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxpreference.xlsx'
 $wrkbstaxprime= $exclstaxprime.Workbooks.Open($filestaxprime)
 $wrkbstaxprime.SaveAs("Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt", -4158)

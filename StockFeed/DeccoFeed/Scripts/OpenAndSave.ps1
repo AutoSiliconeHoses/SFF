@@ -5,17 +5,11 @@ $excldecco.DisplayAlerts = $FALSE
 
 $wrkbdecco.SaveAs("Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\decco.csv", 6)
 $wrkbdecco = $excldecco.Workbooks.Open('Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\decco.csv')
-
-$wrkbdecco.Save()
-
-Set-Variable -Name "filedecco" -Value 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\dcreference2.xlsx'
-$wrkbdecco = $excldecco.Workbooks.Open($filedecco)
 $wrkbdecco.Save()
 
 "`tdcmacro2.xlsm"
 Set-Variable -Name "filedecco" -Value 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\dcmacro2.xlsm'
 $wrkbdecco = $excldecco.Workbooks.Open($filedecco)
-$worksheet = $wrkbdecco.worksheets.item(1)
 $excldecco.run("CombineRows")
 $wrkbdecco.Save()
 

@@ -1,4 +1,4 @@
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSstax.txt" -Force -NoClobber
+#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSstax.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = "StaxFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts"
@@ -26,4 +26,4 @@ If (Test-Path -Path stax.txt) {del stax.txt}
 
 "Moving File to Upload folder"
 move stax.txt "Z:\Stock File Fetcher\Upload"
-Stop-Transcript
+#Stop-Transcript

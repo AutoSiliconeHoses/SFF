@@ -1,4 +1,4 @@
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbank.txt" -Force -NoClobber
+#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbank.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = 'ToolBankFeed'
 
 Z:
@@ -15,8 +15,6 @@ If (Test-Path -Path toolbankstock.txt) {del toolbankstock.txt}
 Rename-Item Availability20D.csv toolbankstock.txt
 
 "Processing File"
-"SaveZero.ps1"
-& "Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\SaveZero.ps1" /C
 "OpenAndSave.ps1"
 & "Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\OpenAndSave.ps1" /C
 
@@ -27,4 +25,4 @@ cd "Z:\Stock File Fetcher\StockFeed\ToolBankFeed"
 
 "Moving File to Upload folder"
 move toolbank.txt "Z:\Stock File Fetcher\Upload"
-Stop-Transcript
+#Stop-Transcript

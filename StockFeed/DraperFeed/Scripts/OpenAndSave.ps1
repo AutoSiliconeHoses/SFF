@@ -5,10 +5,6 @@ $excldraper.DisplayAlerts = $FALSE
 
 $wrkbdraper.Save()
 
-Set-Variable -Name "filedraper" -Value '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\dpreference2.xlsx'
-$wrkbdraper = $excldraper.Workbooks.Open($filedraper)
-$wrkbdraper.Save()
-
 Set-Variable -Name "filedraper" -Value '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\dpreference.xlsx'
 $wrkbdraper = $excldraper.Workbooks.Open($filedraper)
 $wrkbdraper.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\draper.txt", -4158)

@@ -1,4 +1,4 @@
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSkyb.txt" -Force -NoClobber
+#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSkyb.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = "KYBFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\KYB"
@@ -18,4 +18,4 @@ If (Test-Path -Path kyb.txt) {del kyb.txt}
 "Moving File to Upload folder"
 cd "Z:\Stock File Fetcher\StockFeed\KYBFeed"
 move kyb.txt "Z:\Stock File Fetcher\Upload"
-Stop-Transcript
+#Stop-Transcript

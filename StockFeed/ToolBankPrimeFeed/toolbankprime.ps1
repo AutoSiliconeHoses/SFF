@@ -1,4 +1,4 @@
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbankprime.txt" -Force -NoClobber
+#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbankprime.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = 'ToolBankPrimeFeed'
 
 # Time check conditions
@@ -35,9 +35,9 @@ If (!$result) {
 }
 cd "Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed"
 "Cleaning File"
-(Get-Content 'Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt').replace("FALSE`t`t`t`t0", "") | Set-Content 'Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
+(GC 'Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt').replace("FALSE`t`t`t`t0", "") | SC 'Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
 (GC 'Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
 
 "Moving File to Upload folder"
 move toolbankprime.txt "Z:\Stock File Fetcher\Upload"
-Stop-Transcript
+#Stop-Transcript

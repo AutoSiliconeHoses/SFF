@@ -1,4 +1,4 @@
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStetrosyl.txt" -Force -NoClobber
+#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStetrosyl.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = "TetrosylFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\GUI\Dropzone\Tetrosyl"
@@ -26,4 +26,4 @@ cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed"
 "Moving File to Upload folder"
 cd "Z:\Stock File Fetcher\StockFeed\TetrosylFeed"
 move tetrosyl.txt "Z:\Stock File Fetcher\Upload"
-Stop-Transcript
+#Stop-Transcript

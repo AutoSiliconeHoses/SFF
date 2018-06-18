@@ -1,4 +1,4 @@
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANShh.txt" -Force -NoClobber
+#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANShh.txt" -Force -NoClobber
 $Host.UI.RawUI.WindowTitle = "HomeHardwareFeed"
 Z:
 cd "Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
@@ -32,4 +32,4 @@ If (Test-Path -Path Primary15.csv) {del Primary15.csv}
 
 "Moving File to Upload folder"
 move homehardware.txt "Z:\Stock File Fetcher\Upload"
-Stop-Transcript
+#Stop-Transcript

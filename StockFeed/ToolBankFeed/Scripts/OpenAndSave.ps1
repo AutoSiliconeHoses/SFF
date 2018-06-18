@@ -9,11 +9,6 @@ Set-Variable -Name "filetoolbank" -Value 'Z:\Stock File Fetcher\StockFeed\ToolBa
 $wrkbtoolbank = $excltoolbank.Workbooks.Open($filetoolbank)
 $wrkbtoolbank.Save()
 
-Set-Variable -Name "filetoolbank" -Value 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\tbreference2.xlsx'
-$wrkbtoolbank = $excltoolbank.Workbooks.Open($filetoolbank)
-$wrkbtoolbank.Save()
-
-
 Set-Variable -Name "filetoolbank" -Value 'Z:\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\tbreference.xlsx'
 $wrkbtoolbank = $excltoolbank.Workbooks.Open($filetoolbank)
 $wrkbtoolbank.SaveAs("Z:\Stock File Fetcher\StockFeed\toolbankFeed\toolbank.txt", -4158)
