@@ -11,6 +11,8 @@ $wrkbtoolbankprime.Save()
 
 Set-Variable -Name "filetoolbankprime" -Value 'Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\tbpzero.xlsx'
 $wrkbtoolbankprime = $excltoolbankprime.Workbooks.Open($filetoolbankprime)
+$Range = $wrkbtoolbankprime.range("A:F")
+$Range.Removeduplicates()
 $wrkbtoolbankprime.SaveAs("Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt", -4158)
 
 $wrkbtoolbankprime.Close()

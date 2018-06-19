@@ -12,6 +12,8 @@ $wrkbhomehardware.Save()
 
 Set-Variable -Name "filehomehardware" -Value 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\hhreference.xlsx'
 $wrkbhomehardware = $exclhomehardware.Workbooks.Open($filehomehardware)
+$Range = $wrkbhomehardware.range("A:F")
+$Range.Removeduplicates()
 $wrkbhomehardware.Save()
 
 $wrkbhomehardware.Close()

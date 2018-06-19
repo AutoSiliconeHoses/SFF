@@ -7,6 +7,8 @@ $wrkbtoolstream.SaveAs("Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Product C
 
 Set-Variable -Name "filetoolstream" -Value 'Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\tsreference.xlsx'
 $wrkbtoolstream = $excltoolstream.Workbooks.Open($filetoolstream)
+$Range = $wrkbtoolstream.range("A:F")
+$Range.Removeduplicates()
 $wrkbtoolstream.SaveAs("Z:\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt", -4158)
 
 $wrkbtoolstream.Close()

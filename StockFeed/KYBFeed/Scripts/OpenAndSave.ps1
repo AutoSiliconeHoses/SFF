@@ -7,6 +7,8 @@ $wrkbkyb.Save()
 
 Set-Variable -Name "filekyb" -Value 'Z:\Stock File Fetcher\StockFeed\KYBFeed\Scripts\kbreference.xlsx'
 $wrkbkyb = $exclkyb.Workbooks.Open($filekyb)
+$Range = $wrkbkyb.range("A:F")
+$Range.Removeduplicates()
 $wrkbkyb.SaveAs("Z:\Stock File Fetcher\StockFeed\KYBFeed\kyb.txt", -4158)
 
 $wrkbkyb.Close()

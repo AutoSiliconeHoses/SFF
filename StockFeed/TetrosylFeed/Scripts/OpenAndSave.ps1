@@ -24,6 +24,8 @@ $wrkbtetrosyl.Save()
 "`ttlreference2.xlsx"
 Set-Variable -Name "filetetrosyl" -Value 'Z:\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tlreference2.xlsx'
 $wrkbtetrosyl = $excltetrosyl.Workbooks.Open($filetetrosyl)
+$Range = $wrkbtetrosyl.range("A:F")
+$Range.Removeduplicates()
 $wrkbtetrosyl.SaveAs("Z:\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt", -4158)
 
 $wrkbtetrosyl.Close()

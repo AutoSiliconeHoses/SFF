@@ -7,6 +7,8 @@ $wrkbstaxprime.Save()
 
 Set-Variable -Name "filestaxprime" -Value 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxpzero.xlsx'
 $wrkbstaxprime= $exclstaxprime.Workbooks.Open($filestaxprime)
+$Range = $wrkbstaxprime.range("A:F")
+$Range.Removeduplicates()
 $wrkbstaxprime.SaveAs("Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt", -4158)
 
 $wrkbstaxprime.Close()

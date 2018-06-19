@@ -12,6 +12,8 @@ $wrkbvaleo.Save()
 
 Set-Variable -Name "filevaleo" -Value 'Z:\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\voreference.xlsx'
 $wrkbvaleo = $exclvaleo.Workbooks.Open($filevaleo)
+$Range = $wrkbvaleo.range("A:F")
+$Range.Removeduplicates()
 $wrkbvaleo.SaveAs("Z:\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt", -4158)
 
 $wrkbvaleo.Close()

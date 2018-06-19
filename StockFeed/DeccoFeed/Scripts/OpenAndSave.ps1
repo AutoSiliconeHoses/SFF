@@ -15,6 +15,8 @@ $wrkbdecco.Save()
 
 Set-Variable -Name "filedecco" -Value 'Z:\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\dcreference.xlsx'
 $wrkbdecco = $excldecco.Workbooks.Open($filedecco)
+$Range = $wrkbdecco.range("A:F")
+$Range.Removeduplicates()
 $wrkbdecco.SaveAs("Z:\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt", -4158)
 
 $wrkbdecco.Close()

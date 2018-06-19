@@ -18,15 +18,10 @@ If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transc
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt" -Force -NoClobber -ErrorAction SilentlyContinue
 New-Item -Path '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp'
 $computer = $osInfo = $compOSInfo = $null
-
+$timer = [system.diagnostics.stopwatch]::StartNew()
 "Welcome to the Stock File Fetcher Script (SFF). Don't click me.`n`n`n`n`n"
 Set-PSDebug -Trace 0
 $argString = $args
-$thistime = (Get-Date).Hour
-$day = (Get-Date).DayOfWeek.Value__
-$timecheck = (8 -le $thistime) -and ($thistime -lt 13)
-$daycheck = (1 -le $day) -and ($day -le 5)
-$result = $timecheck -and $daycheck
 
 Function String-Search($string, $target) {
 	$result = Select-string -pattern $target -InputObject $string
@@ -35,13 +30,13 @@ Function String-Search($string, $target) {
 
 Function Run-Supplier($supplier, $id) {
 	$argResult = String-Search $argString $id
-	if ($argResult -or $RunAll) {
-	  "Loading $supplier"
+
+	If ($argResult -or $RunAll) {
+		"Loading $supplier"
 		$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
 		Start PowerShell $loadstring -WindowStyle Hidden
-	  $i++
-	  Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-	}
+		$i += 1
+		Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"}
 }
 
 "Pushing Drive"
@@ -67,7 +62,6 @@ $RunAll = String-Search $argString all-
 	Run-Supplier ToolStream 'ts-'
 	Run-Supplier Valeo 'vo-'
 	Run-Supplier WorkshopWarehouse 'ww-'
-
 }
 Write-Progress -Activity 'Loading Scripts' -Status "Loaded"
 
@@ -80,16 +74,18 @@ while (@(Get-Process | where-object {$_.ProcessName -like 'powershell'}).count -
   }
 }
 
-"Moving 'Constant' Files'"
-Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\Warehouse" |
-Foreach-Object {
-	$supplier = $_.name
-	$folderpath = $_.fullname
-	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\Warehouse\$_"
-	If ($result) {$file = $supplier + "-prime-zero.txt"}
-	If (!$result) {$file = $supplier + "-prime.txt"}
-	copy $file "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-	copy "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\Warehouse\$_\$_.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+$argResult = String-Search $argstring "wh-"
+if ($argResult) {
+	"Moving 'Constant' Files'"
+	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\Warehouse" |
+	Foreach-Object {
+		$supplier = $_.name
+		$folderpath = $_.fullname
+		cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\Warehouse\$_"
+		$file = $supplier + "-prime.txt"
+		copy $file "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+		copy "$supplier.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+	}
 }
 
 "Compiling Output Files"
@@ -104,7 +100,7 @@ net use z: /delete /y
 $argResult = String-Search $argstring "op-"
 if ($argResult) {
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
+	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt | Where-Object {$_.name -NotMatch "poorboys" -and $_.name -NotMatch "everbuild" -and $_.name -NotMatch "ash"} |
   Foreach-Object {
 		Start-Process excel $_ -Windowstyle maximized
   }
@@ -121,5 +117,10 @@ if ($argResult) {
   copy *.txt "Y:\production\outgoing"
 	net use Y: /delete /y
 }
+
 del '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp'
+
+$timer.Stop()
+$timer.Elapsed.Minutes.ToString() + "m " + $timer.Elapsed.Seconds.ToString() + "s"
+Start-Sleep 2
 Stop-Transcript

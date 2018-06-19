@@ -7,6 +7,8 @@ $wrkbkilen.Save()
 
 Set-Variable -Name "filekilen" -Value 'Z:\Stock File Fetcher\StockFeed\KilenFeed\Scripts\knreference.xlsx'
 $wrkbkilen = $exclkilen.Workbooks.Open($filekilen)
+$Range = $wrkbkilen.range("A:F")
+$Range.Removeduplicates()
 $wrkbkilen.SaveAs("Z:\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt", -4158)
 
 $wrkbkilen.Close()

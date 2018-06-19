@@ -11,6 +11,8 @@ $wrkbworkshopwarehouse.Save()
 
 Set-Variable -Name "fileworkshopwarehouse" -Value 'Z:\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts\wwreference.xlsx'
 $wrkbworkshopwarehouse = $exclworkshopwarehouse.Workbooks.Open($fileworkshopwarehouse)
+$Range = $wrkbworkshopwarehouse.range("A:F")
+$Range.Removeduplicates()
 $wrkbworkshopwarehouse.SaveAs("Z:\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\workshopwarehouse.txt", -4158)
 
 $wrkbworkshopwarehouse.Close()
