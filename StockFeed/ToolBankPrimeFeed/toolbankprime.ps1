@@ -8,8 +8,7 @@ $timecheck = (7 -le $thistime) -and ($thistime -lt 12)
 $daycheck = (1 -le $day) -and ($day -le 5)
 $result = $timecheck -and $daycheck
 
-Z:
-cd "Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts"
+cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts"
 
 If (Test-Path -Path "Availability20D.csv"){del Availability20D.csv}
 If (Test-Path -Path "toolbankprimestock.csv"){del toolbankprimestock.csv}
@@ -27,17 +26,17 @@ Rename-Item Availability20D.csv toolbankprimestock.txt
 "result = $result"
 If ($result) {
   "SaveZero.ps1"
-  & "Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\SaveZero.ps1" /C
+  & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\SaveZero.ps1" /C
 }
 If (!$result) {
   "OpenAndSave.ps1"
-  & "Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\OpenAndSave.ps1" /C
+  & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\OpenAndSave.ps1" /C
 }
-cd "Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed"
+cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed"
 "Cleaning File"
-(GC 'Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt').replace("FALSE`t`t`t`t0", "") | SC 'Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
-(GC 'Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt')|?{$_.Trim(" `t")}|SC 'Z:\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
+(GC '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt').replace("FALSE`t`t`t`t0", "") | SC '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
+(GC '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt')|?{$_.Trim(" `t")}|SC '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
 
 "Moving File to Upload folder"
-move toolbankprime.txt "Z:\Stock File Fetcher\Upload"
+move toolbankprime.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 #Stop-Transcript

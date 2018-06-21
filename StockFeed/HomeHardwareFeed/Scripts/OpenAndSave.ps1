@@ -1,20 +1,22 @@
-$filehomehardware =  'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\homehardware.csv'
-$exclhomehardware = New-Object -ComObject "Excel.Application"
-$wrkbhomehardware = $exclhomehardware.Workbooks.Open($filehomehardware)
-$exclhomehardware.DisplayAlerts = $FALSE
+$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\homehardware.csv'
+$excel = New-Object -ComObject "Excel.Application"
+$workbook = $excel.Workbooks.Open($file)
+$excel.DisplayAlerts = $FALSE
 
-$wrkbhomehardware.Save()
+$workbook.Save()
 
-Set-Variable -Name "filehomehardware" -Value 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\hhmacro2.xlsm'
-$wrkbhomehardware = $exclhomehardware.Workbooks.Open($filehomehardware)
-$exclhomehardware.Run("CombineRows")
-$wrkbhomehardware.Save()
+$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\hhmacro2.xlsm'
+$workbook = $excel.Workbooks.Open($file)
+$excel.Run("CombineRows")
+$workbook.Save()
 
-Set-Variable -Name "filehomehardware" -Value 'Z:\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\hhreference.xlsx'
-$wrkbhomehardware = $exclhomehardware.Workbooks.Open($filehomehardware)
-$Range = $wrkbhomehardware.range("A:F")
-$Range.Removeduplicates()
-$wrkbhomehardware.Save()
+$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\hhreference.xlsx'
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.worksheets.item(1)
+$columns = 1, 2, 3, 4, 5, 6
+$worksheet.UsedRange.Removeduplicates($columns)
+$workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt", -4158)
+$workbook.Save()
 
-$wrkbhomehardware.Close()
-$exclhomehardware.Quit()
+$workbook.Close()
+$excel.Quit()

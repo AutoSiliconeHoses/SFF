@@ -1,15 +1,20 @@
-$filestax =  'Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stax.csv'
-$exclstax = New-Object -ComObject "Excel.Application"
-$wrkbstax = $exclstax.Workbooks.Open($filestax)
-$exclstax.DisplayAlerts = $FALSE
+$excel = new-object -ComObject Excel.Application
+$excel.Visible = $false
+$excel.DisplayAlerts = $false
+$stockfile = $excel.Workbooks.Open("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stax.csv")
+$stocksheet = $stockfile.sheets.item("stax")
+$stockrange = $stocksheet.UsedRange
+$stockrows = $stockrange.Rows.Count - 3
+$extendrange = "A2:F$stockrows"
+$workbook.Save()
 
-$wrkbstax.Save()
+$workbook = $excel.Workbooks.Open("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\Scripts\sxreference.xlsx")
+$worksheet = $workbook.Worksheets.Item(1)
+$worksheet.Rows("3:" + $worksheet.Rows.Count).EntireRow.Delete
+$worksheet.Range($extendrange).FillDown()
+$columns = 1, 2, 3, 4, 5, 6
+$worksheet.UsedRange.Removeduplicates($columns)
+$workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt", -4158)
 
-Set-Variable -Name "filestax" -Value 'Z:\Stock File Fetcher\StockFeed\StaxFeed\Scripts\sxreference.xlsx'
-$wrkbstax = $exclstax.Workbooks.Open($filestax)
-$Range = $wrkbstax.range("A:F")
-$Range.Removeduplicates()
-$wrkbstax.SaveAs("Z:\Stock File Fetcher\StockFeed\StaxFeed\stax.txt", -4158)
-
-$wrkbstax.Close()
-$exclstax.Quit()
+$workbook.Close()
+$excel.Quit()

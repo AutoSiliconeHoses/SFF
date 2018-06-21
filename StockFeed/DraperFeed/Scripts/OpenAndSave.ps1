@@ -1,15 +1,15 @@
-$filedraper =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\draper.csv'
-$excldraper = New-Object -ComObject "Excel.Application"
-$wrkbdraper = $excldraper.Workbooks.Open($filedraper)
-$excldraper.DisplayAlerts = $FALSE
+$file =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\draper.csv'
+$excel = New-Object -ComObject "Excel.Application"
+$workbook = $excel.Workbooks.Open($file)
+$excel.DisplayAlerts = $FALSE
 
-$wrkbdraper.Save()
+$workbook.Save()
 
-Set-Variable -Name "filedraper" -Value '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\dpreference.xlsx'
-$wrkbdraper = $excldraper.Workbooks.Open($filedraper)
-$Range = $wrkbdraper.range("A:F")
-$Range.Removeduplicates()
-$wrkbdraper.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\draper.txt", -4158)
+Set-Variable -Name "file" -Value '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\dpreference.xlsx'
+$workbook = $excel.Workbooks.Open($file)
+$columns = 1, 2, 3, 4, 5, 6
+$worksheet.UsedRange.Removeduplicates($columns)
+$workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\draper.txt", -4158)
 
-$wrkbdraper.Close()
-$excldraper.Quit()
+$workbook.Close()
+$excel.Quit()

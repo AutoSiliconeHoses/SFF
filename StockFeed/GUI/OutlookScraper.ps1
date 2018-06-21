@@ -46,8 +46,12 @@ foreach ($supplier in $inbox) {
                         if ($supplierName -eq "Decco") {$filename = "decco.zip"}
                         if ($supplierName -eq "KYB") {$filename = "kyb.csv"}
                         if ($supplierName -eq "Febi") {$filename = "febi.csv"}
+                        if ($supplierName -eq "FPS") {
+                          If ($filename -like '*LEEDS*') {
+                            $filename = "FPS_LEEDS.xlsx"
+                          }
+                        }
                         if ($supplierName -eq "Kilen") {$filename = "kilen.csv"}
-                        if ($supplierName -eq "FPS") {$filename = "fps.xlsx"}
                         if ($supplierName -eq "Workshop Warehouse") {$filename = "workshopwarehouse.xls"}
 
                         echo ($filename + " saved from " + $supplier + " @ " + $email.receivedTime)

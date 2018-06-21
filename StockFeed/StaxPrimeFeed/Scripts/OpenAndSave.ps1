@@ -1,15 +1,21 @@
-$filestaxprime =  'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\staxprime.csv'
-$exclstaxprime = New-Object -ComObject "Excel.Application"
-$wrkbstaxprime= $exclstaxprime.Workbooks.Open($filestaxprime)
-$exclstaxprime.DisplayAlerts = $FALSE
+$excel = new-object -ComObject Excel.Application
+$excel.Visible = $false
+$excel.DisplayAlerts = $false
+$stockfile = $excel.Workbooks.Open("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\staxprime.csv")
+$stocksheet = $stockfile.sheets.item("staxprime")
+$stockrange = $stocksheet.UsedRange
+$stockrows = $stockrange.Rows.Count - 3
+$extendrange = "A2:F$stockrows"
+$workbook.Save()
 
-$wrkbstaxprime.Save()
+$file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxpreference.xlsx"
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.Worksheets.Item(1)
+$worksheet.Rows("3:" + $worksheet.Rows.Count).ClearContents
+$worksheet.Range($extendrange).FillDown()
+$range = $workbook.range("A:F")
+$range.Removeduplicates()
+$workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt", -4158)
 
-Set-Variable -Name "filestaxprime" -Value 'Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxpreference.xlsx'
-$wrkbstaxprime= $exclstaxprime.Workbooks.Open($filestaxprime)
-$Range = $wrkbstaxprime.range("A:F")
-$Range.Removeduplicates()
-$wrkbstaxprime.SaveAs("Z:\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt", -4158)
-
-$wrkbstaxprime.Close()
-$exclstaxprime.Quit()
+$workbook.Close()
+$excel.Quit()
