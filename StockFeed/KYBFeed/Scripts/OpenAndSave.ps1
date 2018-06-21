@@ -5,10 +5,11 @@ $exclkyb.DisplayAlerts = $FALSE
 
 $wrkbkyb.Save()
 
-Set-Variable -Name "filekyb" -Value '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\Scripts\kbreference.xlsx'
+$filekyb =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\Scripts\kbreference.xlsx'
 $wrkbkyb = $exclkyb.Workbooks.Open($filekyb)
-$Range = $wrkbkyb.range("A:F")
-$Range.Removeduplicates()
+$worksheet = $wrkbkyb.Worksheets.Item(1)
+$columns = 1, 2, 3, 4, 5, 6
+$worksheet.UsedRange.Removeduplicates($columns)
 $wrkbkyb.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\kyb.txt", -4158)
 
 $wrkbkyb.Close()

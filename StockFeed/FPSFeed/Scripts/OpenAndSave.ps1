@@ -8,7 +8,7 @@ $stocksheet = $stockfile.sheets.item(1)
 $stockrange = $stocksheet.UsedRange
 $stockrows = $stockrange.Rows.Count - 1
 $extendrange = "A2:F$stockrows"
-$workbook.Save()
+$stockfile.Save()
 
 $file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\Scripts\fpsreference.xlsx'
 $workbook = $excel.Workbooks.Open($file)

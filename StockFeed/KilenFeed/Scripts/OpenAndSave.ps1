@@ -1,14 +1,15 @@
-$filekilen =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\Scripts\kilen.csv'
 $exclkilen = New-Object -ComObject "Excel.Application"
-$wrkbkilen = $exclkilen.Workbooks.Open($filekilen)
 $exclkilen.DisplayAlerts = $FALSE
 
+$filekilen = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\Scripts\kilen.csv'
+$wrkbkilen = $exclkilen.Workbooks.Open($filekilen)
 $wrkbkilen.Save()
 
-Set-Variable -Name "filekilen" -Value '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\Scripts\knreference.xlsx'
+$filekilen = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\Scripts\knreference.xlsx'
 $wrkbkilen = $exclkilen.Workbooks.Open($filekilen)
-$Range = $wrkbkilen.range("A:F")
-$Range.Removeduplicates()
+$worksheet = $wrkbkilen.Worksheets.Item(1)
+$columns = 1, 2, 3, 4, 5, 6
+$worksheet.UsedRange.Removeduplicates($columns)
 $wrkbkilen.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt", -4158)
 
 $wrkbkilen.Close()

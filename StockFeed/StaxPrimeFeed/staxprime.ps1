@@ -1,4 +1,4 @@
-#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSstaxprime.txt" -Force -NoClobber
+#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSstaxprime.txt" -Force 
 $Host.UI.RawUI.WindowTitle = "StaxPrimeFeed"
 
 # Time check conditions

@@ -5,15 +5,16 @@ $exclvaleo.DisplayAlerts = $FALSE
 
 $wrkbvaleo.Save()
 
-Set-Variable -Name "filevaleo" -Value '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\voreference2.xlsx'
+$filevaleo =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\voreference2.xlsx'
 $wrkbvaleo = $exclvaleo.Workbooks.Open($filevaleo)
 $wrkbvaleo.Save()
 
 
-Set-Variable -Name "filevaleo" -Value '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\voreference.xlsx'
+$filevaleo =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\voreference.xlsx'
 $wrkbvaleo = $exclvaleo.Workbooks.Open($filevaleo)
-$Range = $wrkbvaleo.range("A:F")
-$Range.Removeduplicates()
+$worksheet = $wrkbvaleo.Worksheets.Item(1)
+$columns = 1, 2, 3, 4, 5, 6
+$worksheet.UsedRange.Removeduplicates($columns)
 $wrkbvaleo.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt", -4158)
 
 $wrkbvaleo.Close()

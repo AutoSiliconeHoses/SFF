@@ -1,7 +1,7 @@
 $Host.UI.RawUI.WindowTitle = "Outlook Scraper"
 Set-PSDebug -Trace 0
 # If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt"}
-# Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force -NoClobber
+# Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force 
 
 #Open Outlook
 Start-Process -WindowStyle Hidden -filepath 'Outlook' -ErrorAction SilentlyContinue -ArgumentList '/profile "Stocks" '

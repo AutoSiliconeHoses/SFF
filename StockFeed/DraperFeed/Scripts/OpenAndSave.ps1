@@ -5,8 +5,9 @@ $excel.DisplayAlerts = $FALSE
 
 $workbook.Save()
 
-Set-Variable -Name "file" -Value '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\dpreference.xlsx'
+$file =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\dpreference.xlsx'
 $workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.Worksheets.Item(1)
 $columns = 1, 2, 3, 4, 5, 6
 $worksheet.UsedRange.Removeduplicates($columns)
 $workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\draper.txt", -4158)

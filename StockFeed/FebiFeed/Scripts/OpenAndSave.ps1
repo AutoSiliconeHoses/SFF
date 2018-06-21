@@ -5,10 +5,11 @@ $exclfebi.DisplayAlerts = $FALSE
 
 $wrkbfebi.Save()
 
-Set-Variable -Name "filefebi" -Value '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts\fireference.xlsx'
+$filefebi =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts\fireference.xlsx'
 $wrkbfebi = $exclfebi.Workbooks.Open($filefebi)
-$Range = $wrkbfebi.range("A:F")
-$Range.Removeduplicates()
+$worksheet = $wrkbfebi.Worksheets.Item(1)
+$columns = 1, 2, 3, 4, 5, 6
+$worksheet.UsedRange.Removeduplicates($columns)
 $wrkbfebi.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt", -4158)
 
 $wrkbfebi.Close()

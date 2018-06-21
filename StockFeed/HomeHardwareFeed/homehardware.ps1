@@ -1,4 +1,4 @@
-#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANShh.txt" -Force -NoClobber
+#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANShh.txt" -Force 
 $Host.UI.RawUI.WindowTitle = "HomeHardwareFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
@@ -9,7 +9,7 @@ move Primary15.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwar
 
 "Combining Files"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed"
-cat *.csv | sc ".\Scripts\homehardware.csv"
+gc *.csv | sc ".\Scripts\homehardware.csv"
 
 If (Test-Path -Path Primary1.csv) {del Primary1.csv}
 If (Test-Path -Path Primary15.csv) {del Primary15.csv}
@@ -24,7 +24,7 @@ copy hhmacro.xlsm hhmacro2.xlsm
 
 "Cleaning file"
 $textfile = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
-(cat $textfile).replace("FALSE`t`t`t`t0`targreplace", "").replace("-HH`t`t`t`t0`targreplace", "").replace("stock_no-HH`t`t`t`t50`targreplace", "") | sc $textfile
+(gc $textfile).replace("FALSE`t`t`t`t0`targreplace", "").replace("-HH`t`t`t`t0`targreplace", "").replace("stock_no-HH`t`t`t`t50`targreplace", "") | sc $textfile
 
 "Cleaning folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed"

@@ -1,10 +1,10 @@
-#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStetrosyl.txt" -Force -NoClobber
+#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStetrosyl.txt" -Force 
 $Host.UI.RawUI.WindowTitle = "TetrosylFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Tetrosyl"
 "Acquiring File"
 if (Test-Path -Path 'tetrosyl.csv') {del tetrosyl.csv}
-cat *.csv | sc tetrosyl.csv
+gc *.csv | sc tetrosyl.csv
 
 If (Test-Path -Path '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tetrosyl.csv') {del '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tetrosyl.csv'}
 move tetrosyl.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"

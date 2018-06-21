@@ -16,8 +16,9 @@ $wrkbtoolbankprime.Save()
 
 $filetoolbankprime = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\tbpreference.xlsx'
 $wrkbtoolbankprime = $excltoolbankprime.Workbooks.Open($filetoolbankprime)
-$Range = $wrkbtoolbankprime.range("A:F")
-$Range.Removeduplicates()
+$worksheet = $wrkbtoolbankprime.Worksheets.Item(1)
+$columns = 1, 2, 3, 4, 5, 6
+$worksheet.UsedRange.Removeduplicates($columns)
 $wrkbtoolbankprime.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\toolbankprimeFeed\toolbankprime.txt", -4158)
 
 $wrkbtoolbankprime.Close()

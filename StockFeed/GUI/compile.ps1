@@ -12,7 +12,7 @@ Foreach-Object {
 Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
 Foreach-Object {
   $_
-  (cat $_)| ?{$_.Trim(" `t")} | sc $_
+  (gc $_)| ?{$_.Trim(" `t")} | sc $_
 }
 
 "Finished Compiling"

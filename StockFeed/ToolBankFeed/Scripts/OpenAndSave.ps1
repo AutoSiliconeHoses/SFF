@@ -11,8 +11,9 @@ $wrkbtoolbank.Save()
 
 $filetoolbank = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\tbreference.xlsx'
 $wrkbtoolbank = $excltoolbank.Workbooks.Open($filetoolbank)
-$Range = $wrkbtoolbank.range("A:F")
-$Range.Removeduplicates()
+$worksheet = $wrkbtoolbank.Worksheets.Item(1)
+$columns = 1, 2, 3, 4, 5, 6
+$worksheet.UsedRange.Removeduplicates($columns)
 $wrkbtoolbank.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\toolbankFeed\toolbank.txt", -4158)
 
 $wrkbtoolbank.Close()
