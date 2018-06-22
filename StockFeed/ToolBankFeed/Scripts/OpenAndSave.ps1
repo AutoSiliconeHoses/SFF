@@ -1,7 +1,7 @@
 $excltoolbank = New-Object -ComObject "Excel.Application"
 $excltoolbank.DisplayAlerts = $FALSE
 
-$filetoolbank =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\toolbankstock.txt'
+$filetoolbank =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\toolbankstock.csv'
 $wrkbtoolbank = $excltoolbank.Workbooks.Open($filetoolbank)
 $wrkbtoolbank.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\toolbank.csv", 6)
 

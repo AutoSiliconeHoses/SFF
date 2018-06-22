@@ -18,14 +18,10 @@ If (Test-Path -Path "toolbankprime.csv"){del toolbankprime.csv}
 "Acquiring File"
 ftp -s:login.txt 195.74.141.134
 If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\Availability20D.csv") {
-  "FTP Fetch Issue"
+  "FTP Get Issue"
 }
-Rename-Item Availability20D.csv toolbankprimestock.csv
+Rename-Item Availability20D.csv toolbankprime.csv
 
-"Processing File"
-"timecheck = $timecheck"
-"daycheck = $daycheck"
-"result = $result"
 If ($result) {
   "SaveZero.ps1"
   & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\SaveZero.ps1" /C
@@ -34,8 +30,9 @@ If (!$result) {
   "OpenAndSave.ps1"
   & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\OpenAndSave.ps1" /C
 }
-cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed"
+
 "Cleaning File"
+cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed"
 (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt').replace("FALSE`t`t`t`t0", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
 (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt')|?{$_.Trim(" `t")} | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
 
