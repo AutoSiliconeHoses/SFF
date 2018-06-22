@@ -1,4 +1,4 @@
-#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSworkshopwarehouse.txt" -Force 
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSworkshopwarehouse.txt" -Force 
 $Host.UI.RawUI.WindowTitle = "WorkshopWarehouseFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts"
@@ -21,4 +21,4 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scrip
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed"
 move workshopwarehouse.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 If (Test-Path -Path workshopwarehouse.txt) {del workshopwarehouse.txt}
-#Stop-Transcript
+Stop-Transcript

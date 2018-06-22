@@ -1,4 +1,4 @@
-#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfebi.txt" -Force 
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfebi.txt" -Force 
 $Host.UI.RawUI.WindowTitle = "FebiFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts"
@@ -23,4 +23,4 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed"
 move febi.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 If (Test-Path -Path febi.txt) {del febi.txt}
-#Stop-Transcript
+Stop-Transcript

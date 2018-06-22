@@ -1,4 +1,4 @@
-#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbankprime.txt" -Force
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbankprime.txt" -Force
 $Host.UI.RawUI.WindowTitle = 'ToolBankPrimeFeed'
 
 # Time check conditions
@@ -41,4 +41,4 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed"
 
 "Moving File to Upload folder"
 move toolbankprime.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-#Stop-Transcript
+Stop-Transcript

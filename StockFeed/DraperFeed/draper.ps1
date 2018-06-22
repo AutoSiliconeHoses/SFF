@@ -1,4 +1,4 @@
-#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSdraper.txt" -Force 
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSdraper.txt" -Force 
 $Host.UI.RawUI.WindowTitle = "DraperFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts"
@@ -18,4 +18,4 @@ Rename-Item stock.csv draper.csv
 "Moving File to Upload folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed"
 move draper.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-#Stop-Transcript
+Stop-Transcript
