@@ -6,7 +6,7 @@ $stocksheet = $stockfile.sheets.item("staxprime")
 $stockrange = $stocksheet.UsedRange
 $stockrows = $stockrange.Rows.Count - 3
 $extendrange = "A2:F$stockrows"
-$workbook.Save()
+$stockfile.Save()
 
 $file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxpreference.xlsx"
 $workbook = $excel.Workbooks.Open($file)

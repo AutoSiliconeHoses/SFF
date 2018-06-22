@@ -1,4 +1,4 @@
-#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbankprime.txt" -Force 
+#Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbankprime.txt" -Force
 $Host.UI.RawUI.WindowTitle = 'ToolBankPrimeFeed'
 
 # Time check conditions
@@ -12,13 +12,15 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts"
 
 If (Test-Path -Path "Availability20D.csv"){del Availability20D.csv}
 If (Test-Path -Path "toolbankprimestock.csv"){del toolbankprimestock.csv}
+If (Test-Path -Path toolbankprimestock.txt) {del toolbankprimestock.txt}
 If (Test-Path -Path "toolbankprime.csv"){del toolbankprime.csv}
 
 "Acquiring File"
 ftp -s:login.txt 195.74.141.134
-
-If (Test-Path -Path toolbankprimestock.txt) {del toolbankprimestock.txt}
-Rename-Item Availability20D.csv toolbankprimestock.txt
+If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\Availability20D.csv") {
+  "FTP Fetch Issue"
+}
+Rename-Item Availability20D.csv toolbankprimestock.csv
 
 "Processing File"
 "timecheck = $timecheck"
@@ -35,7 +37,7 @@ If (!$result) {
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed"
 "Cleaning File"
 (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt').replace("FALSE`t`t`t`t0", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt')|?{$_.Trim(" `t")}|sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt')|?{$_.Trim(" `t")} | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
 
 "Moving File to Upload folder"
 move toolbankprime.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"

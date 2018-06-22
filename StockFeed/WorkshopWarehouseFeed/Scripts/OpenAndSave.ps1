@@ -6,9 +6,8 @@ $stocksheet = $stockfile.sheets.item(1)
 $stockrange = $stocksheet.UsedRange
 $stockrows = $stockrange.Rows.Count - 1
 $extendrange = "A2:F$stockrows"
-$workbook.Save()
-
-$wrkbworkshopwarehouse.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts\workshopwarehouse.xlsx", 51)
+$stockfile.Save()
+$stockfile.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts\workshopwarehouse.xlsx", 51)
 
 $fileworkshopwarehouse =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts\workshopwarehouse.xlsx'
 $wrkbworkshopwarehouse = $excel.Workbooks.Open($fileworkshopwarehouse)
