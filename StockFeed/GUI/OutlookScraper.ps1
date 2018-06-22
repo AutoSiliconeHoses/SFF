@@ -1,7 +1,7 @@
 $Host.UI.RawUI.WindowTitle = "Outlook Scraper"
 Set-PSDebug -Trace 0
 # If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt"}
-# Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force 
+# Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force
 
 #Open Outlook
 Start-Process -WindowStyle Hidden -filepath 'Outlook' -ErrorAction SilentlyContinue -ArgumentList '/profile "Stocks" '
@@ -44,6 +44,7 @@ foreach ($supplier in $inbox) {
                         $filename = $attachment.filename
 
                         if ($supplierName -eq "Decco") {$filename = "decco.zip"}
+                        if ($supplierName -eq "Mintex") {$filename = "mintex.zip"}
                         if ($supplierName -eq "KYB") {$filename = "kyb.csv"}
                         if ($supplierName -eq "Febi") {$filename = "febi.csv"}
                         if ($supplierName -eq "FPS") {
@@ -60,6 +61,7 @@ foreach ($supplier in $inbox) {
 
                         $file = Get-Item $filepath
                         $file.LastWriteTime = $email.receivedTime
+                        $email.unread = $true
                     }
                 }
             }

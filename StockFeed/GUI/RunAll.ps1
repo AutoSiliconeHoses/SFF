@@ -39,7 +39,7 @@ Function Run-Supplier($supplier, $id) {
 	If ($argResult -or $RunAll) {
 		"Loading $supplier"
 		$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
-		Start PowerShell $loadstring -WindowStyle Hidden
+		Start PowerShell $loadstring #-WindowStyle Hidden
 		$i++
 		Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 	}
@@ -64,8 +64,9 @@ $RunAll = String-Search $argString all-
 	Run-Supplier Febi 'fi-'
 	Run-Supplier FPS 'fps-'
 	Run-Supplier HomeHardware 'hh-'
-	Run-Supplier Kilen 'kn-'
+	#Run-Supplier Kilen 'kn-'
 	Run-Supplier KYB 'kb-'
+	Run-Supplier Mintex 'mx-'
 	Run-Supplier Stax 'sx-'
 	Run-Supplier StaxPrime 'sxp-'
 	Run-Supplier Tetrosyl 'tl-'

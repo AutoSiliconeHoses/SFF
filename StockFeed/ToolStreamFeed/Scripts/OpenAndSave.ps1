@@ -1,16 +1,17 @@
-$excltoolstream = New-Object -ComObject "Excel.Application"
-$excltoolstream.DisplayAlerts = $FALSE
+$excel = New-Object -ComObject "Excel.Application"
+$excel.DisplayAlerts = $FALSE
 
-$filetoolstream = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\Product Content And Pricing Information ENGLISH.xls'
-$wrkbtoolstream = $excltoolstream.Workbooks.Open($filetoolstream)
-$wrkbtoolstream.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolStreamFeed\Product Content And Pricing Information ENGLISH.xlsx")
+$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\toolstream.xlsx'
+$workbook = $excel.Workbooks.Open($file)
+$stockfile.Save()
 
-$filetoolstream =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\tsreference.xlsx'
-$wrkbtoolstream = $excltoolstream.Workbooks.Open($filetoolstream)
-$worksheet = $wrkbtoolstream.Worksheets.Item(1)
+$file =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\tsreference.xlsx'
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.Worksheets.Item(1)
 $columns = 1, 2, 3, 4, 5, 6
 $worksheet.UsedRange.Removeduplicates($columns)
-$wrkbtoolstream.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt", -4158)
+$workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt", -4158)
 
-$wrkbtoolstream.Close()
-$excltoolstream.Quit()
+$workbook.Close()
+$stockfile.Close()
+$excel.Quit()
