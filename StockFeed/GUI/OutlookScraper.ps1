@@ -72,7 +72,7 @@ if ($Outlook) {
   # try gracefully first
   $Outlook.CloseMainWindow()
   # kill after five seconds
-  Sleep 10
+  Sleep 20
   if (!$Outlook.HasExited) {
     $Outlook | Stop-Process -Force
   }

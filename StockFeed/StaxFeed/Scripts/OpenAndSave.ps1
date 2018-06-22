@@ -1,12 +1,12 @@
 $excel = new-object -ComObject Excel.Application
-$excel.Visible = $false
 $excel.DisplayAlerts = $false
+
 $stockfile = $excel.Workbooks.Open("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\Scripts\stax.csv")
 $stocksheet = $stockfile.sheets.item("stax")
 $stockrange = $stocksheet.UsedRange
 $stockrows = $stockrange.Rows.Count - 3
 $extendrange = "A2:F$stockrows"
-$workbook.Save()
+$stockfile.Save()
 
 $workbook = $excel.Workbooks.Open("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\Scripts\sxreference.xlsx")
 $worksheet = $workbook.Worksheets.Item(1)
