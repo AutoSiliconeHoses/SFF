@@ -1,16 +1,21 @@
-$filefebi =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts\febi.csv'
-$exclfebi = New-Object -ComObject "Excel.Application"
-$wrkbfebi = $exclfebi.Workbooks.Open($filefebi)
-$exclfebi.DisplayAlerts = $FALSE
+$excel = new-object -ComObject Excel.Application
+$excel.DisplayAlerts = $false
 
-$wrkbfebi.Save()
+$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts\febi.csv'
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.sheets.item(1)
+$range = $worksheet.UsedRange
+$rows = $range.Rows.Count - 1
+$extendrange = "A2:F$rows"
+$workbook.Save()
 
-$filefebi =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts\fireference.xlsx'
-$wrkbfebi = $exclfebi.Workbooks.Open($filefebi)
-$worksheet = $wrkbfebi.Worksheets.Item(1)
+$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts\fireference.xlsx'
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.Worksheets.Item(1)
+$worksheet.Rows("3:" + $worksheet.Rows.Count).EntireRow.Delete
+$worksheet.Range($extendrange).FillDown()
 $columns = 1, 2, 3, 4, 5, 6
 $worksheet.UsedRange.Removeduplicates($columns)
-$wrkbfebi.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt", -4158)
-
-$wrkbfebi.Close()
-$exclfebi.Quit()
+$workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt", -4158)
+$workbook.Close()
+$excel.Quit()

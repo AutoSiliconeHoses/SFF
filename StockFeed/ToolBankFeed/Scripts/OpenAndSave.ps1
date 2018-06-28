@@ -1,20 +1,21 @@
-$excltoolbank = New-Object -ComObject "Excel.Application"
-$excltoolbank.DisplayAlerts = $FALSE
+$excel = New-Object -ComObject "Excel.Application"
+$excel.DisplayAlerts = $FALSE
 
-$filetoolbank =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\toolbankstock.csv'
-$wrkbtoolbank = $excltoolbank.Workbooks.Open($filetoolbank)
-$wrkbtoolbank.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\toolbank.csv", 6)
+$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\toolbank.csv'
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.sheets.item(1)
+$range = $worksheet.UsedRange
+$rows = $range.Rows.Count - 1
+$extendrange = "A2:F$rows"
+$workbook.Save()
 
-$filetoolbank = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\toolbank.csv'
-$wrkbtoolbank = $excltoolbank.Workbooks.Open($filetoolbank)
-$wrkbtoolbank.Save()
-
-$filetoolbank = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\tbreference.xlsx'
-$wrkbtoolbank = $excltoolbank.Workbooks.Open($filetoolbank)
-$worksheet = $wrkbtoolbank.Worksheets.Item(1)
+$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\tbreference.xlsx'
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.Worksheets.Item(1)
+$worksheet.Rows("3:" + $worksheet.Rows.Count).EntireRow.Delete
+$worksheet.Range($extendrange).FillDown()
 $columns = 1, 2, 3, 4, 5, 6
 $worksheet.UsedRange.Removeduplicates($columns)
-$wrkbtoolbank.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\toolbankFeed\toolbank.txt", -4158)
-
-$wrkbtoolbank.Close()
-$excltoolbank.Quit()
+$workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\toolbankFeed\toolbank.txt", -4158)
+$workbook.Close()
+$excel.Quit()

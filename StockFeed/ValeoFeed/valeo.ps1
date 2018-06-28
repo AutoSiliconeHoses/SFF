@@ -1,4 +1,4 @@
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSvaleo.txt" -Force 
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSvaleo.txt" -Force
 $Host.UI.RawUI.WindowTitle = 'ValeoFeed'
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Valeo"
@@ -11,10 +11,10 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\Scripts"
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\Scripts\OpenAndSave.ps1" /C
 
 "Cleaning File"
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("#VALUE!`t`t`t`t20`targreplace", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("C`t`t`t`t20`targreplace", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt')|?{$_.Trim(" `t")}|sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
+# (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
+# (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("#VALUE!`t`t`t`t20`targreplace", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
+# (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt').replace("C`t`t`t`t20`targreplace", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
+# (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt')|?{$_.Trim(" `t")}|sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\valeo.txt'
 
 "Moving File to Upload folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed"

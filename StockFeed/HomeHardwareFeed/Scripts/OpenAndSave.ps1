@@ -1,22 +1,37 @@
-$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\homehardware.csv'
 $excel = New-Object -ComObject "Excel.Application"
-$workbook = $excel.Workbooks.Open($file)
 $excel.DisplayAlerts = $FALSE
 
-$workbook.Save()
-
-$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\hhmacro2.xlsm'
+$file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\homehardware.csv"
 $workbook = $excel.Workbooks.Open($file)
-$excel.Run("CombineRows")
+$worksheet = $workbook.sheets.item(1)
+$range = $worksheet.UsedRange
+$rows = $range.Rows.Count - 1
+$extendrange = "A2:F$rows"
 $workbook.Save()
 
-$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\hhreference.xlsx'
+$file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\hhmacro.xlsm"
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.Worksheets.Item(1)
+$worksheet.Rows("2:" + $worksheet.Rows.Count).EntireRow.Delete
+$worksheet.Range($extendrange).FillDown()
+$workbook.Save()
+
+cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
+copy hhmacro.xlsm hhmacro2.xlsm
+
+$file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\hhmacro2.xlsm"
+$workbook = $excel.Workbooks.Open($file)
+$excel.run("CombineRows")
+$workbook.Save()
+
+$file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\hhreference.xlsx"
 $workbook = $excel.Workbooks.Open($file)
 $worksheet = $workbook.worksheets.item(1)
+$worksheet.Rows("3:" + $worksheet.Rows.Count).EntireRow.Delete
+$worksheet.Range($extendrange).FillDown()
 $columns = 1, 2, 3, 4, 5, 6
 $worksheet.UsedRange.Removeduplicates($columns)
 $workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt", -4158)
 $workbook.Save()
-
 $workbook.Close()
 $excel.Quit()

@@ -1,33 +1,44 @@
-$filetetrosyl =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tetrosyl.csv'
-$excltetrosyl = New-Object -ComObject "Excel.Application"
-$wrkbtetrosyl = $excltetrosyl.Workbooks.Open($filetetrosyl)
-$excltetrosyl.DisplayAlerts = $FALSE
+$excel = New-Object -ComObject "Excel.Application"
+$excel.DisplayAlerts = $FALSE
 
-$wrkbtetrosyl.Save()
+$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tetrosyl.csv'
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.sheets.item(1)
+$range = $worksheet.UsedRange
+$rows = $range.Rows.Count - 1
+$extendrange = "A1:F$rows"
+$workbook.Save()
 
-"`ttlreference.xlsx"
-$filetetrosyl =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tlreference.xlsx'
-$wrkbtetrosyl = $excltetrosyl.Workbooks.Open($filetetrosyl)
-$wrkbtetrosyl.Save()
+$file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tlmacro.xlsm"
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.Worksheets.Item(1)
+$worksheet.Rows("2:" + $worksheet.Rows.Count).EntireRow.Delete
+$worksheet.Range($extendrange).FillDown()
+$workbook.Save()
 
-"`ttlreference3.xlsx"
-$filetetrosyl =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tlreference3.xlsx'
-$wrkbtetrosyl = $excltetrosyl.Workbooks.Open($filetetrosyl)
-$wrkbtetrosyl.Save()
+cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
+copy tlmacro.xlsm tlmacro2.xlsm
 
 "`ttlmacro2.xlsm"
-$filetetrosyl =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tlmacro2.xlsm'
-$wrkbtetrosyl = $excltetrosyl.Workbooks.Open($filetetrosyl)
-$excltetrosyl.run("CombineRows")
-$wrkbtetrosyl.Save()
+$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tlmacro2.xlsm'
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.sheets.item(1)
+$range = $worksheet.UsedRange
+$rows = $range.Rows.Count
+$extendrange = "A1:F$rows"
+$excel.run("CombineRows")
+$workbook.Save()
 
-"`ttlreference2.xlsx"
-$filetetrosyl =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tlreference2.xlsx'
-$wrkbtetrosyl = $excltetrosyl.Workbooks.Open($filetetrosyl)
-$worksheet = $wrkbtetrosyl.Worksheets.Item(1)
+"`ttlreference.xlsx"
+$file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tlreference.xlsx'
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.Worksheets.Item(1)
+$extendrange = "A2:F$rows"
+$worksheet.Rows("3:" + $worksheet.Rows.Count).EntireRow.Delete
+$worksheet.Range($extendrange).FillDown()
 $columns = 1, 2, 3, 4, 5, 6
 $worksheet.UsedRange.Removeduplicates($columns)
-$wrkbtetrosyl.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt", -4158)
+$workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt", -4158)
 
-$wrkbtetrosyl.Close()
-$excltetrosyl.Quit()
+$workbook.Close()
+$excel.Quit()

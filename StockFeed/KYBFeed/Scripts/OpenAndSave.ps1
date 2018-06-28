@@ -1,16 +1,21 @@
-$filekyb =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\Scripts\kyb.csv'
-$exclkyb = New-Object -ComObject "Excel.Application"
-$wrkbkyb = $exclkyb.Workbooks.Open($filekyb)
-$exclkyb.DisplayAlerts = $FALSE
+$excel = New-Object -ComObject "Excel.Application"
+$excel.DisplayAlerts = $FALSE
 
-$wrkbkyb.Save()
+$file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\Scripts\kyb.csv"
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.sheets.item(1)
+$range = $worksheet.UsedRange
+$rows = $range.Rows.Count - 1
+$extendrange = "A2:F$rows"
+$Workbook.Save()
 
-$filekyb =  '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\Scripts\kbreference.xlsx'
-$wrkbkyb = $exclkyb.Workbooks.Open($filekyb)
-$worksheet = $wrkbkyb.Worksheets.Item(1)
+$file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\Scripts\kbreference.xlsx"
+$workbook = $excel.Workbooks.Open($file)
+$worksheet = $workbook.Worksheets.Item(1)
+$worksheet.Rows("3:" + $worksheet.Rows.Count).EntireRow.Delete
+$worksheet.Range($extendrange).FillDown()
 $columns = 1, 2, 3, 4, 5, 6
 $worksheet.UsedRange.Removeduplicates($columns)
-$wrkbkyb.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\kyb.txt", -4158)
-
-$wrkbkyb.Close()
-$exclkyb.Quit()
+$workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\kyb.txt", -4158)
+$workbook.Close()
+$excel.Quit()

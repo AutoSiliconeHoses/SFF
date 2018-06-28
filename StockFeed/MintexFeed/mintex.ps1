@@ -17,9 +17,7 @@ If (Test-Path -Path mintex.zip) {del mintex.zip}
 "Renaming File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\Scripts\unzipped"
 Get-ChildItem *.csv | ForEach-Object {
-    $a=$_.fullname
-    $b="mintex.csv"
-    Rename-Item -path $a -NewName $b
+    Rename-Item -path $_.fullname -NewName "mintex.csv"
     move mintex.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\Scripts" -Force
 }
 

@@ -1,4 +1,4 @@
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfebi.txt" -Force 
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfebi.txt" -Force
 $Host.UI.RawUI.WindowTitle = "FebiFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts"
@@ -15,8 +15,8 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts"
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts\OpenAndSave.ps1" /C
 
 "Cleaning File"
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt'
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt')|?{$_.Trim(" `t")}|sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt'
+# (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt'
+# (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt')|?{$_.Trim(" `t")}|sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt'
 
 
 "Moving File to Upload folder"

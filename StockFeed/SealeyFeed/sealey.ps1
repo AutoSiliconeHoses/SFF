@@ -12,5 +12,6 @@ Rename-Item Datacut.xlsx sealey.xlsx
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\SealeyFeed\Scripts\OpenAndSave.ps1" /C
 
 "Moving File to Upload folder"
+cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\SealeyFeed"
 move sealey.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 Stop-Transcript

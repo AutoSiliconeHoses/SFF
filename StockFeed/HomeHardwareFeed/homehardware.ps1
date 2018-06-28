@@ -1,4 +1,4 @@
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANShh.txt" -Force 
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANShh.txt" -Force
 $Host.UI.RawUI.WindowTitle = "HomeHardwareFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
@@ -16,7 +16,6 @@ If (Test-Path -Path Primary15.csv) {del Primary15.csv}
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
 If (Test-Path -Path hhmacro2.xlsm) {del hhmacro2.xlsm}
-copy hhmacro.xlsm hhmacro2.xlsm
 
 "Processing File"
 "OpenAndSave.ps1"

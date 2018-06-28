@@ -1,22 +1,45 @@
 $Host.UI.RawUI.WindowTitle = "StockFeed"
 
-#Check if other instances of PowerShell are open
-$process = get-process -Name 'powershell' | where {$_.mainWindowTitle -ne "StockFeed"}
-If($process) {
-	"PowerShell Already Running. Aborting"
-	Start-Sleep 3
-	Exit
+# Time check conditions
+$time = (Get-Date).Hour
+$day = (Get-Date).DayOfWeek.Value__
+$timecheck = (8 -le $time) -and ($time -lt 18)
+$daycheck = (1 -le $day) -and ($day -le 5)
+$working = $timecheck -and $daycheck
+
+$process = Get-Process -Name 'powershell' | where {$_.mainWindowTitle -ne "StockFeed"}
+
+If (!$working) {
+	"WARNING: POWERSHELL SET TO KILL MODE OUTSIDE OF OFFICE HOURS"
+
+	#Kill other PowerShell instances
+	If($process) {
+		"PowerShell Already Running. "
+		"Killing other instances."
+		Start-Sleep 3
+		Get-Process Powershell  | Where-Object { $_.ID -ne $pid } | Stop-Process
+		get-process |? {$_.processname -eq 'excel'}|%{stop-process $_.id}
+	}
 }
 
-#Check to see if other systems are running the script or if the script has failed on last run
-$running = (Test-Path -Path '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp')
-If ($running) {
-	"Someone else is running the system, please try again later"
-	Start-Sleep 3
-	Exit
+If ($working) {
+	#Check to see if other systems are running the script or if the script has failed on last run
+	$running = (Test-Path -Path '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp')
+	If ($running) {
+		"Someone else is running the system, please try again later"
+		Start-Sleep 3
+		Exit
+	}
+
+	If($process) {
+		"PowerShell Already Running. "
+		Start-Sleep 3
+		EXIT
+	}
 }
 
-#Start Transcript,,mm, m
+
+#Start Transcript
 If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt" -ErrorAction SilentlyContinue}
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSRunAll.txt" -Force  -ErrorAction SilentlyContinue
 
@@ -40,8 +63,6 @@ Function Run-Supplier($supplier, $id) {
 		"Loading $supplier"
 		$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
 		Start PowerShell $loadstring #-WindowStyle Hidden
-		$i++
-		Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
 	}
 }
 
@@ -55,18 +76,18 @@ cd '\\DISKSTATION\Feeds\Stock File Fetcher\Upload'
 If (Test-Path -Path *.txt) {del *.txt}
 
 #Runs suppliers using Run-Supplier
-Write-Progress -Activity 'Loading Scripts' -Status "Scripts Loaded: $i"
-$i = 0
 $RunAll = String-Search $argString all-
+
+"Loading Supplier Scripts"
 .{
 	Run-Supplier Decco 'dc-'
 	Run-Supplier Draper 'dp-'
 	Run-Supplier Febi 'fi-'
 	Run-Supplier FPS 'fps-'
 	Run-Supplier HomeHardware 'hh-'
-	#Run-Supplier Kilen 'kn-'
 	Run-Supplier KYB 'kb-'
 	Run-Supplier Mintex 'mx-'
+	Run-Supplier Sealey 'sy-'
 	Run-Supplier Stax 'sx-'
 	Run-Supplier StaxPrime 'sxp-'
 	Run-Supplier Tetrosyl 'tl-'
@@ -76,10 +97,11 @@ $RunAll = String-Search $argString all-
 	Run-Supplier Valeo 'vo-'
 	Run-Supplier WorkshopWarehouse 'ww-'
 }
-Write-Progress -Activity 'Loading Scripts' -Status "Loaded"
+"Finished loading supplier scripts"
 
 "Waiting for Scripts to finish"
 #Counts instances of PowerShell currently running apart from this one and updates user on the number
+$i = 0
 while (@(Get-Process | where-object {$_.ProcessName -like 'powershell'}).count -ne 1) {
   Write-Progress -Activity 'Running Scripts' -Status "Number of Scripts running: $i"
   sleep 1

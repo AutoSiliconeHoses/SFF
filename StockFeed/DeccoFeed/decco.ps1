@@ -38,9 +38,9 @@ If (Test-Path -Path decco.xml) {del decco.xml}
 
 "Cleaning File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"
-(gc 'decco.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'decco.txt'
-(gc 'decco.txt').replace("FALSE-DC`t`t`t`t0`targreplace", "") | sc 'decco.txt'
-(gc 'decco.txt')|?{$_.Trim(" `t")}| sc 'decco.txt'
+# (gc 'decco.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'decco.txt'
+# (gc 'decco.txt').replace("FALSE-DC`t`t`t`t0`targreplace", "") | sc 'decco.txt'
+# (gc 'decco.txt')|?{$_.Trim(" `t")}| sc 'decco.txt'
 
 "Moving File to Upload folder"
 move decco.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
