@@ -1,10 +1,10 @@
 $Host.UI.RawUI.WindowTitle = "Outlook Scraper"
-Set-PSDebug -Trace 0
-# If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt"}
-# Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force
+Set-PSDebug -Trace 1
+If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -ErrorAction SilentlyContinue}
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force  -ErrorAction SilentlyContinue
 
 #Open Outlook
-Start-Process -WindowStyle Hidden -filepath 'Outlook' -ErrorAction SilentlyContinue -ArgumentList '/profile "Stocks" '
+Start-Process -filepath 'Outlook' -WindowStyle Hidden -ErrorAction SilentlyContinue -ArgumentList '/profile "Stocks" '
 
 # Creates MAPI workspace
 Add-Type -Assembly "Microsoft.Office.Interop.Outlook"
@@ -43,17 +43,19 @@ foreach ($supplier in $inbox) {
                         $supplier = $email.SenderName
                         $filename = $attachment.filename
 
-                        if ($supplierName -eq "Decco") {$filename = "decco.zip"}
-                        if ($supplierName -eq "Mintex") {$filename = "mintex.zip"}
-                        if ($supplierName -eq "KYB") {$filename = "kyb.csv"}
-                        if ($supplierName -eq "Febi") {$filename = "febi.csv"}
+                        if ($supplierName -eq "Decco") {$filename = "decco.zip"; $run += "dc- "}
+                        if ($supplierName -eq "Febi") {$filename = "febi.csv"; $run += "fi- "}
                         if ($supplierName -eq "FPS") {
                           If ($filename -like '*LEEDS*') {
                             $filename = "FPS_LEEDS.xlsx"
                           }
+                          $run += "fps- "
                         }
                         if ($supplierName -eq "Kilen") {$filename = "kilen.csv"}
-                        if ($supplierName -eq "Workshop Warehouse") {$filename = "workshopwarehouse.xls"}
+                        if ($supplierName -eq "KYB") {$filename = "kyb.csv"; $run += "kb- "}
+                        if ($supplierName -eq "Mintex") {$filename = "mintex.zip"; $run += "mx- "}
+                        if ($supplierName -eq "Tetrosyl") {$run += "tl- "}
+                        if ($supplierName -eq "Workshop Warehouse") {$filename = "workshopwarehouse.xls"; $run += "ww- "}
 
                         echo ($filename + " saved from " + $supplier + " @ " + $email.receivedTime)
                         $filepath = (join-path $savefilepath $filename)
@@ -61,7 +63,8 @@ foreach ($supplier in $inbox) {
 
                         $file = Get-Item $filepath
                         $file.LastWriteTime = $email.receivedTime
-                        $email.unread = $true
+                        $email.unread = $false
+                        $email.delete()
                     }
                 }
             }
@@ -80,3 +83,12 @@ if ($Outlook) {
   }
 }
 Remove-Variable Outlook
+If (!([String]::IsNullOrEmpty($run))) {
+  $run = "4 " + $run + "up-"
+  "Args: "+$run
+  "Booting RunAll"
+  Start-Sleep 2
+  $loadString = "& '\\Diskstation\Feeds\Stock File Fetcher\StockFeed\GUI\RunAll.ps1' $run"
+	Start PowerShell $loadstring
+}
+Stop-Transcript

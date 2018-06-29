@@ -62,7 +62,7 @@ Function Run-Supplier($supplier, $id) {
 	If ($argResult) {
 		"Loading $supplier"
 		$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
-		Start PowerShell $loadstring #-WindowStyle Hidden
+		Start PowerShell $loadstring -WindowStyle Hidden
 	}
 }
 
