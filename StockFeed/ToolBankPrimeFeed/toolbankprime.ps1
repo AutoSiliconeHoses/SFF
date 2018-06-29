@@ -9,17 +9,15 @@ $daycheck = (1 -le $day) -and ($day -le 5)
 $result = $timecheck -and $daycheck
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts"
-
 If (Test-Path -Path "Availability20D.csv"){del Availability20D.csv}
 If (Test-Path -Path "toolbankprimestock.csv"){del toolbankprimestock.csv}
 If (Test-Path -Path "toolbankprime.csv"){del toolbankprime.csv}
 
 "Acquiring File"
-ftp -s:login.txt 195.74.141.134
-If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\Availability20D.csv") {
-  "FTP Get Issue"
-}
-Rename-Item Availability20D.csv toolbankprime.csv
+. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
+gc login.txt | ForEach-Object{Invoke-Expression $_}
+$LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\toolbankprime.csv"
+FTP-Download $RemoteFile $Username $Password $LocalFile
 
 If ($result) {
   "SaveZero.ps1"

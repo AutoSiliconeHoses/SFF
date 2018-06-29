@@ -2,14 +2,14 @@ Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Tra
 $Host.UI.RawUI.WindowTitle = 'ToolBankFeed'
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts"
-
-If (Test-Path -Path "Availability20D.csv"){del Availability20D.csv}
 If (Test-Path -Path "toolbank.csv"){del toolbank.csv}
 
 "Acquiring File"
-ftp -s:login.txt 195.74.141.134
+. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
+gc login.txt | ForEach-Object{Invoke-Expression $_}
 
-Rename-Item Availability20D.csv toolbank.csv
+$LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts\toolbank.csv"
+FTP-Download $RemoteFile $Username $Password $LocalFile
 
 "Processing File"
 "OpenAndSave.ps1"

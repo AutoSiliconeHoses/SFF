@@ -2,7 +2,12 @@ Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Tra
 $Host.UI.RawUI.WindowTitle = "KYBFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\KYB"
-copy kyb.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\Scripts"
+If (!(Test-Path -Path kyb.csv)) {
+	"kyb.csv has not been found and may have already been run."
+	Start-Sleep 2
+	EXIT
+}
+move kyb.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\Scripts"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 If (Test-Path -Path kyb.txt) {del kyb.txt}

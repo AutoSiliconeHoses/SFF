@@ -1,8 +1,13 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSvaleo.txt" -Force
 $Host.UI.RawUI.WindowTitle = 'ValeoFeed'
 
-cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Valeo"
 "Acquiring File"
+cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Valeo"
+If (!(Test-Path -Path "VALEO_stock.csv")) {
+	"No valeo file found. Aborting."
+	Start-Sleep 2
+	EXIT
+}
 copy "VALEO_stock.csv" "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\Scripts"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\Scripts"

@@ -7,7 +7,12 @@ If (Test-Path -Path workshopwarehouse.xlsx) {del workshopwarehouse.xlsx}
 
 "Acquiring File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Workshop Warehouse"
-copy workshopwarehouse.xls "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts"
+If (!(Test-Path -Path workshopwarehouse.xls)) {
+	"workshopwarehouse.xls has not been found and may have already been run."
+	Start-Sleep 2
+	EXIT
+}
+move workshopwarehouse.xls "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts"
 "OpenAndSave.ps1"

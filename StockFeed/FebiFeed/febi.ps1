@@ -6,7 +6,12 @@ If (Test-Path -Path febi.csv) {del febi.csv}
 
 "Acquiring File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Febi"
-copy febi.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts"
+If (!(Test-Path -Path febi.csv)) {
+	"febi.csv has not been found and may have already been run."
+	Start-Sleep 2
+	EXIT
+}
+move febi.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts"
 "Processing File"

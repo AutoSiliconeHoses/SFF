@@ -8,7 +8,12 @@ If (Test-Path -Path unzipped) {del unzipped -recurse}
 
 "Acquiring File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Decco"
-copy decco.zip "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"
+If (!(Test-Path -Path decco.zip)) {
+	"decco.zip has not been found and may have already been run."
+	Start-Sleep 2
+	EXIT
+}
+move decco.zip "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"
 
 "Extracting File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"

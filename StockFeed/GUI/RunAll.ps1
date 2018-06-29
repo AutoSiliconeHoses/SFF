@@ -59,11 +59,18 @@ Function String-Search($string, $target) {
 #Runs supplier when given name and ID
 Function Run-Supplier($supplier, $id) {
 	$argResult = String-Search $argString $id
-	If ($argResult -or $RunAll) {
+	If ($argResult) {
 		"Loading $supplier"
 		$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
 		Start PowerShell $loadstring #-WindowStyle Hidden
 	}
+}
+
+#Runs supplier when given name and ID
+Function Run-All($supplier, $id) {
+	"Loading $supplier"
+	$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
+	Start PowerShell $loadstring -WindowStyle Hidden
 }
 
 #Changes arguement into a string that can be searched
@@ -75,11 +82,19 @@ $argString = $args
 cd '\\DISKSTATION\Feeds\Stock File Fetcher\Upload'
 If (Test-Path -Path *.txt) {del *.txt}
 
-#Runs suppliers using Run-Supplier
-$RunAll = String-Search $argString all-
-
 "Loading Supplier Scripts"
-.{
+$RunAll = String-Search $argString all-
+If ($RunAll) {
+	Run-All Draper 'dp-'
+	Run-All HomeHardware 'hh-'
+	Run-All Sealey 'sy-'
+	Run-All Stax 'sx-'
+	Run-All StaxPrime 'sxp-'
+	Run-All ToolBank 'tb-'
+	Run-All ToolBankPrime 'tbp-'
+	Run-All ToolStream 'ts-'
+}
+If (!$RunAll) {
 	Run-Supplier Decco 'dc-'
 	Run-Supplier Draper 'dp-'
 	Run-Supplier Febi 'fi-'
@@ -94,9 +109,9 @@ $RunAll = String-Search $argString all-
 	Run-Supplier ToolBank 'tb-'
 	Run-Supplier ToolBankPrime 'tbp-'
 	Run-Supplier ToolStream 'ts-'
-	Run-Supplier Valeo 'vo-'
 	Run-Supplier WorkshopWarehouse 'ww-'
 }
+
 "Finished loading supplier scripts"
 
 "Waiting for Scripts to finish"

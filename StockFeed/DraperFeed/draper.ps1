@@ -2,11 +2,13 @@ Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Tra
 $Host.UI.RawUI.WindowTitle = "DraperFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts"
+If (Test-Path -Path draper.csv) {del draper.csv}
 
 "Acquiring File"
-ftp -s:login.txt 62.255.240.235
-If (Test-Path -Path draper.csv) {del draper.csv}
-Rename-Item stock.csv draper.csv
+. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
+gc login.txt | ForEach-Object{Invoke-Expression $_}
+$LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\draper.csv"
+FTP-Download $RemoteFile $Username $Password $LocalFile
 
 "Processing File"
 "OpenAndSave.ps1"

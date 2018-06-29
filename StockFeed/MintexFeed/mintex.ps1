@@ -7,7 +7,12 @@ If (Test-Path -Path unzipped) {del unzipped -recurse}
 
 "Acquiring File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Mintex"
-copy mintex.zip "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\Scripts"
+If (!(Test-Path -Path mintex.zip)) {
+	"mintex.zip has not been found and may have already been run."
+	Start-Sleep 2
+	EXIT
+}
+move mintex.zip "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\Scripts"
 
 "Extracting File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\Scripts"

@@ -3,9 +3,13 @@ $Host.UI.RawUI.WindowTitle = "HomeHardwareFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
 "Acquiring Files"
-ftp -s:login.txt 195.74.141.134
-move Primary1.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed"
-move Primary15.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed"
+. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
+gc login.txt | ForEach-Object{Invoke-Expression $_}
+$LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Primary1.csv"
+FTP-Download $RemoteFile $Username $Password $LocalFile
+$RemoteFile = "ftp://195.74.141.134/HHW_Availability_Bedford/Primary15.csv"
+$LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Primary15.csv"
+FTP-Download $RemoteFile $Username $Password $LocalFile
 
 "Combining Files"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed"

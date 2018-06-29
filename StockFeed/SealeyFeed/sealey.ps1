@@ -5,8 +5,10 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\SealeyFeed\Scripts"
 If (Test-Path -Path "sealey.xlsx"){del sealey.xlsx}
 
 "Acquiring File"
-ftp -s:login.txt sealey.iweb-storage.com
-Rename-Item Datacut.xlsx sealey.xlsx
+. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
+gc login.txt | ForEach-Object{Invoke-Expression $_}
+$LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\SealeyFeed\Scripts\sealey.xlsx"
+FTP-Download $RemoteFile $Username $Password $LocalFile
 
 "OpenAndSave.ps1"
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\SealeyFeed\Scripts\OpenAndSave.ps1" /C
