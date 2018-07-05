@@ -7,6 +7,7 @@ If (!(Test-Path -Path kyb.csv)) {
 	Start-Sleep 2
 	EXIT
 }
+If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\Scripts\kyb.csv") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\Scripts\kyb.csv"}
 move kyb.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\Scripts"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"

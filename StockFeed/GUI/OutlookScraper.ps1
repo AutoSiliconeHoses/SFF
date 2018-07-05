@@ -1,5 +1,5 @@
 $Host.UI.RawUI.WindowTitle = "Outlook Scraper"
-Set-PSDebug -Trace 1
+Set-PSDebug -Trace 0
 If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -ErrorAction SilentlyContinue}
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force  -ErrorAction SilentlyContinue
 
@@ -77,18 +77,20 @@ if ($Outlook) {
   # try gracefully first
   $Outlook.CloseMainWindow()
   # kill after five seconds
-  Sleep 20
+  Sleep 60
   if (!$Outlook.HasExited) {
     $Outlook | Stop-Process -Force
   }
 }
 Remove-Variable Outlook
-If (!([String]::IsNullOrEmpty($run))) {
-  $run = "4 " + $run + "up-"
-  "Args: "+$run
-  "Booting RunAll"
-  Start-Sleep 2
-  $loadString = "& '\\Diskstation\Feeds\Stock File Fetcher\StockFeed\GUI\RunAll.ps1' $run"
-	Start PowerShell $loadstring
+If ($args[0] -eq "-run"){
+  If (!([String]::IsNullOrEmpty($run))) {
+    $run = "4 " + $run + "up-"
+    "Args: "+$run
+    "Booting RunAll"
+    Start-Sleep 2
+    $loadString = "& '\\Diskstation\Feeds\Stock File Fetcher\StockFeed\GUI\RunAll.ps1' $run"
+  	Start PowerShell $loadstring
+  }
 }
 Stop-Transcript

@@ -6,8 +6,9 @@ $day = (Get-Date).DayOfWeek.Value__
 $timecheck = (8 -le $time) -and ($time -lt 18)
 $daycheck = (1 -le $day) -and ($day -le 5)
 $working = $timecheck -and $daycheck
-
 $process = Get-Process -Name 'powershell' | where {$_.mainWindowTitle -ne "StockFeed"}
+# KILL TOGGLE
+#$working = $false
 
 If (!$working) {
 	"WARNING: POWERSHELL SET TO KILL MODE OUTSIDE OF OFFICE HOURS"
@@ -15,10 +16,11 @@ If (!$working) {
 	#Kill other PowerShell instances
 	If($process) {
 		"PowerShell Already Running. "
-		"Killing other instances."
+		"Killing other instances and logging."
 		Start-Sleep 3
 		Get-Process Powershell  | Where-Object { $_.ID -ne $pid } | Stop-Process
 		get-process |? {$_.processname -eq 'excel'}|%{stop-process $_.id}
+		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\KillList.txt" (Get-Date)
 	}
 }
 
@@ -62,7 +64,7 @@ Function Run-Supplier($supplier, $id) {
 	If ($argResult) {
 		"Loading $supplier"
 		$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
-		Start PowerShell $loadstring -WindowStyle Hidden
+		Start PowerShell $loadstring #-WindowStyle Hidden
 	}
 }
 
@@ -85,16 +87,17 @@ If (Test-Path -Path *.txt) {del *.txt}
 "Loading Supplier Scripts"
 $RunAll = String-Search $argString all-
 If ($RunAll) {
+	Run-All BizTools 'bz-'
 	Run-All Draper 'dp-'
 	Run-All HomeHardware 'hh-'
 	Run-All Sealey 'sy-'
 	Run-All Stax 'sx-'
 	Run-All StaxPrime 'sxp-'
 	Run-All ToolBank 'tb-'
-	Run-All ToolBankPrime 'tbp-'
 	Run-All ToolStream 'ts-'
 }
 If (!$RunAll) {
+	Run-All BizTools 'bz-'
 	Run-Supplier Decco 'dc-'
 	Run-Supplier Draper 'dp-'
 	Run-Supplier Febi 'fi-'
@@ -102,8 +105,8 @@ If (!$RunAll) {
 	Run-Supplier HomeHardware 'hh-'
 	Run-Supplier KYB 'kb-'
 	Run-Supplier Mintex 'mx-'
-	Run-Supplier Sealey 'sy-'
-	Run-Supplier Stax 'sx-'
+	Run-Supplier Sealey 'sy-'.
+	Run-Supplier Stax 'sx-'.
 	Run-Supplier StaxPrime 'sxp-'
 	Run-Supplier Tetrosyl 'tl-'
 	Run-Supplier ToolBank 'tb-'
