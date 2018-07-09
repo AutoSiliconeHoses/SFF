@@ -20,56 +20,57 @@ echo ($Today)
 
 # Begins the search
 foreach ($supplier in $inbox) {
-    $supplierName = $supplier.FolderPath.replace("\\Personal Folders\Inbox\","").replace("2","")
+  $supplierName = $supplier.FolderPath.replace("\\Personal Folders\Inbox\","").replace("2","")
 
-    $folderPath = ('\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\')
-    $saveFilePath = ('\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\' + $supplierName)
+  $folderPath = ('\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\')
+  $saveFilePath = ('\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\' + $supplierName)
 
-    If (!(Test-Path -Path $saveFilePath)) {
-      New-Item -Path $folderPath -Name $supplierName -ItemType "directory"
-    }
+  If (!(Test-Path -Path $saveFilePath)) {
+    New-Item -Path $folderPath -Name $supplierName -ItemType "directory"
+  }
 
-    $supplierCont = $supplier.Items
-    $supplierName
-    foreach ($email in $supplierCont) {
-        if ($email.attachments.count -ge 1) {
-            if (($email.receivedTime.tostring("yyyy-MM-dd")) -eq ($Today)) {
-                foreach ($attachment in $email.attachments) {
-                    if ($attachment.filename.contains(".CSV") `
-                    -or $attachment.filename.contains(".csv") `
-                    -or $attachment.filename.contains(".xls") `
-                    -or $attachment.filename.contains(".xlsx") `
-                    -or $attachment.filename.contains(".zip")) {
-                        $supplier = $email.SenderName
-                        $filename = $attachment.filename
+  $supplierCont = $supplier.Items
+  $supplierName
+  foreach ($email in $supplierCont) {
+    if ($email.attachments.count -ge 1) {
+      if (($email.receivedTime.tostring("yyyy-MM-dd")) -eq ($Today)) {
+        if ($email.unread) {
+          foreach ($attachment in $email.attachments) {
+            if ($attachment.filename.contains(".CSV") `
+              -or $attachment.filename.contains(".csv") `
+              -or $attachment.filename.contains(".xls") `
+              -or $attachment.filename.contains(".xlsx") `
+              -or $attachment.filename.contains(".zip")) {
+                $supplier = $email.SenderName
+                $filename = $attachment.filename
 
-                        if ($supplierName -eq "Decco") {$filename = "decco.zip"; $run += "dc- "}
-                        if ($supplierName -eq "Febi") {$filename = "febi.csv"; $run += "fi- "}
-                        if ($supplierName -eq "FPS") {
-                          If ($filename -like '*LEEDS*') {
-                            $filename = "FPS_LEEDS.xlsx"
-                          }
-                          $run += "fps- "
-                        }
-                        if ($supplierName -eq "Kilen") {$filename = "kilen.csv"}
-                        if ($supplierName -eq "KYB") {$filename = "kyb.csv"; $run += "kb- "}
-                        if ($supplierName -eq "Mintex") {$filename = "mintex.zip"; $run += "mx- "}
-                        if ($supplierName -eq "Tetrosyl") {$run += "tl- "}
-                        if ($supplierName -eq "Workshop Warehouse") {$filename = "workshopwarehouse.xls"; $run += "ww- "}
-
-                        echo ($filename + " saved from " + $supplier + " @ " + $email.receivedTime)
-                        $filepath = (join-path $savefilepath $filename)
-                        $attachment.saveasfile($filepath)
-
-                        $file = Get-Item $filepath
-                        $file.LastWriteTime = $email.receivedTime
-                        $email.unread = $false
-                        $email.delete()
-                    }
+                if ($supplierName -eq "Decco") {$filename = "decco.zip"; $run += "dc- "}
+                if ($supplierName -eq "Febi") {$filename = "febi.csv"; $run += "fi- "}
+                if ($supplierName -eq "FPS") {
+                  If ($filename -like '*LEEDS*') {
+                    $filename = "FPS_LEEDS.xlsx"
+                  }
+                  $run += "fps- "
                 }
-            }
+                if ($supplierName -eq "Kilen") {$filename = "kilen.csv"}
+                if ($supplierName -eq "KYB") {$filename = "kyb.csv"; $run += "kb- "}
+                if ($supplierName -eq "Mintex") {$filename = "mintex.zip"; $run += "mx- "}
+                if ($supplierName -eq "Tetrosyl") {$run += "tl- "}
+                if ($supplierName -eq "Workshop Warehouse") {$filename = "workshopwarehouse.xls"; $run += "ww- "}
+
+                echo ($filename + " saved from " + $supplier + " @ " + $email.receivedTime)
+                $filepath = (join-path $savefilepath $filename)
+                $attachment.saveasfile($filepath)
+
+                $file = Get-Item $filepath
+                $file.LastWriteTime = $email.receivedTime
+                $email.unread = $false
+              }
+          }
         }
+      }
     }
+  }
 }
 # Stop Outlook
 $Outlook = Get-Process outlook -ErrorAction SilentlyContinue

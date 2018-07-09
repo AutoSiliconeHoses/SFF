@@ -72,7 +72,7 @@ Function Run-Supplier($supplier, $id) {
 Function Run-All($supplier, $id) {
 	"Loading $supplier"
 	$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
-	Start PowerShell $loadstring -WindowStyle Hidden
+	Start PowerShell $loadstring #-WindowStyle Hidden
 }
 
 #Changes arguement into a string that can be searched
@@ -97,7 +97,7 @@ If ($RunAll) {
 	Run-All ToolStream 'ts-'
 }
 If (!$RunAll) {
-	Run-All BizTools 'bz-'
+	Run-Supplier BizTools 'bz-'
 	Run-Supplier Decco 'dc-'
 	Run-Supplier Draper 'dp-'
 	Run-Supplier Febi 'fi-'
