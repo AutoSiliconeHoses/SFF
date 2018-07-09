@@ -34,7 +34,7 @@ If ($working) {
 	}
 
 	If($process) {
-		"PowerShell Already Running. "
+		"PowerShell Already Running."
 		Start-Sleep 3
 		EXIT
 	}
@@ -157,8 +157,8 @@ $argResult = String-Search $argstring "up-"
 if ($argResult) {
 	"Moving to Upload Folder"
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI"
-	$lines = gc STOCKMACHINE.txt
-	$lines | ForEach-Object{Invoke-Expression $_}
+	$drive = gc STOCKMACHINE.txt
+	$drive | ForEach-Object{Invoke-Expression $_}
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
   copy *.txt "Y:\production\outgoing"
 	net use Y: /delete /y

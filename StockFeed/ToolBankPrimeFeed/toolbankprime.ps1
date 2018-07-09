@@ -12,12 +12,17 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts"
 If (Test-Path -Path "Availability20D.csv"){del Availability20D.csv}
 If (Test-Path -Path "toolbankprimestock.csv"){del toolbankprimestock.csv}
 If (Test-Path -Path "toolbankprime.csv"){del toolbankprime.csv}
+If (Test-Path -Path "toolbankprime.txt"){del toolbankprime.csv}
 
 "Acquiring File"
 . "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
 gc login.txt | ForEach-Object{Invoke-Expression $_}
 $LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\toolbankprime.csv"
 FTP-Download $RemoteFile $Username $Password $LocalFile
+
+. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\timestamp.ps1"
+$dt = Get-FileDateTime $RemoteFile $Username $Password
+Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\Date Modified LOG" ($dt)
 
 If ($result) {
   "SaveZero.ps1"
