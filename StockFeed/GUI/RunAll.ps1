@@ -91,8 +91,6 @@ If ($RunAll) {
 	Run-All Draper 'dp-'
 	Run-All HomeHardware 'hh-'
 	Run-All Sealey 'sy-'
-	Run-All Stax 'sx-'
-	Run-All StaxPrime 'sxp-'
 	Run-All ToolBank 'tb-'
 	Run-All ToolStream 'ts-'
 }
