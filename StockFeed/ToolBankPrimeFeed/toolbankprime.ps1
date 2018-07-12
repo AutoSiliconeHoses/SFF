@@ -22,7 +22,7 @@ FTP-Download $RemoteFile $Username $Password $LocalFile
 
 . "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\timestamp.ps1"
 $dt = Get-FileDateTime $RemoteFile $Username $Password
-Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\Date Modified LOG" ($dt)
+Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ScheduleTracking\TBPSCHEDULE.txt" ($dt)
 
 If ($result) {
   "SaveZero.ps1"

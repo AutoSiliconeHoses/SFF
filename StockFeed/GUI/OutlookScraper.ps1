@@ -46,13 +46,9 @@ foreach ($supplier in $inbox) {
 
                 if ($supplierName -eq "Decco") {$filename = "decco.zip"; $run += "dc- "}
                 if ($supplierName -eq "Febi") {$filename = "febi.csv"; $run += "fi- "}
-                if ($supplierName -eq "FPS") {
-                  If ($filename -like '*LEEDS*') {
-                    $filename = "FPS_LEEDS.xlsx"
-                  }
+                if ($supplierName -eq "FPS") {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"}
                   $run += "fps- "
                 }
-                if ($supplierName -eq "Kilen") {$filename = "kilen.csv"}
                 if ($supplierName -eq "KYB") {$filename = "kyb.csv"; $run += "kb- "}
                 if ($supplierName -eq "Mintex") {$filename = "mintex.zip"; $run += "mx- "}
                 if ($supplierName -eq "Tetrosyl") {$run += "tl- "}
@@ -64,8 +60,10 @@ foreach ($supplier in $inbox) {
 
                 $file = Get-Item $filepath
                 $file.LastWriteTime = $email.receivedTime
-                $email.unread = $false
-              }
+                If ($args[0] -eq "-run"){
+                  $email.unread = $false
+                }
+            }
           }
         }
       }
@@ -74,16 +72,14 @@ foreach ($supplier in $inbox) {
 }
 # Stop Outlook
 $Outlook = Get-Process outlook -ErrorAction SilentlyContinue
-if ($Outlook) {
-  # try gracefully first
+$Outlook.CloseMainWindow()
+While ($Outlook) {
   $Outlook.CloseMainWindow()
-  # kill after five seconds
-  Sleep 60
-  if (!$Outlook.HasExited) {
-    $Outlook | Stop-Process -Force
-  }
+  Sleep 2
+  $Outlook = Get-Process outlook -ErrorAction SilentlyContinue
 }
 Remove-Variable Outlook
+
 If ($args[0] -eq "-run"){
   If (!([String]::IsNullOrEmpty($run))) {
     $run = "4 " + $run + "up-"
@@ -93,5 +89,6 @@ If ($args[0] -eq "-run"){
     $loadString = "& '\\Diskstation\Feeds\Stock File Fetcher\StockFeed\GUI\RunAll.ps1' $run"
   	Start PowerShell $loadstring
   }
+  If ([String]::IsNullOrEmpty($run)) {"No new emails found"; Start-Sleep 3}
 }
 Stop-Transcript

@@ -15,7 +15,7 @@ $excel.DisplayAlerts = $FALSE
     $worksheet = $workbook.Worksheets.Item(1)
     $worksheet.Rows("3:" + $worksheet.Rows.Count).EntireRow.Delete
     $worksheet.Range($extendrange).FillDown()
-      $columns = 1, 2, 3, 4, 5, 6
+    $columns = 1, 2, 3, 4, 5, 6
     $worksheet.UsedRange.Removeduplicates($columns)
   $workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt", -4158)
   $workbook.Save()

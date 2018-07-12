@@ -14,6 +14,7 @@ If (!(Test-Path -Path tetrosyl.csv)) {
 	EXIT
 }
 move tetrosyl.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
+del *.txt
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
 If (Test-Path -Path tlmacro2.xlsm) {del tlmacro2.xlsm}

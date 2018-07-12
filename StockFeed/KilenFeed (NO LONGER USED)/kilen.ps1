@@ -1,4 +1,4 @@
-Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSkilen.txt" -Force 
+Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSkilen.txt" -Force
 $Host.UI.RawUI.WindowTitle = "KilenFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
@@ -6,7 +6,12 @@ If (Test-Path -Path kilen.csv) {del kilen.csv}
 
 "Acquiring File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Kilen"
-copy kilen.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
+If (!(Test-Path -Path kilen.csv)) {
+	"kilen.csv has not been found and may have already been run."
+	Start-Sleep 2
+	EXIT
+}
+move kilen.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
 "Processing File"

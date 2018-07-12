@@ -10,6 +10,10 @@ gc login.txt | ForEach-Object{Invoke-Expression $_}
 $LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\draper.csv"
 FTP-Download $RemoteFile $Username $Password $LocalFile
 
+. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\timestamp.ps1"
+$dt = Get-FileDateTime $RemoteFile $Username $Password
+Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ScheduleTracking\DPSCHEDULE.txt" ($dt)
+
 "Processing File"
 "OpenAndSave.ps1"
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\OpenAndSave.ps1" /C

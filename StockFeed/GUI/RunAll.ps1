@@ -72,7 +72,7 @@ Function Run-Supplier($supplier, $id) {
 Function Run-All($supplier, $id) {
 	"Loading $supplier"
 	$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
-	Start PowerShell $loadstring #-WindowStyle Hidden
+	Start PowerShell $loadstring -WindowStyle Hidden
 }
 
 #Changes arguement into a string that can be searched
@@ -90,7 +90,6 @@ If ($RunAll) {
 	Run-All BizTools 'bz-'
 	Run-All Draper 'dp-'
 	Run-All HomeHardware 'hh-'
-	Run-All Sealey 'sy-'
 	Run-All ToolBank 'tb-'
 	Run-All ToolStream 'ts-'
 }
@@ -127,7 +126,7 @@ while (@(Get-Process | where-object {$_.ProcessName -like 'powershell'}).count -
 }
 
 #Adds the warehouse stock file to the upload folder
-$argResult = (String-Search $argstring "rp-") -or (String-Search $argstring "all-")
+$argResult = (String-Search $argstring "rp-") -or ($RunAll)
 if ($argResult) {
 	"Moving 'Constant' Files'"
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\replenish"
