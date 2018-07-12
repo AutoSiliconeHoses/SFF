@@ -5,7 +5,7 @@ Function FTP-Download ($RemoteFile, $Username, $Password, $LocalFile) {
 	$FTPRequest.Method = [System.Net.WebRequestMethods+Ftp]::DownloadFile
 	$FTPRequest.UsePassive = $true
 	$FTPRequest.UseBinary = $true
-	$FTPRequest.KeepAlive = $false
+	$FTPRequest.KeepAlive = $true
 	# Send the ftp request
 	$FTPResponse = $FTPRequest.GetResponse()
 	# Get a download stream from the server response

@@ -6,7 +6,9 @@ $day = (Get-Date).DayOfWeek.Value__
 $timecheck = (8 -le $time) -and ($time -lt 18)
 $daycheck = (1 -le $day) -and ($day -le 5)
 $working = $timecheck -and $daycheck
-$process = Get-Process -Name 'powershell' | where {$_.mainWindowTitle -ne "StockFeed"}
+$PSprocess = Get-Process -Name 'powershell' | where {$_.mainWindowTitle -ne "StockFeed"}
+$XLprocess = Get-Process |? {$_.processname -eq 'excel'}
+
 # KILL TOGGLE
 #$working = $false
 
@@ -14,13 +16,19 @@ If (!$working) {
 	"WARNING: POWERSHELL SET TO KILL MODE OUTSIDE OF OFFICE HOURS"
 
 	#Kill other PowerShell instances
-	If($process) {
+	If($PSprocess) {
 		"PowerShell Already Running. "
 		"Killing other instances and logging."
 		Start-Sleep 3
 		Get-Process Powershell  | Where-Object { $_.ID -ne $pid } | Stop-Process
-		get-process |? {$_.processname -eq 'excel'}|%{stop-process $_.id}
-		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\KillList.txt" (Get-Date)
+		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" (Get-Date)
+	}
+	If($XLprocess) {
+		"Excel Already Running. "
+		"Killing other instances and logging."
+		Start-Sleep 3
+		Get-Process |? {$_.processname -eq 'excel'}|%{stop-process $_.id}
+		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\XLKillList.txt" (Get-Date)
 	}
 }
 
@@ -33,7 +41,7 @@ If ($working) {
 		Exit
 	}
 
-	If($process) {
+	If($PSprocess) {
 		"PowerShell Already Running."
 		Start-Sleep 3
 		EXIT

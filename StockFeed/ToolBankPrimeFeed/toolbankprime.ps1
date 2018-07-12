@@ -20,10 +20,6 @@ gc login.txt | ForEach-Object{Invoke-Expression $_}
 $LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\toolbankprime.csv"
 FTP-Download $RemoteFile $Username $Password $LocalFile
 
-. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\timestamp.ps1"
-$dt = Get-FileDateTime $RemoteFile $Username $Password
-Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ScheduleTracking\TBPSCHEDULE.txt" ($dt)
-
 If ($result) {
   "SaveZero.ps1"
   & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\SaveZero.ps1" /C

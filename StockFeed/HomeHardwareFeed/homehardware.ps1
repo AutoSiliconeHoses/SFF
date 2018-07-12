@@ -8,17 +8,9 @@ gc login.txt | ForEach-Object{Invoke-Expression $_}
 $LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Primary1.csv"
 FTP-Download $RemoteFile $Username $Password $LocalFile
 
-. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\timestamp.ps1"
-$dt = Get-FileDateTime $RemoteFile $Username $Password
-Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ScheduleTracking\HH1SCHEDULE.txt" ($dt)
-
 $RemoteFile = "ftp://195.74.141.134/HHW_Availability_Bedford/Primary15.csv"
 $LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Primary15.csv"
 FTP-Download $RemoteFile $Username $Password $LocalFile
-
-. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\timestamp.ps1"
-$dt = Get-FileDateTime $RemoteFile $Username $Password
-Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ScheduleTracking\HH15SCHEDULE.txt" ($dt)
 
 "Combining Files"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed"
