@@ -20,7 +20,10 @@ If (!$working) {
 		"PowerShell Already Running. "
 		"Killing other instances and logging."
 		Start-Sleep 3
-		Get-Process Powershell  | Where-Object { $_.ID -ne $pid } | Stop-Process
+		Get-Process Powershell  | Where-Object { $_.ID -ne $pid }  | ForEach {
+			Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" ($_.mainWindowTitle)
+			Stop-Process $_.id
+		}
 		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" (Get-Date)
 	}
 	If($XLprocess) {
