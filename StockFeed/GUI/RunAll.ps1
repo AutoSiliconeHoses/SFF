@@ -143,7 +143,21 @@ if ($argResult) {
 
 "Modifying and cleaning files"
 Write-Progress -Activity 'Modification' -Status "Cleaning..."
-& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\compile.ps1' $args[0] /C
+	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+	$lead = $args[0]
+	"Replacing argreplace with $lead"
+	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
+	Foreach-Object {
+	  $_
+	  (gc $_).replace("argreplace", $lead) | sc $_
+	}
+
+	"Cleaning file"
+	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
+	Foreach-Object {
+		$_
+	  (gc $_)| ?{$_.Trim(" `t")} | sc $_
+	}
 Write-Progress -Activity 'Compiling' -Status "Compiled"
 
 "Done"

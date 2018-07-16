@@ -6,11 +6,29 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
 . "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
 gc login.txt | ForEach-Object{Invoke-Expression $_}
 $LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Primary1.csv"
-FTP-Download $RemoteFile $Username $Password $LocalFile
+Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
+Catch {
+	"FTP Issue 1/2, trying again"
+	Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
+	Catch {
+		"FTP Issue 2/2, Aborting Process"
+		Sleep 3
+		EXIT
+	}
+}
 
 $RemoteFile = "ftp://195.74.141.134/HHW_Availability_Bedford/Primary15.csv"
 $LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Primary15.csv"
-FTP-Download $RemoteFile $Username $Password $LocalFile
+Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
+Catch {
+	"FTP Issue 1/2, trying again"
+	Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
+	Catch {
+		"FTP Issue 2/2, Aborting Process"
+		Sleep 3
+		EXIT
+	}
+}
 
 "Combining Files"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed"

@@ -4,7 +4,7 @@ If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transc
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force  -ErrorAction SilentlyContinue
 
 #Open Outlook
-Start-Process -filepath 'Outlook' -WindowStyle Hidden -ErrorAction SilentlyContinue -ArgumentList '/profile "Stocks" '
+Start-Process 'Outlook' -WindowStyle Hidden -ErrorAction SilentlyContinue -ArgumentList '/profile "Stocks" '
 
 # Creates MAPI workspace
 Add-Type -Assembly "Microsoft.Office.Interop.Outlook"
@@ -12,6 +12,7 @@ $Outlook = New-Object -ComObject Outlook.Application
 $Namespace = $Outlook.GetNameSpace("MAPI")
 $Namespace.logon()
 $Namespace.SendAndReceive($TRUE)
+Sleep 15
 $inbox = $NameSpace.Folders.Item(1).Folders.Item('Inbox').Folders
 
 # Gets today's date and formats it

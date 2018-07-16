@@ -8,7 +8,16 @@ If (Test-Path -Path "toolstream.xls") {del "toolstream.xls"}
 . "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
 gc login.txt | ForEach-Object{Invoke-Expression $_}
 $LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\toolstream.xls"
-FTP-Download $RemoteFile $Username $Password $LocalFile
+Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
+Catch {
+	"FTP Issue 1/2, trying again"
+	Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
+	Catch {
+		"FTP Issue 2/2, Aborting Process"
+		Sleep 3
+		EXIT
+	}
+}
 
 "OpenAndSave.ps1"
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolStreamFeed\Scripts\OpenAndSave.ps1" /C

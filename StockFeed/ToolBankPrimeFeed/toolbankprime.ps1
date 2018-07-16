@@ -18,7 +18,16 @@ If (Test-Path -Path "toolbankprime.txt"){del toolbankprime.csv}
 . "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
 gc login.txt | ForEach-Object{Invoke-Expression $_}
 $LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts\toolbankprime.csv"
-FTP-Download $RemoteFile $Username $Password $LocalFile
+Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
+Catch {
+	"FTP Issue 1/2, trying again"
+	Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
+	Catch {
+		"FTP Issue 2/2, Aborting Process"
+		Sleep 3
+		EXIT
+	}
+}
 
 If ($result) {
   "SaveZero.ps1"
