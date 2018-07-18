@@ -1,4 +1,4 @@
-$Host.UI.RawUI.WindowTitle = "Outlook Scraper"
+$Host.UI.RawUI.WindowTitle = $title = "Outlook Scraper"
 Set-PSDebug -Trace 0
 If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -ErrorAction SilentlyContinue}
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force  -ErrorAction SilentlyContinue
@@ -42,28 +42,28 @@ foreach ($supplier in $inbox) {
               -or $attachment.filename.contains(".xls") `
               -or $attachment.filename.contains(".xlsx") `
               -or $attachment.filename.contains(".zip")) {
-                $supplier = $email.SenderName
-                $filename = $attachment.filename
+              $supplier = $email.SenderName
+              $filename = $attachment.filename
 
-                if ($supplierName -eq "Decco") {$filename = "decco.zip"; $run += "dc- "}
-                if ($supplierName -eq "Febi") {$filename = "febi.csv"; $run += "fi- "}
-                if ($supplierName -eq "FPS") {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"}
-                  $run += "fps- "
-                }
-                if ($supplierName -eq "KYB") {$filename = "kyb.csv"; $run += "kb- "}
-                if ($supplierName -eq "Mintex") {$filename = "mintex.zip"; $run += "mx- "}
-                if ($supplierName -eq "Tetrosyl") {$run += "tl- "}
-                if ($supplierName -eq "Workshop Warehouse") {$filename = "workshopwarehouse.xls"; $run += "ww- "}
+              if ($supplierName -eq "Decco") {$filename = "decco.zip"; $run += "dc- "}
+              if ($supplierName -eq "Febi") {$filename = "febi.csv"; $run += "fi- "}
+              if ($supplierName -eq "FPS") {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"}
+                $run += "fps- "
+              }
+              if ($supplierName -eq "KYB") {$filename = "kyb.csv"; $run += "kb- "}
+              if ($supplierName -eq "Mintex") {$filename = "mintex.zip"; $run += "mx- "}
+              if ($supplierName -eq "Tetrosyl") {$run += "tl- "}
+              if ($supplierName -eq "Workshop Warehouse") {$filename = "workshopwarehouse.xls"; $run += "ww- "}
 
-                echo ($filename + " saved from " + $supplier + " @ " + $email.receivedTime)
-                $filepath = (join-path $savefilepath $filename)
-                $attachment.saveasfile($filepath)
+              echo ($filename + " saved from " + $supplier + " @ " + $email.receivedTime)
+              $filepath = (join-path $savefilepath $filename)
+              $attachment.saveasfile($filepath)
 
-                $file = Get-Item $filepath
-                $file.LastWriteTime = $email.receivedTime
-                If ($args[0] -eq "-run"){
-                  $email.unread = $false
-                }
+              $file = Get-Item $filepath
+              $file.LastWriteTime = $email.receivedTime
+              If ($args[0] -eq "-run"){
+                $email.unread = $false
+              }
             }
           }
         }

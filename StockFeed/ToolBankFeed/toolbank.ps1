@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbank.txt" -Force
-$Host.UI.RawUI.WindowTitle = 'ToolBankFeed'
+$Host.UI.RawUI.WindowTitle = $title = 'ToolBankFeed'
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankFeed\Scripts"
 If (Test-Path -Path "toolbank.csv"){del toolbank.csv}
@@ -14,7 +14,9 @@ Catch {
 	"FTP Issue 1/2, trying again"
 	Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
 	Catch {
-		"FTP Issue 2/2, Aborting Process"
+		. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\PowerBullet.ps1"
+		Get-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
+			Foreach-Object {Send-PushMessage -Type Email -Recipient $_ -Title "FTP Issue" -msg "2nd Attempt at running $title FTP failed."}
 		Sleep 3
 		EXIT
 	}

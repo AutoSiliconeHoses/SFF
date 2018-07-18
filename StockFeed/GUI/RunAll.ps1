@@ -1,5 +1,5 @@
-$Host.UI.RawUI.WindowTitle = "StockFeed"
-
+$Host.UI.RawUI.WindowTitle = $title = "StockFeed"
+. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\PowerBullet.ps1"
 # Time check conditions
 $time = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
@@ -10,7 +10,7 @@ $PSprocess = Get-Process -Name 'powershell' | where {$_.mainWindowTitle -ne "Sto
 $XLprocess = Get-Process |? {$_.processname -eq 'excel'}
 
 # KILL TOGGLE
-#$working = $false
+$working = $false
 
 If (!$working) {
 	"WARNING: POWERSHELL SET TO KILL MODE OUTSIDE OF OFFICE HOURS"
@@ -21,9 +21,13 @@ If (!$working) {
 		"Killing other instances and logging."
 		Start-Sleep 3
 		Get-Process Powershell  | Where-Object { $_.ID -ne $pid }  | ForEach {
-			Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" ($_.mainWindowTitle)
+			$BadArgs += ($_.mainWindowTitle + ", ")
 			Stop-Process $_.id
 		}
+		#PushBullet & Log Files
+		Get-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
+			Foreach-Object {Send-PushMessage -Type Email -Recipient $_ -Title "Error" -msg "PowerShell did not finish while running $BadArgs"}
+		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" ($BadArgs)
 		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" (Get-Date)
 	}
 	If($XLprocess) {
@@ -102,6 +106,7 @@ If ($RunAll) {
 	Run-All Draper 'dp-'
 	Run-All HomeHardware 'hh-'
 	Run-All ToolBank 'tb-'
+	Run-All ToolBankPrime 'tbp-'
 	Run-All ToolStream 'ts-'
 }
 If (!$RunAll) {

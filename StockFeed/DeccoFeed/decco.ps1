@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSdecco.txt" -Force  -ErrorAction SilentlyContinue
-$Host.UI.RawUI.WindowTitle = "DeccoFeed"
+$Host.UI.RawUI.WindowTitle = $title = "DeccoFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
 If (Test-Path -Path decco.csv) {del decco.csv}

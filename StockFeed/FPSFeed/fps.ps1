@@ -1,6 +1,6 @@
 If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfps.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfps.txt" -ErrorAction SilentlyContinue}
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfps.txt" -Force  -ErrorAction SilentlyContinue
-$Host.UI.RawUI.WindowTitle = "FPSFeed"
+$Host.UI.RawUI.WindowTitle = $title = "FPSFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\Scripts"
 If (Test-Path -Path FPS_LEEDS.xlsx) {del FPS_LEEDS.xlsx}

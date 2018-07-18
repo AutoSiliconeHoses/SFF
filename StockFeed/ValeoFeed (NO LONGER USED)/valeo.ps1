@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSvaleo.txt" -Force
-$Host.UI.RawUI.WindowTitle = 'ValeoFeed'
+$Host.UI.RawUI.WindowTitle = $title = 'ValeoFeed'
 
 "Acquiring File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Valeo"

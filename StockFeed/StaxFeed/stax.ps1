@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSstax.txt" -Force
-$Host.UI.RawUI.WindowTitle = "StaxFeed"
+$Host.UI.RawUI.WindowTitle = $title = "StaxFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\Scripts"
 "Acquiring File"

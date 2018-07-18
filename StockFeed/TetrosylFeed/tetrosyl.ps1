@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStetrosyl.txt" -Force
-$Host.UI.RawUI.WindowTitle = "TetrosylFeed"
+$Host.UI.RawUI.WindowTitle = $title = "TetrosylFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
 If (Test-Path -Path 'tetrosyl.csv') {del tetrosyl.csv}

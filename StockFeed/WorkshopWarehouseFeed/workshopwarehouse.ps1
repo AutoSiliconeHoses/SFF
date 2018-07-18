@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSworkshopwarehouse.txt" -Force
-$Host.UI.RawUI.WindowTitle = "WorkshopWarehouseFeed"
+$Host.UI.RawUI.WindowTitle = $title = "WorkshopWarehouseFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts"
 If (Test-Path -Path workshopwarehouse.xls) {del workshopwarehouse.xls}

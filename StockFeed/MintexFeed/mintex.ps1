@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSmintex.txt" -Force  -ErrorAction SilentlyContinue
-$Host.UI.RawUI.WindowTitle = "MintexFeed"
+$Host.UI.RawUI.WindowTitle = $title = "MintexFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\Scripts"
 If (Test-Path -Path mintex.csv) {del mintex.csv}

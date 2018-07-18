@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSkyb.txt" -Force
-$Host.UI.RawUI.WindowTitle = "KYBFeed"
+$Host.UI.RawUI.WindowTitle = $title = "KYBFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\KYB"
 If (!(Test-Path -Path kyb.csv)) {

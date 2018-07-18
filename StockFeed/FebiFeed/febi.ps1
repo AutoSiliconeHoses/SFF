@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfebi.txt" -Force
-$Host.UI.RawUI.WindowTitle = "FebiFeed"
+$Host.UI.RawUI.WindowTitle = $title = "FebiFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts"
 If (Test-Path -Path febi.csv) {del febi.csv}

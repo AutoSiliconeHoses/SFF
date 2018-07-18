@@ -1,11 +1,11 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSstaxprime.txt" -Force
-$Host.UI.RawUI.WindowTitle = "StaxPrimeFeed"
+$Host.UI.RawUI.WindowTitle = $title = "StaxPrimeFeed"
 
 # Time check conditions
 $thistime = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
 $timecheck = (7 -le $thistime) -and ($thistime -lt 12)
-$daycheck = (1 -le $day) -and ($day -le 5)
+$daycheck = (1 -eq $day)
 $result = $timecheck -and $daycheck
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts"
