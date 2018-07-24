@@ -9,7 +9,7 @@ If (Test-Path -Path workshopwarehouse.xlsx) {del workshopwarehouse.xlsx}
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Workshop Warehouse"
 If (!(Test-Path -Path workshopwarehouse.xls)) {
 	"workshopwarehouse.xls has not been found and may have already been run."
-	Start-Sleep 2
+	sleep 2
 	EXIT
 }
 move workshopwarehouse.xls "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\WorkshopWarehouseFeed\Scripts"

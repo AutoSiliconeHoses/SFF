@@ -9,7 +9,7 @@ If (Test-Path -Path unzipped) {del unzipped -recurse}
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Mintex"
 If (!(Test-Path -Path mintex.zip)) {
 	"mintex.zip has not been found and may have already been run."
-	Start-Sleep 2
+	sleep 2
 	EXIT
 }
 move mintex.zip "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\Scripts"
@@ -21,7 +21,7 @@ If (Test-Path -Path mintex.zip) {del mintex.zip}
 
 "Renaming File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\Scripts\unzipped"
-Get-ChildItem *.csv | ForEach-Object {
+Get-ChildItem *.csv | % {
     Rename-Item -path $_.fullname -NewName "mintex.csv"
     move mintex.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\Scripts" -Force
 }

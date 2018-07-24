@@ -1,16 +1,17 @@
 $Host.UI.RawUI.WindowTitle = $title = "StockFeed"
-. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\PowerBullet.ps1"
 # Time check conditions
 $time = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
 $timecheck = (8 -le $time) -and ($time -lt 18)
 $daycheck = (1 -le $day) -and ($day -le 5)
 $working = $timecheck -and $daycheck
-$PSprocess = Get-Process -Name 'powershell' | where {$_.mainWindowTitle -ne "StockFeed"}
-$XLprocess = Get-Process |? {$_.processname -eq 'excel'}
+$PSprocess = ps -Name 'powershell' | ? {$_.mainWindowTitle -ne "StockFeed"}
+$XLprocess = ps |? {$_.processname -eq 'excel'}
+
+. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Error Reports\PowerBullet.ps1"
 
 # KILL TOGGLE
-$working = $false
+#$working = $false
 
 If (!$working) {
 	"WARNING: POWERSHELL SET TO KILL MODE OUTSIDE OF OFFICE HOURS"
@@ -19,22 +20,22 @@ If (!$working) {
 	If($PSprocess) {
 		"PowerShell Already Running. "
 		"Killing other instances and logging."
-		Start-Sleep 3
-		Get-Process Powershell  | Where-Object { $_.ID -ne $pid }  | ForEach {
+		sleep 3
+		ps Powershell  | ? { $_.ID -ne $pid }  | ForEach {
 			$BadArgs += ($_.mainWindowTitle + ", ")
 			Stop-Process $_.id
 		}
 		#PushBullet & Log Files
-		Get-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
-			Foreach-Object {Send-PushMessage -Type Email -Recipient $_ -Title "Error" -msg "PowerShell did not finish while running $BadArgs"}
+		gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
+			% {Send-PushMessage -Type Email -Recipient $_ -Title "Error" -msg "PowerShell did not finish while running $BadArgs"}
 		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" ($BadArgs)
 		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" (Get-Date)
 	}
 	If($XLprocess) {
 		"Excel Already Running. "
 		"Killing other instances and logging."
-		Start-Sleep 3
-		Get-Process |? {$_.processname -eq 'excel'}|%{stop-process $_.id}
+		sleep 3
+		ps | ? {$_.processname -eq 'excel'}| % {stop-process $_.id}
 		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\XLKillList.txt" (Get-Date)
 	}
 }
@@ -44,13 +45,13 @@ If ($working) {
 	$running = (Test-Path -Path '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp')
 	If ($running) {
 		"Someone else is running the system, please try again later"
-		Start-Sleep 3
+		sleep 3
 		Exit
 	}
 
 	If($PSprocess) {
 		"PowerShell Already Running."
-		Start-Sleep 3
+		sleep 3
 		EXIT
 	}
 }
@@ -79,7 +80,8 @@ Function Run-Supplier($supplier, $id) {
 	If ($argResult) {
 		"Loading $supplier"
 		$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
-		Start PowerShell $loadstring #-WindowStyle Hidden
+		$global:predicted++
+		Start PowerShell $loadstring -WindowStyle Hidden
 	}
 }
 
@@ -87,11 +89,14 @@ Function Run-Supplier($supplier, $id) {
 Function Run-All($supplier, $id) {
 	"Loading $supplier"
 	$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
+	$global:predicted++
 	Start PowerShell $loadstring -WindowStyle Hidden
 }
 
 #Changes arguement into a string that can be searched
 $argString = $args
+$actual = 0
+$predicted = 0
 
 "Welcome to the Stock File Fetcher Script (SFF). Don't click me.`n`n`n`n`n"
 
@@ -133,11 +138,11 @@ If (!$RunAll) {
 "Waiting for Scripts to finish"
 #Counts instances of PowerShell currently running apart from this one and updates user on the number
 $i = 0
-while (@(Get-Process | where-object {$_.ProcessName -like 'powershell'}).count -ne 1) {
+while (@(ps | ? {$_.ProcessName -like 'powershell'}).count -ne 1) {
   Write-Progress -Activity 'Running Scripts' -Status "Number of Scripts running: $i"
   sleep 1
-  If ((@(Get-Process | where-object {$_.ProcessName -like 'powershell'}).count - 1) -ne $i){
-    $i = @(Get-Process | where-object {$_.ProcessName -like 'powershell'}).count -1
+  If ((@(ps | ? {$_.ProcessName -like 'powershell'}).count - 1) -ne $i){
+    $i = @(ps | ? {$_.ProcessName -like 'powershell'}).count -1
   }
 }
 
@@ -146,6 +151,7 @@ $argResult = (String-Search $argstring "rp-") -or ($RunAll)
 if ($argResult) {
 	"Moving 'Constant' Files'"
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\replenish"
+	$global:predicted++
 	copy "replenish.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 }
 
@@ -155,14 +161,15 @@ Write-Progress -Activity 'Modification' -Status "Cleaning..."
 	$lead = $args[0]
 	"Replacing argreplace with $lead"
 	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
-	Foreach-Object {
+	% {
 	  $_
 	  (gc $_).replace("argreplace", $lead) | sc $_
+		$actual++
 	}
 
 	"Cleaning file"
 	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
-	Foreach-Object {
+	% {
 		$_
 	  (gc $_)| ?{$_.Trim(" `t")} | sc $_
 	}
@@ -173,8 +180,8 @@ Write-Progress -Activity 'Compiling' -Status "Compiled"
 $argResult = String-Search $argstring "op-"
 if ($argResult) {
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt | Where-Object {$_.name -NotMatch "replenish"} |
-  Foreach-Object {
+	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt | ? {$_.name -NotMatch "replenish"} |
+  % {
 		Start-Process excel $_ -Windowstyle maximized
   }
 }
@@ -185,10 +192,18 @@ if ($argResult) {
 	"Moving to Upload Folder"
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI"
 	$drive = gc STOCKMACHINE.txt
-	$drive | ForEach-Object{Invoke-Expression $_}
+	$drive | % {Invoke-Expression $_}
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
   copy *.txt "Y:\production\outgoing"
 	net use Y: /delete /y
+}
+
+#Checking if files are missing
+If ($actual -ne $global:predicted) {
+	"A file is missing, please check the log"
+	Sleep 3
+	gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
+		% {Send-PushMessage -Type Email -Recipient $_ -Title "Missing File" -msg "File/s missing while running $argString"}
 }
 
 #Removes RUNNING.tmp so other users can run the script
@@ -197,5 +212,5 @@ del '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp'
 #Stops timer, shows the user how long it took and closes after 2 seconds
 $timer.Stop()
 $timer.Elapsed.Minutes.ToString() + "m " + $timer.Elapsed.Seconds.ToString() + "s"
-Start-Sleep 2
+sleep 2
 Stop-Transcript

@@ -8,7 +8,7 @@ If (Test-Path -Path kilen.csv) {del kilen.csv}
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Kilen"
 If (!(Test-Path -Path kilen.csv)) {
 	"kilen.csv has not been found and may have already been run."
-	Start-Sleep 2
+	sleep 2
 	EXIT
 }
 move kilen.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\Scripts"

@@ -10,7 +10,7 @@ If (Test-Path -Path 'tetrosyl.csv') {del tetrosyl.csv}
 gc *.csv | sc tetrosyl.csv
 If (!(Test-Path -Path tetrosyl.csv)) {
 	"tetrosyl.csv has not been found and may have already been run."
-	Start-Sleep 2
+	sleep 2
 	EXIT
 }
 move tetrosyl.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"

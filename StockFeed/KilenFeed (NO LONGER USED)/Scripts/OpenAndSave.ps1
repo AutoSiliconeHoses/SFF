@@ -8,7 +8,7 @@ $wrkbkilen.Save()
 $filekilen = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\Scripts\knreference.xlsx'
 $wrkbkilen = $exclkilen.Workbooks.Open($filekilen)
 $worksheet = $wrkbkilen.Worksheets.Item(1)
-$columns = 1, 2, 3, 4, 5, 6
+$columns = 1..6
 $worksheet.UsedRange.Removeduplicates($columns)
 $wrkbkilen.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\kilen.txt", -4158)
 

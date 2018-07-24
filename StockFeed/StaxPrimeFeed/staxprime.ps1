@@ -1,12 +1,15 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSstaxprime.txt" -Force
 $Host.UI.RawUI.WindowTitle = $title = "StaxPrimeFeed"
 
-# Time check conditions
+#Time check conditions
 $thistime = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
 $timecheck = (7 -le $thistime) -and ($thistime -lt 12)
 $daycheck = (1 -eq $day)
-$result = $timecheck -and $daycheck
+$working = $timecheck -and $daycheck
+
+#Force
+$working = $FALSE
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts"
 "Acquiring File"
@@ -23,12 +26,12 @@ If (Test-Path -Path staxprime.txt) {del staxprime.txt}
 "Processing File"
 "timecheck = $timecheck"
 "daycheck = $daycheck"
-"result = $result"
-If ($result) {
+"working = $working"
+If ($working) {
   "SaveZero.ps1"
   & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\SaveZero.ps1" /C
 }
-If (!$result) {
+If (!$working) {
   "OpenAndSave.ps1"
   & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\OpenAndSave.ps1" /C
 }

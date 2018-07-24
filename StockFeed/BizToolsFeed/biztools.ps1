@@ -6,7 +6,7 @@ If (Test-Path -Path "biztools.csv"){del biztools.csv}
 
 "Acquiring File"
 . "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
-gc login.txt | ForEach-Object{Invoke-Expression $_}
+gc login.txt | % {Invoke-Expression $_}
 
 $LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\BizToolsFeed\Scripts\biztools.csv"
 Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
@@ -14,9 +14,9 @@ Catch {
 	"FTP Issue 1/2, trying again"
 	Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
 	Catch {
-		. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\PowerBullet.ps1"
-		Get-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
-			Foreach-Object {Send-PushMessage -Type Email -Recipient $_ -Title "FTP Issue" -msg "2nd Attempt at running $title FTP failed."}
+		. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Error Reports\PowerBullet.ps1"
+		gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
+			% {Send-PushMessage -Type Email -Recipient $_ -Title "FTP Issue" -msg "2nd Attempt at running $title FTP failed."}
 		Sleep 3
 		EXIT
 	}

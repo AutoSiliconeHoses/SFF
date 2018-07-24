@@ -72,12 +72,12 @@ foreach ($supplier in $inbox) {
   }
 }
 # Stop Outlook
-$Outlook = Get-Process outlook -ErrorAction SilentlyContinue
+$Outlook = ps outlook -ErrorAction SilentlyContinue
 $Outlook.CloseMainWindow()
 While ($Outlook) {
   $Outlook.CloseMainWindow()
   Sleep 2
-  $Outlook = Get-Process outlook -ErrorAction SilentlyContinue
+  $Outlook = ps outlook -ErrorAction SilentlyContinue
 }
 Remove-Variable Outlook
 
@@ -86,10 +86,10 @@ If ($args[0] -eq "-run"){
     $run = "4 " + $run + "up-"
     "Args: "+$run
     "Booting RunAll"
-    Start-Sleep 2
+    sleep 2
     $loadString = "& '\\Diskstation\Feeds\Stock File Fetcher\StockFeed\GUI\RunAll.ps1' $run"
   	Start PowerShell $loadstring
   }
-  If ([String]::IsNullOrEmpty($run)) {"No new emails found"; Start-Sleep 3}
+  If ([String]::IsNullOrEmpty($run)) {"No new emails found"; sleep 3}
 }
 Stop-Transcript

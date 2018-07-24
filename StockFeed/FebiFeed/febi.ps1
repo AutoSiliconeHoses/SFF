@@ -8,7 +8,7 @@ If (Test-Path -Path febi.csv) {del febi.csv}
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Febi"
 If (!(Test-Path -Path febi.csv)) {
 	"febi.csv has not been found and may have already been run."
-	Start-Sleep 2
+	sleep 2
 	EXIT
 }
 move febi.csv "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts"

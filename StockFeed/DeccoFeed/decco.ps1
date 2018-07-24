@@ -10,7 +10,7 @@ If (Test-Path -Path unzipped) {del unzipped -recurse}
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\Decco"
 If (!(Test-Path -Path decco.zip)) {
 	"decco.zip has not been found and may have already been run."
-	Start-Sleep 2
+	sleep 2
 	EXIT
 }
 move decco.zip "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"
@@ -23,7 +23,7 @@ If (Test-Path -Path decco.zip) {del decco.zip}
 
 "Renaming File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\unzipped"
-Get-ChildItem *.xls | ForEach-Object{
+Get-ChildItem *.xls | % {
     $a=$_.fullname
     $b="decco.xml"
     Rename-Item -path $a -NewName $b
