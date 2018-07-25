@@ -18,7 +18,7 @@ del *.txt
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
 If (Test-Path -Path tlmacro2.xlsm) {del tlmacro2.xlsm}
-copy tlmacro.xlsm tlmacro2.xlsm
+cp tlmacro.xlsm tlmacro2.xlsm
 
 "Processing File"
 "OpenAndSave.ps1"

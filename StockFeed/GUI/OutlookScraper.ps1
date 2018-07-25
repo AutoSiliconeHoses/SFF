@@ -4,7 +4,7 @@ If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transc
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force  -ErrorAction SilentlyContinue
 
 #Open Outlook
-Start-Process 'Outlook' -WindowStyle Hidden -ErrorAction SilentlyContinue -ArgumentList '/profile "Stocks" '
+saps 'Outlook' -WindowStyle Hidden -ErrorAction SilentlyContinue -ArgumentList '/profile "Stocks" '
 
 # Creates MAPI workspace
 Add-Type -Assembly "Microsoft.Office.Interop.Outlook"
@@ -12,7 +12,7 @@ $Outlook = New-Object -ComObject Outlook.Application
 $Namespace = $Outlook.GetNameSpace("MAPI")
 $Namespace.logon()
 $Namespace.SendAndReceive($TRUE)
-Sleep 15
+sleep 15
 $inbox = $NameSpace.Folders.Item(1).Folders.Item('Inbox').Folders
 
 # Gets today's date and formats it
@@ -45,11 +45,13 @@ foreach ($supplier in $inbox) {
               $supplier = $email.SenderName
               $filename = $attachment.filename
 
+							If ($args[0] -eq "-run"){
+								$email.unread = $false
+							}
+
               if ($supplierName -eq "Decco") {$filename = "decco.zip"; $run += "dc- "}
               if ($supplierName -eq "Febi") {$filename = "febi.csv"; $run += "fi- "}
-              if ($supplierName -eq "FPS") {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"}
-                $run += "fps- "
-              }
+              if ($supplierName -eq "FPS") {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"} $run += "fps- "}
               if ($supplierName -eq "KYB") {$filename = "kyb.csv"; $run += "kb- "}
               if ($supplierName -eq "Mintex") {$filename = "mintex.zip"; $run += "mx- "}
               if ($supplierName -eq "Tetrosyl") {$run += "tl- "}
@@ -61,9 +63,6 @@ foreach ($supplier in $inbox) {
 
               $file = Get-Item $filepath
               $file.LastWriteTime = $email.receivedTime
-              If ($args[0] -eq "-run"){
-                $email.unread = $false
-              }
             }
           }
         }
@@ -76,10 +75,10 @@ $Outlook = ps outlook -ErrorAction SilentlyContinue
 $Outlook.CloseMainWindow()
 While ($Outlook) {
   $Outlook.CloseMainWindow()
-  Sleep 2
+  sleep 2
   $Outlook = ps outlook -ErrorAction SilentlyContinue
 }
-Remove-Variable Outlook
+rv Outlook
 
 If ($args[0] -eq "-run"){
   If (!([String]::IsNullOrEmpty($run))) {

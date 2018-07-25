@@ -3,7 +3,7 @@ $excel.DisplayAlerts = $false
 
   $file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\staxprime.csv"
   $workbook = $excel.Workbooks.Open($file)
-    $worksheet = $excel.sheets.item(1)
+    $worksheet = $workbook.sheets.item(1)
       $range = $worksheet.UsedRange
       $rows = $range.Rows.Count - 3
       $extendrange = "A2:F$rows"

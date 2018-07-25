@@ -6,7 +6,7 @@ If (Test-Path -Path "sealey.xlsx"){del sealey.xlsx}
 
 "Acquiring File"
 . "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
-gc login.txt | % {Invoke-Expression $_}
+gc login.txt | % {iex $_}
 $LocalFile = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\SealeyFeed\Scripts\sealey.xlsx"
 Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
 Catch {
@@ -16,7 +16,7 @@ Catch {
 		. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Error Reports\PowerBullet.ps1"
 		gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
 			% {Send-PushMessage -Type Email -Recipient $_ -Title "FTP Issue" -msg "2nd Attempt at running $title FTP failed."}
-		Sleep 3
+		sleep 3
 		EXIT
 	}
 }

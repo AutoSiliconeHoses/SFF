@@ -5,8 +5,8 @@ $Host.UI.RawUI.WindowTitle = $title = "StaxPrimeFeed"
 $thistime = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
 $timecheck = (7 -le $thistime) -and ($thistime -lt 12)
-$daycheck = (1 -eq $day)
-$working = $timecheck -and $daycheck
+$daycheck = (1 -le $day) -and ($day -le 5)
+$result = $timecheck -and $daycheck
 
 #Force
 $working = $FALSE

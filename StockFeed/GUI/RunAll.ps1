@@ -23,20 +23,20 @@ If (!$working) {
 		sleep 3
 		ps Powershell  | ? { $_.ID -ne $pid }  | ForEach {
 			$BadArgs += ($_.mainWindowTitle + ", ")
-			Stop-Process $_.id
+			spps $_.id
 		}
 		#PushBullet & Log Files
 		gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
 			% {Send-PushMessage -Type Email -Recipient $_ -Title "Error" -msg "PowerShell did not finish while running $BadArgs"}
-		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" ($BadArgs)
-		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" (Get-Date)
+		ac "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" ($BadArgs)
+		ac "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" (Get-Date)
 	}
 	If($XLprocess) {
 		"Excel Already Running. "
 		"Killing other instances and logging."
 		sleep 3
-		ps | ? {$_.processname -eq 'excel'}| % {stop-process $_.id}
-		Add-Content "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\XLKillList.txt" (Get-Date)
+		ps | ? {$_.processname -eq 'excel'}| % {spps $_.id}
+		ac "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\XLKillList.txt" (Get-Date)
 	}
 }
 
@@ -65,12 +65,12 @@ Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Tra
 New-Item -Path '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp'
 
 #Clear system variables and start timer
-Remove-Variable * -ErrorAction SilentlyContinue
+rv * -ErrorAction SilentlyContinue
 $timer = [system.diagnostics.stopwatch]::StartNew()
 
 #Checks a string for target
 Function String-Search($string, $target) {
-	$result = Select-string -pattern $target -InputObject $string
+	$result = sls -pattern $target -InputObject $string
 	If ($result) {return $true}
 }
 
@@ -120,6 +120,7 @@ If (!$RunAll) {
 	Run-Supplier Draper 'dp-'
 	Run-Supplier Febi 'fi-'
 	Run-Supplier FPS 'fps-'
+	Run-Supplier FPSPrime 'fpsp-'
 	Run-Supplier HomeHardware 'hh-'
 	Run-Supplier KYB 'kb-'
 	Run-Supplier Mintex 'mx-'
@@ -152,7 +153,7 @@ if ($argResult) {
 	"Moving 'Constant' Files'"
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\replenish"
 	$global:predicted++
-	copy "replenish.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+	cp "replenish.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 }
 
 "Modifying and cleaning files"
@@ -160,7 +161,7 @@ Write-Progress -Activity 'Modification' -Status "Cleaning..."
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 	$lead = $args[0]
 	"Replacing argreplace with $lead"
-	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
+	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
 	% {
 	  $_
 	  (gc $_).replace("argreplace", $lead) | sc $_
@@ -168,7 +169,7 @@ Write-Progress -Activity 'Modification' -Status "Cleaning..."
 	}
 
 	"Cleaning file"
-	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
+	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
 	% {
 		$_
 	  (gc $_)| ?{$_.Trim(" `t")} | sc $_
@@ -180,9 +181,9 @@ Write-Progress -Activity 'Compiling' -Status "Compiled"
 $argResult = String-Search $argstring "op-"
 if ($argResult) {
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-	Get-ChildItem "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt | ? {$_.name -NotMatch "replenish"} |
+	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt | ? {$_.name -NotMatch "replenish"} |
   % {
-		Start-Process excel $_ -Windowstyle maximized
+		saps excel $_ -Windowstyle maximized
   }
 }
 
@@ -192,16 +193,16 @@ if ($argResult) {
 	"Moving to Upload Folder"
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI"
 	$drive = gc STOCKMACHINE.txt
-	$drive | % {Invoke-Expression $_}
+	$drive | % {iex $_}
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-  copy *.txt "Y:\production\outgoing"
+  cp *.txt "Y:\production\outgoing"
 	net use Y: /delete /y
 }
 
 #Checking if files are missing
 If ($actual -ne $global:predicted) {
 	"A file is missing, please check the log"
-	Sleep 3
+	sleep 3
 	gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
 		% {Send-PushMessage -Type Email -Recipient $_ -Title "Missing File" -msg "File/s missing while running $argString"}
 }

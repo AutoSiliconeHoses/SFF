@@ -91,7 +91,7 @@ process{
                     fileType  = $FileType
                 }
 
-                $attempt = Invoke-WebRequest -Uri $uploadRequestURL -Credential $cred -Method Post -Body $UploadRequest -ErrorAction SilentlyContinue
+                $attempt = wget -Uri $uploadRequestURL -Credential $cred -Method Post -Body $UploadRequest -ErrorAction SilentlyContinue
                 If ($attempt.StatusCode -eq "200"){Write-Verbose "Upload Request OK"}
                 else {Write-Warning "error encountered, check `$Uploadattempt for more info"
                         $global:Uploadattempt = $attempt}
@@ -101,7 +101,7 @@ process{
                 #Have to append the file data to the Upload request
                 $UploadApproval | Add-Member -Name "file" -MemberType NoteProperty -Value ([System.IO.File]::ReadAllBytes((get-item C:\TEMP\upload.txt).FullName))
 
-                Invoke-WebRequest -Uri $uploads -Method Post -Body $UploadApproval -ErrorAction SilentlyContinue
+                wget -Uri $uploads -Method Post -Body $UploadApproval -ErrorAction SilentlyContinue
                 }
             Else {
                 $body = @{
@@ -118,10 +118,10 @@ process{
             }
     }
 
-    write-debug "Test-value of `$body before it gets passed to Invoke-WebRequest"
+    write-debug "Test-value of `$body before it gets passed to wget"
 
     #Here is where it is sent
-    $Sendattempt = Invoke-WebRequest -Uri $PushURL -Credential $cred -Method Post -Body $body -ErrorAction SilentlyContinue
+    $Sendattempt = wget -Uri $PushURL -Credential $cred -Method Post -Body $body -ErrorAction SilentlyContinue
 
     If ($Sendattempt.StatusCode -eq "200"){Write-Verbose "OK"}
         else {Write-Warning "error encountered, check `$attempt for more info"

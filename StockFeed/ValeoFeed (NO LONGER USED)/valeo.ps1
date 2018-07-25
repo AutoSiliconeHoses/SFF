@@ -8,7 +8,7 @@ If (!(Test-Path -Path "VALEO_stock.csv")) {
 	sleep 2
 	EXIT
 }
-copy "VALEO_stock.csv" "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\Scripts"
+cp "VALEO_stock.csv" "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\Scripts"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ValeoFeed\Scripts"
 "Processing File"

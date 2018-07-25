@@ -9,7 +9,7 @@ If (Test-Path "$folderpath\Input\PROCESSING*.txt") {
 #Tests for missing file
 If (!(Test-Path "$folderpath\Input\PROCESSING*.txt")) {
   "No File Found"
-	Sleep 3
+	sleep 3
   EXIT
 }
 
@@ -20,7 +20,7 @@ If (Test-Path "$folderpath\Output\Errors.txt") {del "$folderpath\Output\Errors.t
 
 #Splits the messages like Moses, Errors and Warnings
 If ((gc "$folderpath\Output\Out.txt" | % {$_ -match "Error`t" -or "Warning`t"}) -contains $true) {
-    gc "$folderpath\Output\Out.txt" | ? {$_ -match "Error`t"} | ? {$_.trim() -ne "" } | sc "$folderpath\Output\Errors.txt"
-    gc "$folderpath\Output\Out.txt" | ? {$_ -match "Warning`t"} | ? {$_.trim() -ne "" } | sc "$folderpath\Output\Warnings.txt"
+    gc "$folderpath\Output\Out.txt" | ? {$_ -match "Error`t"} | ? {$_.trim() -ne ""} | sc "$folderpath\Output\Errors.txt"
+    gc "$folderpath\Output\Out.txt" | ? {$_ -match "Warning`t"} | ? {$_.trim() -ne ""} | sc "$folderpath\Output\Warnings.txt"
     If (Test-Path "$folderpath\Output\Out.txt") {del "$folderpath\Output\Out.txt"}
 }

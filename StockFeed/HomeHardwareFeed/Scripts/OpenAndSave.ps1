@@ -19,7 +19,7 @@ $excel.DisplayAlerts = $FALSE
   $workbook.Saved = $True
 
   cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
-  copy hhmacro.xlsm hhmacro2.xlsm
+  cp hhmacro.xlsm hhmacro2.xlsm
 
   $file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts\hhmacro2.xlsm"
   $workbook = $excel.Workbooks.Open($file)

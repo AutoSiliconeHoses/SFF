@@ -19,7 +19,7 @@ $excel.DisplayAlerts = $FALSE
   $workbook.Saved = $True
 
   cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
-  copy tlmacro.xlsm tlmacro2.xlsm
+  cp tlmacro.xlsm tlmacro2.xlsm
 
   "`ttlmacro2.xlsm"
   $file = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\tlmacro2.xlsm'

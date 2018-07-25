@@ -23,7 +23,7 @@ $excel.DisplayAlerts = $FALSE
   $workbook.Saved = $True
 
   cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
-  copy dcmacro.xlsm dcmacro2.xlsm
+  cp dcmacro.xlsm dcmacro2.xlsm
 
   "`tdcmacro2.xlsm"
   $file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\Scripts\dcmacro2.xlsm"

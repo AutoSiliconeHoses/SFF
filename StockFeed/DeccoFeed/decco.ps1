@@ -23,10 +23,10 @@ If (Test-Path -Path decco.zip) {del decco.zip}
 
 "Renaming File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\unzipped"
-Get-ChildItem *.xls | % {
+gci *.xls | % {
     $a=$_.fullname
     $b="decco.xml"
-    Rename-Item -path $a -NewName $b
+    ren -path $a -NewName $b
 }
 
 move decco.xml "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\Scripts" -Force
@@ -34,7 +34,7 @@ cd ..\
 If (Test-Path -Path unzipped) {del unzipped -recurse}
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
 If (Test-Path -Path dcmacro2.xlsm) {del dcmacro2.xlsm}
-copy dcmacro.xlsm dcmacro2.xlsm
+cp dcmacro.xlsm dcmacro2.xlsm
 
 "Processing File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
