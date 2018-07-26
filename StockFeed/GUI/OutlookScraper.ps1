@@ -52,6 +52,7 @@ foreach ($supplier in $inbox) {
               if ($supplierName -eq "Decco") {$filename = "decco.zip"; $run += "dc- "}
               if ($supplierName -eq "Febi") {$filename = "febi.csv"; $run += "fi- "}
               if ($supplierName -eq "FPS") {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"} $run += "fps- "}
+              if ($supplierName -eq "FPS Prime") {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"}}
               if ($supplierName -eq "KYB") {$filename = "kyb.csv"; $run += "kb- "}
               if ($supplierName -eq "Mintex") {$filename = "mintex.zip"; $run += "mx- "}
               if ($supplierName -eq "Tetrosyl") {$run += "tl- "}

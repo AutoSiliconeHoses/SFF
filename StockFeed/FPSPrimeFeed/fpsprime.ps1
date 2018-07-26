@@ -12,7 +12,7 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSPrimeFeed\Scripts"
 If (Test-Path -Path FPS_LEEDS.xlsx) {del FPS_LEEDS.xlsx}
 
 "Acquiring File"
-copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\FPS\FPS_LEEDS.xlsx" "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSPrimeFeed\Scripts" -ErrorAction SilentlyContinue
+copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Dropzone\FPS Prime\FPS_LEEDS.xlsx" "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSPrimeFeed\Scripts" -ErrorAction SilentlyContinue
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSPrimeFeed\Scripts"
 If (!(Test-Path -Path FPS_LEEDS.xlsx)) {"FPS_LEEDS.xlsx has not been found and may have already been run."}
