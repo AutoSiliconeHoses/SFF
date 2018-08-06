@@ -36,6 +36,9 @@ If (!$working) {
   & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\OpenAndSave.ps1" /C
 }
 
+"Cleaning File"
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt').replace("724835-SX-PRIME`t`t`t`t.+`targreplace", "724835-SX-PRIME`t`t`t`t0`targreplace") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
+
 "Moving File to Upload folder"
 move staxprime.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 Stop-Transcript
