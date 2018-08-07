@@ -8,6 +8,8 @@ $timecheck = (7 -le $thistime) -and ($thistime -lt 12)
 $daycheck = (1 -le $day) -and ($day -le 5)
 $result = $timecheck -and $daycheck
 
+#$result = $TRUE
+
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\Scripts"
 If (Test-Path -Path "Availability20D.csv"){del Availability20D.csv}
 If (Test-Path -Path "toolbankprimestock.csv"){del toolbankprimestock.csv}

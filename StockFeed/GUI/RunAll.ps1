@@ -5,7 +5,7 @@ $day = (Get-Date).DayOfWeek.Value__
 $timecheck = (8 -le $time) -and ($time -lt 18)
 $daycheck = (1 -le $day) -and ($day -le 5)
 $working = $timecheck -and $daycheck
-$PSprocess = ps -Name 'powershell' | ? {$_.mainWindowTitle -ne "StockFeed"}
+#$PSprocess = ps -Name 'powershell' | ? {$_.mainWindowTitle -ne "StockFeed"}
 $XLprocess = ps |? {$_.processname -eq 'excel'}
 
 . "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Error Reports\PowerBullet.ps1"
@@ -16,7 +16,6 @@ $XLprocess = ps |? {$_.processname -eq 'excel'}
 If (!$working) {
 	"WARNING: POWERSHELL SET TO KILL MODE OUTSIDE OF OFFICE HOURS"
 
-	#Kill other PowerShell instances
 	If($PSprocess) {
 		"PowerShell Already Running. "
 		"Killing other instances and logging."
@@ -31,6 +30,7 @@ If (!$working) {
 		ac "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" ($BadArgs)
 		ac "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" (Get-Date)
 	}
+
 	If($XLprocess) {
 		"Excel Already Running. "
 		"Killing other instances and logging."
@@ -41,18 +41,11 @@ If (!$working) {
 }
 
 If ($working) {
-	#Check to see if other systems are running the script or if the script has failed on last run
 	$running = (Test-Path -Path '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp')
 	If ($running) {
 		"Someone else is running the system, please try again later"
 		sleep 3
 		Exit
-	}
-
-	If($PSprocess) {
-		"PowerShell Already Running."
-		sleep 3
-		EXIT
 	}
 }
 
@@ -79,18 +72,22 @@ Function Run-Supplier($supplier, $id) {
 	$argResult = String-Search $argString $id
 	If ($argResult) {
 		"Loading $supplier"
-		$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
+		# $loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
+		$loadString = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1"
 		$global:predicted++
-		Start PowerShell $loadstring -WindowStyle Hidden
+		#Start PowerShell $loadstring -WindowStyle Hidden
+		Start-Job -Name ($supplier) -FilePath ($loadString) | Out-Null
 	}
 }
 
 #Runs supplier when given name and ID
 Function Run-All($supplier, $id) {
 	"Loading $supplier"
-	$loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
+	# $loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
+	$loadString = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1"
 	$global:predicted++
-	Start PowerShell $loadstring -WindowStyle Hidden
+	# Start PowerShell $loadstring -WindowStyle Hidden
+	Start-Job -Name ($supplier) -FilePath ($loadString) | Out-Null
 }
 
 #Changes arguement into a string that can be searched
@@ -105,6 +102,7 @@ cd '\\DISKSTATION\Feeds\Stock File Fetcher\Upload'
 If (Test-Path -Path *.txt) {del *.txt}
 
 "Loading Supplier Scripts"
+$jobs = @()
 $RunAll = String-Search $argString all-
 If ($RunAll) {
 	Run-All BizTools 'bz-'
@@ -124,7 +122,7 @@ If (!$RunAll) {
 	Run-Supplier HomeHardware 'hh-'
 	Run-Supplier KYB 'kb-'
 	Run-Supplier Mintex 'mx-'
-	Run-Supplier Sealey 'sy-'.
+	#Run-Supplier Sealey 'sy-'.
 	Run-Supplier Stax 'sx-'.
 	Run-Supplier StaxPrime 'sxp-'
 	Run-Supplier Tetrosyl 'tl-'
@@ -137,15 +135,7 @@ If (!$RunAll) {
 "Finished loading supplier scripts"
 
 "Waiting for Scripts to finish"
-#Counts instances of PowerShell currently running apart from this one and updates user on the number
-$i = 0
-while (@(ps | ? {$_.ProcessName -like 'powershell'}).count -ne 1) {
-  Write-Progress -Activity 'Running Scripts' -Status "Number of Scripts running: $i"
-  sleep 1
-  If ((@(ps | ? {$_.ProcessName -like 'powershell'}).count - 1) -ne $i){
-    $i = @(ps | ? {$_.ProcessName -like 'powershell'}).count -1
-  }
-}
+Wait-Job * -timeout 300 | Out-Null
 
 #Adds the warehouse stock file to the upload folder
 $argResult = (String-Search $argstring "rp-") -or ($RunAll)
@@ -161,16 +151,14 @@ Write-Progress -Activity 'Modification' -Status "Cleaning..."
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 	$lead = $args[0]
 	"Replacing argreplace with $lead"
-	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
-	% {
+	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt | % {
 	  $_
 	  (gc $_).replace("argreplace", $lead) | sc $_
 		$actual++
 	}
 
 	"Cleaning file"
-	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |
-	% {
+	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |	% {
 		$_
 	  (gc $_)| ?{$_.Trim(" `t")} | sc $_
 	}
@@ -181,8 +169,7 @@ Write-Progress -Activity 'Compiling' -Status "Compiled"
 $argResult = String-Search $argstring "op-"
 if ($argResult) {
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt | ? {$_.name -NotMatch "replenish"} |
-  % {
+	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt | ? {$_.name -NotMatch "replenish"} | % {
 		saps excel $_ -Windowstyle maximized
   }
 }
@@ -191,12 +178,12 @@ if ($argResult) {
 $argResult = String-Search $argstring "up-"
 if ($argResult) {
 	"Moving to Upload Folder"
-	cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI"
-	$drive = gc STOCKMACHINE.txt
-	$drive | % {iex $_}
+	# cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI"
+	# $drive = gc STOCKMACHINE.txt
+	# $drive | % {iex $_}
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-  cp *.txt "Y:\production\outgoing"
-	net use Y: /delete /y
+  cp *.txt "\\STOCKMACHINE\AmazonTransport\production\outgoing"
+	# net use Y: /delete /y
 }
 
 #Checking if files are missing

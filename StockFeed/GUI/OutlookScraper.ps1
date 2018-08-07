@@ -83,6 +83,7 @@ rv Outlook
 
 If ($args[0] -eq "-run"){
   If (!([String]::IsNullOrEmpty($run))) {
+		$run = ($run -split ' ' | Select -Unique) -join ' '
     $run = "4 " + $run + "up-"
     "Args: "+$run
     "Booting RunAll"

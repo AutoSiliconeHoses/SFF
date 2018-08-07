@@ -5,7 +5,7 @@ $excel.DisplayAlerts = $FALSE
   $workbook = $excel.Workbooks.Open($file)
     $worksheet = $workbook.sheets.item(1)
       $range = $worksheet.UsedRange
-      $rows = $range.Rows.Count -1
+      $rows = $range.Rows.Count - 1
       $extendrange = "A2:F$rows"
   $workbook.Save()
   $workbook.Saved = $True

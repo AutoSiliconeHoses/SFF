@@ -8,6 +8,8 @@ $timecheck = (7 -le $thistime) -and ($thistime -lt 12)
 $daycheck = (1 -le $day) -and ($day -le 5)
 $working = $timecheck -and $daycheck
 
+$working = $FALSE
+
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSPrimeFeed\Scripts"
 If (Test-Path -Path FPS_LEEDS.xlsx) {del FPS_LEEDS.xlsx}
 
