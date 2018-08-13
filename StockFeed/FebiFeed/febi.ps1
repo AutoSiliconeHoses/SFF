@@ -21,6 +21,7 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts"
 
 "Moving File to Upload folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed"
-move febi.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-If (Test-Path -Path febi.txt) {del febi.txt}
+If (Test-Path -Path "\\DISKSTATION\Feeds\Dropship\Scripts\FI\FI.txt") {del "\\DISKSTATION\Feeds\Dropship\Scripts\FI\FI.txt"}
+copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt" "\\DISKSTATION\Feeds\Dropship\Scripts\FI\FI.txt"
+move "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\febi.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 Stop-Transcript

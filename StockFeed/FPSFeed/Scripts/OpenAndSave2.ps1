@@ -42,6 +42,7 @@ $excel.DisplayAlerts = $FALSE
     $columns = 1..6
     $worksheet.UsedRange.Removeduplicates($columns)
   $workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fps_stock.txt", -4158)
+	# $workbook.SaveAs("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fps_stock.csv", 6)
   $workbook.Save()
   $workbook.Saved = $True
   $workbook.Close()

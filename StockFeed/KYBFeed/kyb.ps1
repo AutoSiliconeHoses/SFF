@@ -19,5 +19,7 @@ If (Test-Path -Path kyb.txt) {del kyb.txt}
 
 "Moving File to Upload folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed"
-move kyb.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+If (Test-Path -Path "\\DISKSTATION\Feeds\Dropship\Scripts\KB\KB.txt") {del "\\DISKSTATION\Feeds\Dropship\Scripts\KB\KB.txt"}
+copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\kyb.txt" "\\DISKSTATION\Feeds\Dropship\Scripts\KB\KB.txt"
+move "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KYBFeed\kyb.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 Stop-Transcript

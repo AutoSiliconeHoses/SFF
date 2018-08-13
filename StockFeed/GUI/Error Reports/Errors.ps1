@@ -1,16 +1,11 @@
 $folderpath = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Error Reports"
 cd $folderpath
+Del "$folderpath\Output\*"
 
 #Filters reports of common errors and moves to seperate file
-If (Test-Path "$folderpath\Input\PROCESSING*.txt") {
-  gc "$folderpath\Input\PROCESSING*.txt" | ? {$_ -notmatch "13013`t"} | ? {$_.trim() -ne "" } | sc "$folderpath\Output\Out.txt"
-}
-
-#Tests for missing file
-If (!(Test-Path "$folderpath\Input\PROCESSING*.txt")) {
-  "No File Found"
-	sleep 3
-  EXIT
+gci "$folderpath\Input\PROCESSING*.txt" | % {
+	$_.Name
+	gc $_.Fullname | ? {$_ -notmatch "13013`t"} | ? {$_.trim() -ne "" } | Add-Content "$folderpath\Output\Out.txt"
 }
 
 #Cleans up files

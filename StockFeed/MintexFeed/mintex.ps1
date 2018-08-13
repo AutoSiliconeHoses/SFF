@@ -37,5 +37,7 @@ If (Test-Path -Path unzipped) {del unzipped -recurse}
 
 "Moving File to Upload folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed"
-move mintex.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+If (Test-Path -Path "\\DISKSTATION\Feeds\Dropship\Scripts\MX\MX.txt") {del "\\DISKSTATION\Feeds\Dropship\Scripts\MX\MX.txt"}
+copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\mintex.txt" "\\DISKSTATION\Feeds\Dropship\Scripts\MX\MX.txt"
+move "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\mintex.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 Stop-Transcript

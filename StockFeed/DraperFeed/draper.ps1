@@ -13,7 +13,7 @@ Catch {
 	"FTP Issue 1/2, trying again"
 	Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
 	Catch {
-		. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Error Reports\PowerBullet.ps1"
+		. "\\Diskstation\Feeds\SDK\Scripts\PowerBullet.ps1"
 		gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
 			% {Send-PushMessage -Type Email -Recipient $_ -Title "FTP Issue" -msg "2nd Attempt at running $title FTP failed."}
 		sleep 3
@@ -30,5 +30,7 @@ Catch {
 
 "Moving File to Upload folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed"
-move draper.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+If (Test-Path -Path "\\DISKSTATION\Feeds\Dropship\Scripts\DP\DP.txt") {del "\\DISKSTATION\Feeds\Dropship\Scripts\DP\DP.txt"}
+copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\draper.txt" "\\DISKSTATION\Feeds\Dropship\Scripts\DP\DP.txt"
+move "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\draper.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 Stop-Transcript

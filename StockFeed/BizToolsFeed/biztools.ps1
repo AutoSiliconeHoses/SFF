@@ -14,7 +14,7 @@ Catch {
 	"FTP Issue 1/2, trying again"
 	Try {FTP-Download $RemoteFile $Username $Password $LocalFile}
 	Catch {
-		. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Error Reports\PowerBullet.ps1"
+		. "\\Diskstation\Feeds\SDK\Scripts\PowerBullet.ps1"
 		gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
 			% {Send-PushMessage -Type Email -Recipient $_ -Title "FTP Issue" -msg "2nd Attempt at running $title FTP failed."}
 		sleep 3

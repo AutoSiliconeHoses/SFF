@@ -37,8 +37,9 @@ If (!$working) {
 }
 
 "Cleaning File"
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt').replace("724835-SX-PRIME`t`t`t`t.+`targreplace", "724835-SX-PRIME`t`t`t`t0`targreplace") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
-
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "724835-SX-PRIME`t`t`t`t.+", "724835-SX-PRIME`t`t`t`t0" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "674085-SX-PRIME`t`t`t`t.+", "674085-SX-PRIME`t`t`t`t50" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "366501-SX-PRIME`t`t`t`t.+", "366501-SX-PRIME`t`t`t`t50" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
 "Moving File to Upload folder"
 move staxprime.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 Stop-Transcript

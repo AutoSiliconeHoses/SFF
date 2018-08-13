@@ -8,7 +8,7 @@ $working = $timecheck -and $daycheck
 #$PSprocess = ps -Name 'powershell' | ? {$_.mainWindowTitle -ne "StockFeed"}
 $XLprocess = ps |? {$_.processname -eq 'excel'}
 
-. "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Error Reports\PowerBullet.ps1"
+. "\\Diskstation\Feeds\SDK\Scripts\PowerBullet.ps1"
 
 # KILL TOGGLE
 #$working = $false

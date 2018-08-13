@@ -18,9 +18,13 @@ If (Test-Path -Path stax.txt) {del stax.txt}
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\Scripts\OpenAndSave.ps1" /C
 
 "Cleaning File"
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt').replace("724835-SX`t`t`t`t.+`targreplace", "724835-SX`t`t`t`t0`targreplace") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt') -replace "724835-SX`t`t`t`t.+", "724835-SX`t`t`t`t0`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt') -replace "674085-SX`t`t`t`t.+", "674085-SX`t`t`t`t50`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt') -replace "366501-SX`t`t`t`t.+", "366501-SX`t`t`t`t50`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
 #(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt')|?{$_.Trim(" `t")}|sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
 
 "Moving File to Upload folder"
-move stax.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+If (Test-Path -Path "\\DISKSTATION\Feeds\Dropship\Scripts\SX\SX.txt") {del "\\DISKSTATION\Feeds\Dropship\Scripts\SX\SX.txt"}
+copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt" "\\DISKSTATION\Feeds\Dropship\Scripts\SX\SX.txt"
+move "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 Stop-Transcript
