@@ -4,7 +4,7 @@ $Host.UI.RawUI.WindowTitle = $title = 'ToolBankPrimeFeed'
 # Time check conditions
 $thistime = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
-$timecheck = (7 -le $thistime) -and ($thistime -lt 12)
+$timecheck = (7 -le $thistime) -and ($thistime -lt 8)
 $daycheck = (1 -le $day) -and ($day -le 5)
 $result = $timecheck -and $daycheck
 
