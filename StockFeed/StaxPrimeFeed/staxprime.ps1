@@ -1,12 +1,12 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSstaxprime.txt" -Force
 $Host.UI.RawUI.WindowTitle = $title = "StaxPrimeFeed"
 
-#Time check conditions
+# Time check conditions
 $thistime = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
 $timecheck = (7 -le $thistime) -and ($thistime -lt 8)
 $daycheck = (1 -le $day) -and ($day -le 5)
-$result = $timecheck -and $daycheck
+$working = $timecheck -and $daycheck
 
 #Force
 # $working = $FALSE
@@ -40,6 +40,9 @@ If (!$working) {
 (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "724835-SX-PRIME`t`t`t`t.+", "724835-SX-PRIME`t`t`t`t0" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
 (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "674085-SX-PRIME`t`t`t`t.+", "674085-SX-PRIME`t`t`t`t50" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
 (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "366501-SX-PRIME`t`t`t`t.+", "366501-SX-PRIME`t`t`t`t50" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "346965-SX-PRIME`t`t`t`t.+", "346965-SX-PRIME`t`t`t`t0" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "434887-SX-PRIME`t`t`t`t.+", "346965-SX-PRIME`t`t`t`t0" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
+
 "Moving File to Upload folder"
 move staxprime.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 Stop-Transcript

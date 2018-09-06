@@ -1,7 +1,7 @@
 $excel = New-Object -ComObject Excel.Application
 $excel.DisplayAlerts = $false
 
-  $file =  "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\draper.csv"
+  $file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\draper.csv"
   $workbook = $excel.Workbooks.Open($file)
     $worksheet = $workbook.sheets.item(1)
       $range = $worksheet.UsedRange
@@ -10,7 +10,7 @@ $excel.DisplayAlerts = $false
   $workbook.Save()
   $workbook.Saved = $True
 
-  $file =  "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\dpreference.xlsx"
+  $file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperFeed\Scripts\dpreference.xlsx"
   $workbook = $excel.Workbooks.Open($file)
     $worksheet = $workbook.Worksheets.Item(1)
     $worksheet.Rows("3:" + $worksheet.Rows.Count).EntireRow.Delete

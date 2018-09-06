@@ -21,6 +21,8 @@ If (Test-Path -Path stax.txt) {del stax.txt}
 (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt') -replace "724835-SX`t`t`t`t.+", "724835-SX`t`t`t`t0`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
 (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt') -replace "674085-SX`t`t`t`t.+", "674085-SX`t`t`t`t50`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
 (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt') -replace "366501-SX`t`t`t`t.+", "366501-SX`t`t`t`t50`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt') -replace "346965-SX`t`t`t`t.+", "346965-SX`t`t`t`t0`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
+(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt') -replace "434887-SX`t`t`t`t.+", "346965-SX`t`t`t`t0`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
 #(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt')|?{$_.Trim(" `t")}|sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
 
 "Moving File to Upload folder"
