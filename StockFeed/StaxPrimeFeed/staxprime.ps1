@@ -1,10 +1,14 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSstaxprime.txt" -Force
 $Host.UI.RawUI.WindowTitle = $title = "StaxPrimeFeed"
 
+Function alter($sku,$edit) {
+  (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
+}
+
 # Time check conditions
 $thistime = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
-$timecheck = (7 -le $thistime) -and ($thistime -lt 8)
+$timecheck = (7 -le $thistime) -and ($thistime -lt 12)
 $daycheck = (1 -le $day) -and ($day -le 5)
 $working = $timecheck -and $daycheck
 
@@ -37,12 +41,21 @@ If (!$working) {
 }
 
 "Cleaning File"
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "724835-SX-PRIME`t`t`t`t.+", "724835-SX-PRIME`t`t`t`t0" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "674085-SX-PRIME`t`t`t`t.+", "674085-SX-PRIME`t`t`t`t50" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "366501-SX-PRIME`t`t`t`t.+", "366501-SX-PRIME`t`t`t`t50" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "346965-SX-PRIME`t`t`t`t.+", "346965-SX-PRIME`t`t`t`t0" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
-(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "434887-SX-PRIME`t`t`t`t.+", "346965-SX-PRIME`t`t`t`t0" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'
+# TODO iterate through a file and alter for each
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
+#alter "724835-SX-PRIME" 0
+#alter "366501-SX-PRIME" 50
+#alter "346965-SX-PRIME" 0
 
-"Moving File to Upload folder"
-move staxprime.txt "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+"Moving Files to Upload folder"
+If ($working) {
+  "Merging sxmaszero.txt"
+  copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxmaszero.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed"
+  gc staxprime.txt,sxmaszero.txt | sc "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\staxprime.txt"
+}
+If (!$working) {
+  "Merging sxmas.txt"
+  copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxmas.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed"
+  gc staxprime.txt,sxmas.txt | sc "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\staxprime.txt"
+}
 Stop-Transcript

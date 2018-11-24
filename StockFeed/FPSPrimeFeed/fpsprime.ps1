@@ -4,7 +4,7 @@ $Host.UI.RawUI.WindowTitle = $title = "FPSPrimeFeed"
 
 $thistime = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
-$timecheck = (7 -le $thistime) -and ($thistime -lt 8)
+$timecheck = (7 -le $thistime) -and ($thistime -lt 12)
 $daycheck = (1 -le $day) -and ($day -le 5)
 $working = $timecheck -and $daycheck
 

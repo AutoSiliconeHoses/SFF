@@ -1,4 +1,4 @@
-$Host.UI.RawUI.WindowTitle = $title = "Outlook Scraper"
+Host.UI.RawUI.WindowTitle = $title = "Outlook Scraper"
 Set-PSDebug -Trace 0
 If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -ErrorAction SilentlyContinue}
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force  -ErrorAction SilentlyContinue
@@ -50,6 +50,7 @@ foreach ($supplier in $inbox) {
 							}
 
               if ($supplierName -eq "Decco") {$filename = "decco.zip"; $run += "dc- "}
+              if ($supplierName -eq "Decco Prime") {$filename = "deccoprime.zip"}
               if ($supplierName -eq "Febi") {$filename = "febi.csv"; $run += "fi- "}
               if ($supplierName -eq "FPS") {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"} $run += "fps- "}
               if ($supplierName -eq "FPS Prime") {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"}}

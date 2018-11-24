@@ -107,7 +107,6 @@ $RunAll = String-Search $argString all-
 If ($RunAll) {
 	Run-All BizTools 'bz-'
 	Run-All Draper 'dp-'
-	Run-All DraperPrime 'dpp-'
 	Run-All HomeHardware 'hh-'
 	Run-All ToolBank 'tb-'
 	Run-All ToolBankPrime 'tbp-'
@@ -116,6 +115,7 @@ If ($RunAll) {
 If (!$RunAll) {
 	Run-Supplier BizTools 'bz-'
 	Run-Supplier Decco 'dc-'
+	Run-Supplier DeccoPrime 'dcp-'
 	Run-Supplier Draper 'dp-'
 	Run-Supplier DraperPrime 'dpp-'
 	Run-Supplier Febi 'fi-'
