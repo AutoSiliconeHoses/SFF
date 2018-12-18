@@ -23,10 +23,6 @@ If (Test-Path -Path stax.txt) {del stax.txt}
 
 "Cleaning File"
 Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
-#alter "724835-SX" 0
-#alter "366501-SX" 50
-#alter "346965-SX" 0
-#(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt')|?{$_.Trim(" `t")}|sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxFeed\stax.txt'
 
 "Moving File to Upload folder"
 If (Test-Path -Path "\\DISKSTATION\Feeds\Dropship\Scripts\SX\SX.txt") {del "\\DISKSTATION\Feeds\Dropship\Scripts\SX\SX.txt"}

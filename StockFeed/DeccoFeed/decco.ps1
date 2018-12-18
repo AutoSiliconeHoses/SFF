@@ -1,6 +1,10 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSdecco.txt" -Force  -ErrorAction SilentlyContinue
 $Host.UI.RawUI.WindowTitle = $title = "DeccoFeed"
 
+Function alter($sku,$edit) {
+  (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt'
+}
+
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\Scripts"
 If (Test-Path -Path decco.csv) {del decco.csv}
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"
@@ -13,7 +17,7 @@ If (!(Test-Path -Path decco.zip)) {
 	sleep 2
 	EXIT
 }
-move decco.zip "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"
+copy decco.zip "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"
 
 "Extracting File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"
@@ -43,9 +47,7 @@ If (Test-Path -Path decco.xml) {del decco.xml}
 
 "Cleaning File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"
-# (gc 'decco.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'decco.txt'
-# (gc 'decco.txt').replace("FALSE-DC`t`t`t`t0`targreplace", "") | sc 'decco.txt'
-# (gc 'decco.txt')|?{$_.Trim(" `t")}| sc 'decco.txt'
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
 
 "Moving File to Upload folder"
 # If (Test-Path -Path "\\DISKSTATION\Feeds\Dropship\Scripts\DC\DC.txt") {del "\\DISKSTATION\Feeds\Dropship\Scripts\DC\DC.txt"}

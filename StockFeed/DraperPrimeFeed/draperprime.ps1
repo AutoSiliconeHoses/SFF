@@ -1,6 +1,10 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSdraperprime.txt" -Force
 $Host.UI.RawUI.WindowTitle = $title = 'DraperPrimeFeed'
 
+Function alter($sku,$edit) {
+  (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperPrimeFeed\draperprime.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperPrimeFeed\draperprime.txt'
+}
+
 # Time check conditions
 $thistime = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
@@ -41,6 +45,7 @@ If ($result) {
 
 "Cleaning File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperPrimeFeed"
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
 # (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperPrimeFeed\draperprime.txt').replace("FALSE`t`t`t`t0", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperPrimeFeed\draperprime.txt'
 # (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperPrimeFeed\draperprime.txt')|?{$_.Trim(" `t")} | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperPrimeFeed\draperprime.txt'
 

@@ -1,6 +1,10 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSsealey.txt" -Force
 $Host.UI.RawUI.WindowTitle = $title = 'SealeyFeed'
 
+Function alter($sku,$edit) {
+  (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\SealeyFeed\sealey.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\SealeyFeed\sealey.txt'
+}
+
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\SealeyFeed\Scripts"
 If (Test-Path -Path "sealey.xlsx"){del sealey.xlsx}
 
@@ -23,6 +27,9 @@ Catch {
 
 "OpenAndSave.ps1"
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\SealeyFeed\Scripts\OpenAndSave.ps1" /C
+
+"Cleaning File"
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
 
 "Moving File to Upload folder"
 If (Test-Path -Path "\\DISKSTATION\Feeds\Dropship\Scripts\SY\SY.txt") {del "\\DISKSTATION\Feeds\Dropship\Scripts\SY\SY.txt"}

@@ -1,6 +1,11 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbankprime.txt" -Force
 $Host.UI.RawUI.WindowTitle = $title = 'ToolBankPrimeFeed'
 
+
+Function alter($sku,$edit) {
+  (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
+}
+
 # Time check conditions
 $thistime = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
@@ -44,6 +49,7 @@ If (!$result) {
 
 "Cleaning File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed"
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
 # (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt').replace("FALSE`t`t`t`t0", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
 # (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt')|?{$_.Trim(" `t")} | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolBankPrimeFeed\toolbankprime.txt'
 

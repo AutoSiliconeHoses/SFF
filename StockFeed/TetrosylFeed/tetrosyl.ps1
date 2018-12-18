@@ -1,6 +1,10 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStetrosyl.txt" -Force
 $Host.UI.RawUI.WindowTitle = $title = "TetrosylFeed"
 
+Function alter($sku,$edit) {
+  (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
+}
+
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts"
 If (Test-Path -Path 'tetrosyl.csv') {del tetrosyl.csv}
 
@@ -25,7 +29,8 @@ cp tlmacro.xlsm tlmacro2.xlsm
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\Scripts\OpenAndSave.ps1" /C
 
 # cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed"
-# "Cleaning File"
+"Cleaning File"
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
 # (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
 # (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt').replace("?-TL`t`t`t`t0`targreplace", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'
 # (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt')|?{$_.Trim(" `t")}| sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\TetrosylFeed\tetrosyl.txt'

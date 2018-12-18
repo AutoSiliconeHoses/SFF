@@ -41,11 +41,7 @@ If (!$working) {
 }
 
 "Cleaning File"
-# TODO iterate through a file and alter for each
 Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
-#alter "724835-SX-PRIME" 0
-#alter "366501-SX-PRIME" 50
-#alter "346965-SX-PRIME" 0
 
 "Moving Files to Upload folder"
 If ($working) {

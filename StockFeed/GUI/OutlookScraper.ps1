@@ -1,4 +1,4 @@
-Host.UI.RawUI.WindowTitle = $title = "Outlook Scraper"
+$Host.UI.RawUI.WindowTitle = $title = "Outlook Scraper"
 Set-PSDebug -Trace 0
 If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -ErrorAction SilentlyContinue}
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force  -ErrorAction SilentlyContinue
@@ -16,6 +16,7 @@ sleep 15
 $inbox = $NameSpace.Folders.Item(1).Folders.Item('Inbox').Folders
 
 # Gets today's date and formats it
+$Yesterday = (Get-Date).AddDays(-1).tostring("yyyy-MM-dd")
 $Today = (Get-Date).tostring("yyyy-MM-dd")
 echo ($Today)
 

@@ -2,6 +2,11 @@ FPSIf (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Tra
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfps.txt" -Force  -ErrorAction SilentlyContinue
 $Host.UI.RawUI.WindowTitle = $title = "FPSFeed"
 
+Function alter($sku,$edit) {
+  (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fps_leeds.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fps_leeds.txt'
+  (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fps_stock.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fps_stock.txt'
+}
+
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\Scripts"
 If (Test-Path -Path FPS_LEEDS.xlsx) {del FPS_LEEDS.xlsx}
 If (Test-Path -Path FPS_STOCK.csv) {del FPS_STOCK.csv}
@@ -29,6 +34,9 @@ If (Test-Path -Path FPS_STOCK.csv) {
 
 # cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed"
 # gc fps_stock.scv,fps_leeds.csv | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fps_complete.csv'
+
+"Cleaning File"
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
 
 If (Test-Path -Path FPS_STOCK.csv) {del FPS_STOCK.csv}
 If (Test-Path -Path fps_leeds.txt) {del fps_leeds.txt}

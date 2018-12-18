@@ -2,6 +2,10 @@ If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transc
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfpsprime.txt" -Force  -ErrorAction SilentlyContinue
 $Host.UI.RawUI.WindowTitle = $title = "FPSPrimeFeed"
 
+Function alter($sku,$edit) {
+  (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fpsleedsprime.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fpsleedsprime.txt'
+}
+
 $thistime = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
 $timecheck = (7 -le $thistime) -and ($thistime -lt 12)
@@ -31,6 +35,9 @@ If (Test-Path -Path FPS_LEEDS.xlsx) {
 }
 
 If (Test-Path -Path FPS_LEEDS.txt) {del FPS_LEEDS.txt}
+
+"Cleaning File"
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
 
 "Moving File to Upload folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSPrimeFeed"

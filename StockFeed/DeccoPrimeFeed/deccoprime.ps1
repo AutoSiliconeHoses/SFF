@@ -20,13 +20,17 @@ If (!(Test-Path -Path deccoprime.zip)) {
 	sleep 2
 	EXIT
 }
-move deccoprime.zip "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed"
+copy deccoprime.zip "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed"
 
 "Extracting File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed"
 
 Expand-Archive "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed\deccoprime.zip" -DestinationPath "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed\unzipped" -Force
 If (Test-Path -Path deccoprime.zip) {del deccoprime.zip}
+
+Function alter($sku,$edit) {
+  (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed\deccoprime.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed\deccoprime.txt'
+}
 
 "Renaming File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed\unzipped"
@@ -40,8 +44,8 @@ move deccoprime.xml "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrime
 cd ..\
 If (Test-Path -Path unzipped) {del unzipped -recurse}
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed\Scripts"
-If (Test-Path -Path dcmacro2.xlsm) {del dcmacro2.xlsm}
-cp dcmacro.xlsm dcmacro2.xlsm
+If (Test-Path -Path dcpmacro2.xlsm) {del dcpmacro2.xlsm}
+cp dcpmacro.xlsm dcpmacro2.xlsm
 
 "Processing File"
 "timecheck = $timecheck"
@@ -59,6 +63,7 @@ If (Test-Path -Path deccoprime.xml) {del deccoprime.xml}
 
 "Cleaning File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed"
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
 # (gc 'deccoprime.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'deccoprime.txt'
 # (gc 'deccoprime.txt').replace("FALSE-DC`t`t`t`t0`targreplace", "") | sc 'deccoprime.txt'
 # (gc 'deccoprime.txt')|?{$_.Trim(" `t")}| sc 'deccoprime.txt'

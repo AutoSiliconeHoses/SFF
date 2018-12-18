@@ -1,6 +1,10 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANShh.txt" -Force
 $Host.UI.RawUI.WindowTitle = $title = "HomeHardwareFeed"
 
+Function alter($sku,$edit) {
+  (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
+}
+
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\Scripts"
 "Acquiring Files"
 . "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\ftp.ps1"
@@ -51,6 +55,7 @@ If (Test-Path -Path hhmacro2.xlsm) {del hhmacro2.xlsm}
 "Cleaning file"
 $textfile = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
 (gc $textfile).replace("FALSE`t`t`t`t0`targreplace", "").replace("-HH`t`t`t`t0`targreplace", "").replace("stock_no-HH`t`t`t`t50`targreplace", "") | sc $textfile
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
 
 "Cleaning folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed"
