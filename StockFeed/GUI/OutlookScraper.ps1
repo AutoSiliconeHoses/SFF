@@ -50,15 +50,17 @@ foreach ($supplier in $inbox) {
 								$email.unread = $false
 							}
 
-              if ($supplierName -eq "Decco") {$filename = "decco.zip"; $run += "dc- "}
-              if ($supplierName -eq "Decco Prime") {$filename = "deccoprime.zip"}
-              if ($supplierName -eq "Febi") {$filename = "febi.csv"; $run += "fi- "}
-              if ($supplierName -eq "FPS") {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"} $run += "fps- "}
-              if ($supplierName -eq "FPS Prime") {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"}}
-              if ($supplierName -eq "KYB") {$filename = "kyb.csv"; $run += "kb- "}
-              if ($supplierName -eq "Mintex") {$filename = "mintex.zip"; $run += "mx- "}
-              if ($supplierName -eq "Tetrosyl") {$run += "tl- "}
-              if ($supplierName -eq "Workshop Warehouse") {$filename = "workshopwarehouse.xls"; $run += "ww- "}
+              switch ($supplierName) {
+                "Decco" {$filename = "decco.zip"; $run += "dc- "}
+                "Decco Prime" {$filename = "deccoprime.zip"}
+                "Febi" {$filename = "febi.csv"; $run += "fi- "}
+                "FPS" {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"} $run += "fps- "}
+                "FPS Prime" {If ($filename -like '*LEEDS*') {$filename = "FPS_LEEDS.xlsx"}}
+                "KYB" {$filename = "kyb.csv"; $run += "kb- "}
+                "Mintex" {$filename = "mintex.zip"; $run += "mx- "}
+                "Tetrosyl" {$run += "tl- "}
+                "Workshop Warehouse" {$filename = "workshopwarehouse.xls"; $run += "ww- "}
+              }
 
               echo ($filename + " saved from " + $supplier + " @ " + $email.receivedTime)
               $filepath = (join-path $savefilepath $filename)
