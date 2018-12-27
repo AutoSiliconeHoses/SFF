@@ -44,14 +44,6 @@ If (!$working) {
 Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
 
 "Moving Files to Upload folder"
-If ($working) {
-  "Merging sxmaszero.txt"
-  copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxmaszero.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed"
-  gc staxprime.txt,sxmaszero.txt | sc "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\staxprime.txt"
-}
-If (!$working) {
-  "Merging sxmas.txt"
-  copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\Scripts\sxmas.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed"
-  gc staxprime.txt,sxmas.txt | sc "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\staxprime.txt"
-}
+gc staxprime.txt | sc "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\staxprime.txt"
+
 Stop-Transcript

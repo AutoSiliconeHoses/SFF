@@ -109,7 +109,10 @@ If ($RunAll) {
 	Run-All Draper 'dp-'
 	Run-All HomeHardware 'hh-'
 	Run-All ToolBank 'tb-'
-	Run-All ToolBankPrime 'tbp-'
+
+	#Prime Disabled for Holiday Period
+	#Run-All ToolBankPrime 'tbp-'
+
 	Run-All ToolStream 'ts-'
 }
 If (!$RunAll) {
@@ -133,8 +136,6 @@ If (!$RunAll) {
 	Run-Supplier ToolStream 'ts-'
 	Run-Supplier WorkshopWarehouse 'ww-'
 }
-
-"Finished loading supplier scripts"
 
 "Waiting for Scripts to finish"
 Wait-Job * -timeout 300 | Out-Null
