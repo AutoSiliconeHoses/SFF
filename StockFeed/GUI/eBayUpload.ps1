@@ -1,5 +1,5 @@
-#TODO: Get Gib to use the folders with the names
-#TODO: See how some commands feel about the CSV headers
+#NOTE: No data is being added, just sits there.
+#TODO: Try working on a supplier by supplier basis. Essentially loads of micro-processes
 
 function BinarySearch {
    Param ($YourOrderedArray, $ItemSearched)
@@ -26,33 +26,47 @@ function BinarySearch {
 function CreateStockfile ($store) {
   #Load Files into RAM
   $FileA = Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\StoreFiles\$store.csv" | Sort-Object CustomLabel
-  $FileB = Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Fullstock\fullstock.csv" -delimiter "`t" | Sort-Object sku
 
   #Setup Output file location
-  $FileCPath = "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\eBay\Updated\" + $storeName
+  $FileCPath = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $store + ".csv"
   If (Test-Path $FileCPath) {del $FileCPath}
   "Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8),ItemID,SiteID,Quantity,Relationship,RelationshipDetails,CustomLabel" | Add-Content $FileCPath
 
   #Build File Data
   ForEach($lineA in $FileA) {
-      BinarySearch -YourOrderedArray $FileB.sku -ItemSearched $lineA.CustomLabel
+      BinarySearch -YourOrderedArray $AmazonStock.sku -ItemSearched $lineA.CustomLabel
       If ($ItemFound -eq $True) {
-          $lineC = "{0},{1},{2},{3},{4},{5},{6}`n" -f $lineA.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)',$lineA.ItemID,$lineA.SiteID,$FileB[$MiddlePoint].quantity,$lineA.Relationship,$lineA.RelationshipDetails,$lineA.CustomLabel
-          $FileC += $lineC
+          $lineC = "{0},{1},{2},{3},{4},{5},{6}" -f $lineA.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)',$lineA.ItemID,$lineA.SiteID,$AmazonStock[$MiddlePoint].quantity,$lineA.Relationship,$lineA.RelationshipDetails,$lineA.CustomLabel
+          #$FileC += $lineC
+          $lineC | Add-Content $FileCPath
       }
   }
   #Add Data to File
-  $FileC | Add-Content $FileCPath
+  #$FileC | Add-Content $FileCPath
 }
 
-If (Test-Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Fullstock\fullstock.csv") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Fullstock\fullstock.csv"}
-Import-CSV (gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -filter "*.txt").Fullname -delimiter "`t" | Sort-Object sku | Export-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Fullstock\fullstock.csv" -NoTypeInformation
+"Creating Sorted Combined File"
+#NOTE: Reliable, but slow
+If (Test-Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\Fullstock\fullstock.csv") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\Fullstock\fullstock.csv"}
+Import-CSV (gci "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock" -filter "*.txt").Fullname -delimiter "`t" | Sort-Object sku | Export-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\Fullstock\fullstock.csv" -NoTypeInformation
+$AmazonStock = Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\Fullstock\fullstock.csv" -delimiter "`t" | Sort-Object sku
 
 $StoreList = Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\StoreList.csv" | Select-Object -skip 1
 Foreach ($store in $StoreList) {
   $store.'Store Email'
-  CreateStockfile $store.'Store Code'
+  #Start-Job -Name ($store.'Store Code') -Scriptblock {
+    #TODO: Put into a Job with a wait at the end
+    "`tProcessing..."
+    CreateStockfile $store.'Store Code'
 
-  $result = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Results\$store.'Store Code'.csv"
-  curl -k -o $result -F "token=$store.Token" -F "file=@$store.csv" https://bulksell.ebay.com/ws/eBayISAPI.dll?FileExchangeUpload
+    $result = '"\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\UploadResults\' + $store.'Store Code' + '.csv"'
+    $token = '"token=' + $store.Token + '"'
+    $file = '"file=@' + $store.'Store Code' + '.csv"'
+    "`tUploading..."
+    #curl.exe -k -o $result -F $token -F $file https://bulksell.ebay.com/ws/eBayISAPI.dll?FileExchangeUpload
+  #} | Out-Null
 }
+
+"Waiting for completion..."
+Wait-Job * -timeout 900 | Out-Null
+"Done"
