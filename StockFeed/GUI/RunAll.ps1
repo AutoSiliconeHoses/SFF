@@ -5,7 +5,6 @@ $day = (Get-Date).DayOfWeek.Value__
 $timecheck = (8 -le $time) -and ($time -lt 18)
 $daycheck = (1 -le $day) -and ($day -le 5)
 $working = $timecheck -and $daycheck
-#$PSprocess = ps -Name 'powershell' | ? {$_.mainWindowTitle -ne "StockFeed"}
 $XLprocess = ps |? {$_.processname -eq 'excel'}
 
 . "\\Diskstation\Feeds\SDK\Scripts\PowerBullet.ps1"
@@ -15,21 +14,6 @@ $XLprocess = ps |? {$_.processname -eq 'excel'}
 
 If (!$working) {
 	"WARNING: POWERSHELL SET TO KILL MODE OUTSIDE OF OFFICE HOURS"
-
-	If($PSprocess) {
-		"PowerShell Already Running. "
-		"Killing other instances and logging."
-		sleep 3
-		ps Powershell  | ? { $_.ID -ne $pid }  | ForEach {
-			$BadArgs += ($_.mainWindowTitle + ", ")
-			spps $_.id
-		}
-		#PushBullet & Log Files
-		gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
-			% {Send-PushMessage -Type Email -Recipient $_ -Title "Error" -msg "PowerShell did not finish while running $BadArgs"}
-		ac "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" ($BadArgs)
-		ac "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\PSKillList.txt" (Get-Date)
-	}
 
 	If($XLprocess) {
 		"Excel Already Running. "
