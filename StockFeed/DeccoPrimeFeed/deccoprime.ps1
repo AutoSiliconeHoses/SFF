@@ -64,12 +64,7 @@ If (Test-Path -Path deccoprime.xml) {del deccoprime.xml}
 "Cleaning File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed"
 Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
-# (gc 'deccoprime.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc 'deccoprime.txt'
-# (gc 'deccoprime.txt').replace("FALSE-DC`t`t`t`t0`targreplace", "") | sc 'deccoprime.txt'
-# (gc 'deccoprime.txt')|?{$_.Trim(" `t")}| sc 'deccoprime.txt'
 
 "Moving File to Upload folder"
-# If (Test-Path -Path "\\DISKSTATION\Feeds\Dropship\Scripts\DC\DC.txt") {del "\\DISKSTATION\Feeds\Dropship\Scripts\DC\DC.txt"}
-# copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed\deccoprime.txt" "\\DISKSTATION\Feeds\Dropship\Scripts\DC\DC.txt"
 move "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed\deccoprime.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 Stop-Transcript

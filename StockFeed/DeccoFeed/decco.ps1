@@ -50,7 +50,5 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"
 Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
 
 "Moving File to Upload folder"
-# If (Test-Path -Path "\\DISKSTATION\Feeds\Dropship\Scripts\DC\DC.txt") {del "\\DISKSTATION\Feeds\Dropship\Scripts\DC\DC.txt"}
-# copy "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt" "\\DISKSTATION\Feeds\Dropship\Scripts\DC\DC.txt"
 move "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 Stop-Transcript

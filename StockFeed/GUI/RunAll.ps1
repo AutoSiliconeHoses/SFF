@@ -93,10 +93,7 @@ If ($RunAll) {
 	Run-All Draper 'dp-'
 	Run-All HomeHardware 'hh-'
 	Run-All ToolBank 'tb-'
-
-	#Prime Disabled for Holiday Period
-	#Run-All ToolBankPrime 'tbp-'
-
+	Run-All ToolBankPrime 'tbp-'
 	Run-All ToolStream 'ts-'
 }
 If (!$RunAll) {

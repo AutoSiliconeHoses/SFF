@@ -1,5 +1,5 @@
 $excel = New-Object -ComObject "Excel.Application"
-$excel.DisplayAlerts = $FALSE
+$excel.DisplayAlerts = $False
 
   $file = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DraperPrimeFeed\Scripts\draperprime.csv"
   $workbook = $excel.Workbooks.Open($file)

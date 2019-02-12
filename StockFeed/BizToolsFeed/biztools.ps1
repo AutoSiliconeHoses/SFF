@@ -30,10 +30,8 @@ Catch {
 "OpenAndSave.ps1"
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\BizToolsFeed\Scripts\OpenAndSave.ps1" /C
 
-# "Cleaning File"
 "Cleaning File"
 Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
-#(gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\BizToolsFeed\biztools.txt').replace("FALSE`t`t`t`t0`targreplace", "") | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\BizToolsFeed\biztools.txt'
 
 "Moving File to Upload folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\BizToolsFeed"
