@@ -36,7 +36,10 @@ $functions = {
         #Header Check
         If ($lineA.Quantity -eq "" -and $lineA.Relationship -eq "") {$lastHeader = $lineA; $checked = $false}
 
-        BinarySearch -YourOrderedArray $FileB.sku -ItemSearched $lineA.CustomLabel
+        #Clean Sku ready for search
+        $lineAClean = $lineA.CustomLabel -replace "[\|#].*",""
+
+        BinarySearch -YourOrderedArray $FileB.sku -ItemSearched $lineAClean
         If ($ItemFound -eq $True) {
           #Drop-down Check
           If ($lineA.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)' -eq "") {
