@@ -39,6 +39,12 @@ $functions = {
         #Clean Sku ready for search
         $lineAClean = $lineA.CustomLabel -replace "[\|#].*",""
 
+        #TODO: Due to TL skus actually being TEX, we need to change it before searching
+        #NOTE: This can use the same temporary variable
+        #Convert TEX to TL
+        If($supplier -eq "tetrosyl"){
+          $lineAClean = $lineAClean -replace "-TEX","-TL"
+        }
         BinarySearch -YourOrderedArray $FileB.sku -ItemSearched $lineAClean
         If ($ItemFound -eq $True) {
           #Drop-down Check
@@ -76,6 +82,13 @@ Foreach ($store in $StoreList) {
         $amazonFile = $args[1]
         CreateStockfile $store.'Store Code' $amazonFile
 
+        #Upload to FileExchange
+        #TODO: Edit this code to fit where it needs to
+        # $result = '"\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\UploadResults\'+ $store.'Store Code' + "-" + $amazonFile +'-RESULT.txt"'
+        # $token = '"token=' + $store.Token + '"'
+        # $file = '"file=@' + "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $store.'Store Code' + "-" + $amazonFile + '.csv"'
+        #"`tUploading..."
+        "curl.exe -k -o $result -F $token -F $file https://bulksell.ebay.com/ws/eBayISAPI.dll?FileExchangeUpload" | Add-Content $result
       } -ArgumentList $store,$amazonFile.basename | Out-Null
     }
   }
@@ -85,11 +98,3 @@ Foreach ($store in $StoreList) {
 "Waiting for completion..."
 Wait-Job * -timeout 300 | Out-Null
 "Done"
-
-#Upload to FileExchange
-#TODO: Edit this code to fit where it needs to
-# $result = '"\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\UploadResults\'+ $store.'Store Code' + "-" + $amazonFile +'-RESULT.txt"'
-# $token = '"token=' + $store.Token + '"'
-# $file = '"file=@' + "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $store.'Store Code' + "-" + $amazonFile + '.csv"'
-#"`tUploading..."
-#curl.exe -k -o $result -F $token -F $file https://bulksell.ebay.com/ws/eBayISAPI.dll?FileExchangeUpload
