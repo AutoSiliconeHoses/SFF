@@ -122,7 +122,7 @@ If (!$RunAll) {
 Wait-Job * -timeout 300 | Out-Null
 
 #Adds the warehouse stock file to the upload folder
-$argResult = (String-Search $argstring "rp-") -or ($RunAll)
+$argResult = (String-Search $argString "rp-") -or ($RunAll)
 if ($argResult) {
 	"Moving 'Constant' Files'"
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\replenish"
@@ -150,24 +150,23 @@ Write-Progress -Activity 'Compiling' -Status "Compiled"
 
 "Done"
 #Opens the files in excel if told to by the user
-$argResult = String-Search $argstring "op-"
-if ($argResult) {
+
+if (String-Search $argString "op-") {
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt | ? {$_.name -NotMatch "replenish"} | % {
 		saps excel $_ -Windowstyle maximized
   }
 }
 
-#Maps STOCKMACHINE drive and moves files to Outgoing folder for AMTU (Uses txt as a script for security)
-$argResult = String-Search $argstring "up-"
-if ($argResult) {
+#Moves files to Outgoing folder for AMTU and ebay Stock folder
+if (String-Search $argString "up-") {
 	"Moving to Upload Folder"
-	# cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI"
-	# $drive = gc STOCKMACHINE.txt
-	# $drive | % {iex $_}
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
   cp *.txt "\\STOCKMACHINE\AmazonTransport\production\outgoing"
-	# net use Y: /delete /y
+
+	"Moving to eBay Upload Folder"
+	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+	cp *.txt "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock" -Force
 }
 
 #Checking if files are missing
@@ -181,8 +180,8 @@ If ($actual -ne $global:predicted) {
 #Removes RUNNING.tmp so other users can run the script
 del '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\RUNNING.tmp'
 
-#Stops timer, shows the user how long it took and closes after 2 seconds
+#Stops timer, shows the user how long it took and closes after 1 second
 $timer.Stop()
 $timer.Elapsed.Minutes.ToString() + "m " + $timer.Elapsed.Seconds.ToString() + "s"
-sleep 2
+sleep 1
 Stop-Transcript

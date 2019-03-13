@@ -39,8 +39,6 @@ $functions = {
         #Clean Sku ready for search
         $lineAClean = $lineA.CustomLabel -replace "[\|#].*",""
 
-        #TODO: Due to TL skus actually being TEX, we need to change it before searching
-        #NOTE: This can use the same temporary variable
         #Convert TEX to TL
         If ($supplier -eq "tetrosyl"){
           $lineAClean = $lineAClean -replace "-TEX","-TL"
@@ -68,7 +66,7 @@ $functions = {
   }
 }
 
-$StoreList = Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\StoreList.csv" | Select-Object -skip 1
+$StoreList = Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\StoreList.csv"
 $AmazonStocks = gci "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock" -filter "*.txt"
 
 Foreach ($store in $StoreList) {
@@ -90,7 +88,6 @@ Foreach ($store in $StoreList) {
         $testpath = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\UploadResults\" + $store.'Store Code' + "-" + $amazonFile + "-RESULT.txt"
 
         $command = "curl.exe -k -o " + $result + " -F " + $token + " -F " + $file + " https://bulksell.ebay.com/ws/eBayISAPI.dll?FileExchangeUpload"
-        #TODO: Run $command
         iex $command
       } -ArgumentList $store,$amazonFile.basename | Out-Null
     }
@@ -98,5 +95,9 @@ Foreach ($store in $StoreList) {
 }
 
 "Waiting for completion..."
-Wait-Job * -timeout 300 | Out-Null
+Wait-Job * -timeout 1200 | Out-Null
+
+"Deleting used Stock Files"
+del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\*" -ErrorAction SilentlyContinue
+
 "Done"
