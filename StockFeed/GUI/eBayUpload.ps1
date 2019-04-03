@@ -66,7 +66,7 @@ $functions = {
   }
 }
 
-$StoreList = Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\StoreList.csv"
+$StoreList = Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\StoreList.csv" | ? {$_.Enabled -eq "TRUE"}
 $AmazonStocks = gci "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock" -filter "*.txt"
 
 Foreach ($store in $StoreList) {
@@ -95,7 +95,7 @@ Foreach ($store in $StoreList) {
 }
 
 "Waiting for completion..."
-Wait-Job * -timeout 1200 | Out-Null
+Wait-Job * -timeout 1800 | Out-Null
 
 "Deleting used Stock Files"
 del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\*" -ErrorAction SilentlyContinue
