@@ -170,9 +170,9 @@ if (String-Search $argString "up-") {
 }
 
 #Checking if files are missing
-If ($actual -ne $global:predicted) {
+If ($actual -lt $global:predicted) {
 	"A file is missing, please check the log"
-	sleep 3
+	sleep 1
 	gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
 		% {Send-PushMessage -Type Email -Recipient $_ -Title "Missing File" -msg "File/s missing while running $argString"}
 }
