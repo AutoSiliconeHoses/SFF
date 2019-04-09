@@ -66,6 +66,38 @@ $functions = {
   }
 }
 
+if ($args[0] -match "zero"){
+  $zero = $true
+  $keepPath = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\Keep"
+  $zeroPath = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\Zeroing"
+
+  mkdir $keepPath
+  gci "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock" -filter "*.txt" |
+    % {mv $_.fullname $keepPath}
+  gci $zeroPath |
+    % {mv $_.fullname "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock"}
+  del $zeroPath
+}
+
+# The most horrid way of doing FPS known to man
+gci "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock" -filter "*.txt" |
+    % {
+        if ($_.name -match "fps_stock.txt") {$fpsShef = $true}
+        if ($_.name -match "fps_leeds.txt") {$fpsLeeds = $true}
+    }
+
+if ($fpsShef -and $fpsLeeds) {
+    $fpsShef = gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\fps_stock.txt"
+    $fpsLeeds = gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\fps_leeds.txt" | ? {$_.readcount -gt 1}
+    $fpsShef,$fpsLeeds | sc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\fps.txt"
+}
+if (!($fpsShef -and $fpsLeeds) -and $fpsShef) {
+     Rename-Item "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\fps_stock.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\fps.txt"
+}
+if (!($fpsShef -and $fpsLeeds) -and $fpsLeeds) {
+     Rename-Item "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\fps_leeds.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\fps.txt"
+}
+
 $StoreList = Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\StoreList.csv" | ? {$_.Enabled -eq "TRUE"}
 $AmazonStocks = gci "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock" -filter "*.txt"
 
@@ -95,9 +127,16 @@ Foreach ($store in $StoreList) {
 }
 
 "Waiting for completion..."
-Wait-Job * -timeout 1800 | Out-Null
+Wait-Job * -timeout 3600 | Out-Null
 
 "Deleting used Stock Files"
 del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\*" -ErrorAction SilentlyContinue
+
+If ($zero)
+{
+  gci $keepPath |
+    % {mv $_.fullname "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock"}
+  del $keepPath
+}
 
 "Done"
