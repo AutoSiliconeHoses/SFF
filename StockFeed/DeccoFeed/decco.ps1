@@ -47,7 +47,7 @@ If (Test-Path -Path decco.xml) {del decco.xml}
 
 "Cleaning File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed"
-Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | ? {$_.sku.endswith("-DC")} | % {alter $_.sku $_.qty}
 
 "Moving File to Upload folder"
 move "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"

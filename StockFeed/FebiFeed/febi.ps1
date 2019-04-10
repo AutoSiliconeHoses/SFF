@@ -24,7 +24,7 @@ cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts"
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed\Scripts\OpenAndSave.ps1" /C
 
 "Cleaning File"
-Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | ? {$_.sku.endswith("-FI")} | % {alter $_.sku $_.qty}
 
 "Moving File to Upload folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FebiFeed"

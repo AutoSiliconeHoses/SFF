@@ -55,7 +55,7 @@ If (Test-Path -Path hhmacro2.xlsm) {del hhmacro2.xlsm}
 "Cleaning file"
 $textfile = '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed\homehardware.txt'
 (gc $textfile).replace("FALSE`t`t`t`t0`targreplace", "").replace("-HH`t`t`t`t0`targreplace", "").replace("stock_no-HH`t`t`t`t50`targreplace", "") | sc $textfile
-Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | ? {$_.sku.endswith("-HH")} | % {alter $_.sku $_.qty}
 
 "Cleaning folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\HomeHardwareFeed"

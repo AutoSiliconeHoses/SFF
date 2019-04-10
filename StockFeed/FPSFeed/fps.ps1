@@ -36,7 +36,7 @@ If (Test-Path -Path FPS_STOCK.csv) {
 # gc fps_stock.scv,fps_leeds.csv | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fps_complete.csv'
 
 "Cleaning File"
-Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | ? {$_.sku.endswith("-FPS")} | % {alter $_.sku $_.qty}
 
 If (Test-Path -Path FPS_STOCK.csv) {del FPS_STOCK.csv}
 If (Test-Path -Path fps_leeds.txt) {del fps_leeds.txt}

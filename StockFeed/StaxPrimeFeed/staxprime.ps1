@@ -41,7 +41,7 @@ If (!$working) {
 }
 
 "Cleaning File"
-Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | ? {$_.sku.endswith("-SX-PRIME")} | % {alter $_.sku $_.qty}
 
 "Moving Files to Upload folder"
 gc staxprime.txt | sc "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\staxprime.txt"

@@ -63,7 +63,7 @@ If (Test-Path -Path deccoprime.xml) {del deccoprime.xml}
 
 "Cleaning File"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed"
-Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | ? {$_.sku.endswith("-DC-PRIME")} | % {alter $_.sku $_.qty}
 
 "Moving File to Upload folder"
 move "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoPrimeFeed\deccoprime.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"

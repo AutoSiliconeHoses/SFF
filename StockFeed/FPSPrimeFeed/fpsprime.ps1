@@ -37,7 +37,7 @@ If (Test-Path -Path FPS_LEEDS.xlsx) {
 If (Test-Path -Path FPS_LEEDS.txt) {del FPS_LEEDS.txt}
 
 "Cleaning File"
-Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | ? {$_.sku.endswith("-FPS-PRIME")} | % {alter $_.sku $_.qty}
 
 "Moving File to Upload folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSPrimeFeed"

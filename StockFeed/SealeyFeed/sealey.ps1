@@ -29,7 +29,7 @@ Catch {
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\SealeyFeed\Scripts\OpenAndSave.ps1" /C
 
 "Cleaning File"
-Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | ? {$_.sku.endswith("-SY")} | % {alter $_.sku $_.qty}
 
 "Moving File to Upload folder"
 If (Test-Path -Path "\\DISKSTATION\Feeds\Dropship\Scripts\SY\SY.txt") {del "\\DISKSTATION\Feeds\Dropship\Scripts\SY\SY.txt"}

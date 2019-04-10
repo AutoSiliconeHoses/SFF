@@ -40,7 +40,7 @@ If (Test-Path -Path unzipped) {del unzipped -recurse}
 & "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\Scripts\OpenAndSave.ps1" /C
 
 "Cleaning File"
-Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | % {alter $_.sku $_.qty}
+Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | ? {$_.sku.endswith("-MX")} | % {alter $_.sku $_.qty}
 
 "Moving File to Upload folder"
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed"
