@@ -119,7 +119,7 @@ If (!$RunAll) {
 }
 
 "Waiting for Scripts to finish"
-Wait-Job * -timeout 300 | Out-Null
+Wait-Job * -timeout 600 | Out-Null
 
 #Adds the warehouse stock file to the upload folder
 $argResult = (String-Search $argString "rp-") -or ($RunAll)
@@ -136,15 +136,15 @@ Write-Progress -Activity 'Modification' -Status "Cleaning..."
 	$lead = $args[0]
 	"Replacing argreplace with $lead"
 	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt | % {
-	  $_
-	  (gc $_).replace("argreplace", $lead) | sc $_
+		$_
+		(gc $_).replace("argreplace", $lead) | sc $_
 		$actual++
 	}
 
 	"Cleaning file"
 	gci "\\DISKSTATION\Feeds\Stock File Fetcher\Upload" -Filter *.txt |	% {
 		$_
-	  (gc $_)| ?{$_.Trim(" `t")} | sc $_
+		(gc $_)| ?{$_.Trim(" `t")} | sc $_
 	}
 Write-Progress -Activity 'Compiling' -Status "Compiled"
 
@@ -162,12 +162,14 @@ if (String-Search $argString "op-") {
 if (String-Search $argString "up-") {
 	"Moving to Upload Folder"
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
-  cp *.txt "\\STOCKMACHINE\AmazonTransport\production\outgoing"
+	cp *.txt "\\STOCKMACHINE\AmazonTransport\production\outgoing"
 
 	"Moving to eBay Upload Folder"
 	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 	cp *.txt "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock" -Force
 }
+
+"$actual $global:predicted"
 
 #Checking if files are missing
 If ($actual -lt $global:predicted) {
