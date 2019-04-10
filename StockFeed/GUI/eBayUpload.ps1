@@ -112,13 +112,12 @@ Foreach ($store in $StoreList) {
         $amazonFile = $args[1]
         CreateStockfile $store.'Store Code' $amazonFile
 
-        #Upload to FileExchange
+        # Set up arguments for curl
         $result = '"\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\UploadResults\'+ $store.'Store Code' + "-" + $amazonFile +'-RESULT.html"'
         $token = '"token=' + $store.Token + '"'
         $file = '"file=@' + "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $store.'Store Code' + "-" + $amazonFile + '.csv"'
 
-        $testpath = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\UploadResults\" + $store.'Store Code' + "-" + $amazonFile + "-RESULT.txt"
-
+        # Concatonate command with arguments and invoke
         $command = "curl.exe -k -o " + $result + " -F " + $token + " -F " + $file + " https://bulksell.ebay.com/ws/eBayISAPI.dll?FileExchangeUpload"
         iex $command
       } -ArgumentList $store,$amazonFile.basename | Out-Null
@@ -127,7 +126,7 @@ Foreach ($store in $StoreList) {
 }
 
 "Waiting for completion..."
-Wait-Job * -timeout 3600 | Out-Null
+Wait-Job * -timeout 7200 | Out-Null
 
 "Deleting used Stock Files"
 del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\*" -ErrorAction SilentlyContinue
