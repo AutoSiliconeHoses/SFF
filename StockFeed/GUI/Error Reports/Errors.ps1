@@ -6,10 +6,10 @@ Del "$folderpath\Output\*"
 gci "$folderpath\Input\PROCESSING*.txt" | % {
 	$_.Name
 	gc $_.Fullname | ? {$_ -notmatch "13013`t"} | ? {$_.trim() -ne "" } | Add-Content "$folderpath\Output\Out.txt"
+	del $_.fullname
 }
 
 #Cleans up files
-If (Test-Path "$folderpath\Input\PROCESSING*.txt") {del "$folderpath\Input\PROCESSING*.txt"}
 If (Test-Path "$folderpath\Output\Warnings.txt") {del "$folderpath\Output\Warnings.txt"}
 If (Test-Path "$folderpath\Output\Errors.txt") {del "$folderpath\Output\Errors.txt"}
 
