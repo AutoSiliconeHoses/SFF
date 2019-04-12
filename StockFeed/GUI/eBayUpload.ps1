@@ -126,13 +126,12 @@ Foreach ($store in $StoreList) {
 }
 
 "Waiting for completion..."
-Wait-Job * -timeout 7200 | Out-Null
+Wait-Job * -timeout 14400 | Out-Null
 
 "Deleting used Stock Files"
 del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\*" -ErrorAction SilentlyContinue
 
-If ($zero)
-{
+If ($zero) {
   gci $keepPath |
     % {mv $_.fullname "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock"}
   del $keepPath
