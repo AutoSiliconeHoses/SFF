@@ -8,8 +8,9 @@ If ($check) {
 	If (Test-Path -Path '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Error Reports\Output\Errors.txt') {
 		"There are Errors"
 		$errors = Import-CSV '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Error Reports\Output\Errors.txt' -Delimiter "`t"
+		$errorNumber = $errors.Length
 		gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
-			% {Send-PushMessage -Type Email -Recipient $_ -Title "Processing Report Errors" -msg "Processing report is showing $errors.Length errors."}
+			% {Send-PushMessage -Type Email -Recipient $_ -Title "Processing Report Errors" -msg "Processing report is showing $errorNumber errors."}
 	}
 	If (Test-Path -Path '\\STOCKMACHINE\AmazonTransport\production\failed\*.txt') {
 		gci "\\STOCKMACHINE\AmazonTransport\production\failed\" | % {
