@@ -74,6 +74,10 @@ Function Run-All($supplier, $id) {
 	Start-Job -Name ($supplier) -FilePath ($loadString) | Out-Null
 }
 
+Function alter($sku,$edit) {
+  (gc "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\replenish.txt") -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\replenish.txt"
+}
+
 #Changes arguement into a string that can be searched
 $argString = $args
 $actual = 0
@@ -125,9 +129,11 @@ Wait-Job * -timeout 600 | Out-Null
 $argResult = (String-Search $argString "rp-") -or ($RunAll)
 if ($argResult) {
 	"Moving 'Constant' Files'"
-	cd "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\replenish"
 	$global:predicted++
-	cp "replenish.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+	cp "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\replenish\replenish.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
+	Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" |
+		select sku,qty |
+		% {alter $_.sku $_.qty}
 }
 
 "Modifying and cleaning files"
