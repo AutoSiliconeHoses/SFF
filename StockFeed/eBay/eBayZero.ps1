@@ -22,16 +22,18 @@ $functions = {
           If ($supplier -eq "tetrosyl"){
             $lineAClean = $lineAClean -replace "-TEX","-TL"
           }
-          If ($lineA.sku -match $lineB.sku) {
+
+          If ($lineAClean -match $lineB.sku) {
+            $lineAClean -match $lineB.sku
             If ($lineA.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)' -eq "") {
-                If ($checked) {$lineC = "{0},{1},{2},{3},{4},{5},{6}`n" -f $lineA.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)',$lineA.ItemID,$lineA.SiteID,$FileB[$MiddlePoint].quantity,$lineA.Relationship,$lineA.RelationshipDetails,$lineA.CustomLabel}
+                If ($checked) {$lineC = "{0},{1},{2},{3},{4},{5},{6}`n" -f $lineA.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)',$lineA.ItemID,$lineA.SiteID,$lineB.quantity,$lineA.Relationship,$lineA.RelationshipDetails,$lineA.CustomLabel}
                 If (!$checked) {
-                  $lineC = "{0},{1},{2},{3},{4},{5},{6}`n{7},{8},{9},{10},{11},{12},{13}`n" -f $lastHeader.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)',$lastHeader.ItemID,$lastHeader.SiteID,$lastHeader.Quantity,$lastHeader.Relationship,$lastHeader.RelationshipDetails,$lastHeader.CustomLabel,$lineA.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)',$lineA.ItemID,$lineA.SiteID,$FileB[$MiddlePoint].quantity,$lineA.Relationship,$lineA.RelationshipDetails,$lineA.CustomLabel
+                  $lineC = "{0},{1},{2},{3},{4},{5},{6}`n{7},{8},{9},{10},{11},{12},{13}`n" -f $lastHeader.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)',$lastHeader.ItemID,$lastHeader.SiteID,$lastHeader.Quantity,$lastHeader.Relationship,$lastHeader.RelationshipDetails,$lastHeader.CustomLabel,$lineA.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)',$lineA.ItemID,$lineA.SiteID,$lineB.quantity,$lineA.Relationship,$lineA.RelationshipDetails,$lineA.CustomLabel
                   $checked=$True
                 }
             }
             #Ordinary Check
-            If ($lineA.Relationship -eq "" -and $lineA.RelationshipDetails -eq "") {$lineC = "{0},{1},{2},{3},{4},{5},{6}`n" -f $lineA.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)',$lineA.ItemID,$lineA.SiteID,$FileB[$MiddlePoint].quantity,$lineA.Relationship,$lineA.RelationshipDetails,$lineA.CustomLabel}
+            If ($lineA.Relationship -eq "" -and $lineA.RelationshipDetails -eq "") {$lineC = "{0},{1},{2},{3},{4},{5},{6}`n" -f $lineA.'Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8)',$lineA.ItemID,$lineA.SiteID,$lineB.quantity,$lineA.Relationship,$lineA.RelationshipDetails,$lineA.CustomLabel}
 
             #Add to file data
             $FileC += $lineC
@@ -39,7 +41,14 @@ $functions = {
         }
       }
     #Add Data to File
-    $FileC | Add-Content $FileCPath
+    If (!$FileC) {
+      Write-Host "No matches"
+      del $FileCPath
+    }
+    If ($FileC) {
+      Write-Host $FileC.Length + " matches found"
+      $FileC | Add-Content $FileCPath
+    }
   }
 }
 
@@ -53,7 +62,7 @@ gci $zeroPath |
   % {mv $_.fullname "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock"}
 del $zeroPath
 
-$StoreList = Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\StoreList.csv" | ? {$_.Enabled -eq "TRUE"}
+$StoreList = Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\StoreList.csv"
 $AmazonStocks = gci "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock" -filter "*.txt"
 
 Foreach ($store in $StoreList) {
@@ -62,20 +71,28 @@ Foreach ($store in $StoreList) {
     $dir = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\StoreFiles\"+$store.'Store Code'+"\"+$amazonFile.basename+"-FULLSTOCK.csv"
     If (Test-Path $dir) {
       "`tProcessing " + $amazonFile.basename
-      Start-Job -InitializationScript $functions -name ($store.'Store Code'+"-"+$amazonFile.basename) -ScriptBlock {
+      $jobname = $store.'Store Code'+"-"+$amazonFile.basename
+      Start-Job -InitializationScript $functions -name ($jobname) -ScriptBlock {
         $store = $args[0]
         $amazonFile = $args[1]
+        $jobname = $args[2]
+
         CreateStockfile $store.'Store Code' $amazonFile
+        If (Test-Path ("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $jobname + ".csv")) {
+          # Set up arguments for curl
+          $result = '"\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\UploadResults\'+ $jobname + '-RESULT.html"'
+          $token = '"token=' + $store.Token + '"'
+          $file = '"file=@' + "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $jobname + '.csv"'
 
-        # Set up arguments for curl
-        $result = '"\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\UploadResults\'+ $store.'Store Code' + "-" + $amazonFile +'-RESULT.html"'
-        $token = '"token=' + $store.Token + '"'
-        $file = '"file=@' + "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $store.'Store Code' + "-" + $amazonFile + '.csv"'
-
-        # Concatonate command with arguments and invoke
-        $command = "curl.exe -k -o " + $result + " -F " + $token + " -F " + $file + " https://bulksell.ebay.com/ws/eBayISAPI.dll?FileExchangeUpload"
-        iex $command
-      } -ArgumentList $store,$amazonFile.basename | Out-Null
+          # Concatonate command with arguments and invoke
+          $command = "curl.exe -k -o " + $result + " -F " + $token + " -F " + $file + " https://bulksell.ebay.com/ws/eBayISAPI.dll?FileExchangeUpload"
+          iex $command
+          "$jobname Complete"
+        }
+        If (!Test-Path ("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $jobname + ".csv")) {
+          "$jobname results empty"
+        }
+      } -ArgumentList $store,$amazonFile.basename,$jobname | Out-Null
     }
   }
 }
@@ -84,10 +101,10 @@ Foreach ($store in $StoreList) {
 Wait-Job * -timeout 14400 | Out-Null
 
 "Deleting used Stock Files"
-del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\*" -ErrorAction SilentlyContinue
+del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\*.txt" -ErrorAction SilentlyContinue
 
-gci $keepPath |
-  % {mv $_.fullname "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock"}
+gci $keepPath -ErrorAction SilentlyContinue |
+  % {mv $_.fullname "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock" -ErrorAction SilentlyContinue} -ErrorAction SilentlyContinue
 del $keepPath
 
 "Done"
