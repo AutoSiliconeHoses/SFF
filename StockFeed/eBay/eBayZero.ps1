@@ -76,20 +76,21 @@ Foreach ($store in $StoreList) {
         $store = $args[0]
         $amazonFile = $args[1]
         $jobname = $args[2]
+        $filepath = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $jobname + ".csv"
 
         CreateStockfile $store.'Store Code' $amazonFile
-        If (Test-Path ("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $jobname + ".csv")) {
+        If (Test-Path ($filepath)) {
           # Set up arguments for curl
           $result = '"\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\UploadResults\'+ $jobname + '-RESULT.html"'
           $token = '"token=' + $store.Token + '"'
-          $file = '"file=@' + "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $jobname + '.csv"'
+          $file = '"file=@' + $filepath + '"'
 
           # Concatonate command with arguments and invoke
           $command = "curl.exe -k -o " + $result + " -F " + $token + " -F " + $file + " https://bulksell.ebay.com/ws/eBayISAPI.dll?FileExchangeUpload"
           iex $command
           "$jobname Complete"
         }
-        If (!Test-Path ("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $jobname + ".csv")) {
+        If (!Test-Path ($filepath)) {
           "$jobname results empty"
         }
       } -ArgumentList $store,$amazonFile.basename,$jobname | Out-Null
