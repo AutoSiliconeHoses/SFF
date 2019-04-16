@@ -28,7 +28,7 @@ Catch {
 
 "Processing File"
 "OpenAndSave.ps1"
-& "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\BizToolsFeed\Scripts\OpenAndSave.ps1" /C
+& "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\BizToolsFeed\Scripts\OpenAndSavePS.ps1" /C
 
 "Cleaning File"
 Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" | select sku,qty | ? {$_.sku.endswith("-BZ")} | % {alter $_.sku $_.qty}
