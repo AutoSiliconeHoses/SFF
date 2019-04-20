@@ -1,3 +1,4 @@
+$Host.UI.RawUI.WindowTitle = "eBay Zeroing"
 $functions = {
   function CreateStockfile ($store, $supplier) {
       #Load Files into RAM
@@ -5,7 +6,7 @@ $functions = {
       $FileB = Import-CSV ("\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\"+$supplier+".txt") -delimiter "`t"
 
       #Setup Output file location
-      $FileCPath = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $store + "-" + $supplier + ".csv"
+      $FileCPath = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\ZEROING-" + $store + "-" + $supplier + ".csv"
       If (Test-Path $FileCPath) {del $FileCPath}
       "Action(SiteID=UK|Country=GB|Currency=GBP|Version=585|CC=UTF-8),ItemID,SiteID,Quantity,Relationship,RelationshipDetails,CustomLabel" | Add-Content $FileCPath
 
@@ -71,11 +72,10 @@ Foreach ($store in $StoreList) {
     $dir = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\StoreFiles\"+$store.'Store Code'+"\"+$amazonFile.basename+"-FULLSTOCK.csv"
     If (Test-Path $dir) {
       "`tProcessing " + $amazonFile.basename
-      $jobname = $store.'Store Code'+"-"+$amazonFile.basename
       Start-Job -InitializationScript $functions -name ($jobname) -ScriptBlock {
         $store = $args[0]
         $amazonFile = $args[1]
-        $jobname = $args[2]
+        $jobname = "ZEROING-" + $store.'Store Code'+"-"+$amazonFile
         $filepath = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Updated\" + $jobname + ".csv"
 
         CreateStockfile $store.'Store Code' $amazonFile
@@ -93,13 +93,13 @@ Foreach ($store in $StoreList) {
         If (!Test-Path ($filepath)) {
           "$jobname results empty"
         }
-      } -ArgumentList $store,$amazonFile.basename,$jobname | Out-Null
+      } -ArgumentList $store,$amazonFile.basename | Out-Null
     }
   }
 }
 
 "Waiting for completion..."
-Wait-Job * -timeout 14400 | Out-Null
+Wait-Job * -timeout 1800 | Out-Null
 
 "Deleting used Stock Files"
 del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock\*.txt" -ErrorAction SilentlyContinue
