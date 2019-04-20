@@ -57,7 +57,7 @@ Function Run-Supplier($supplier, $id) {
 		"Loading $supplier"
 		# $loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
 		$loadString = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1"
-		$global:predicted++
+		$script:predicted++
 		#Start PowerShell $loadstring -WindowStyle Hidden
 		Start-Job -Name ($supplier) -FilePath ($loadString) | Out-Null
 	}
@@ -68,7 +68,7 @@ Function Run-All($supplier, $id) {
 	"Loading $supplier"
 	# $loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
 	$loadString = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1"
-	$global:predicted++
+	$script:predicted++
 	# Start PowerShell $loadstring -WindowStyle Hidden
 	Start-Job -Name ($supplier) -FilePath ($loadString) | Out-Null
 }
@@ -89,7 +89,6 @@ cd '\\DISKSTATION\Feeds\Stock File Fetcher\Upload'
 If (Test-Path -Path *.txt) {del *.txt}
 
 "Loading Supplier Scripts"
-$jobs = @()
 $RunAll = String-Search $argString all-
 If ($RunAll) {
 	Run-All BizTools 'bz-'
@@ -128,7 +127,7 @@ Wait-Job * -timeout 600 | Out-Null
 $argResult = (String-Search $argString "rp-") -or ($RunAll)
 if ($argResult) {
 	"Moving 'Constant' Files'"
-	$global:predicted++
+	$script:predicted++
 	cp "\\DISKSTATION\Feeds\Stock File Fetcher\Upload\replenish\replenish.txt" "\\DISKSTATION\Feeds\Stock File Fetcher\Upload"
 	Import-CSV "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\alterations.csv" |
 		select sku,qty |
@@ -174,10 +173,10 @@ if (String-Search $argString "up-") {
 	cp *.txt "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\eBay\Stock" -Force
 }
 
-"$actual $global:predicted"
+"$actual $script:predicted"
 
 #Checking if files are missing
-If ($actual -lt $global:predicted) {
+If ($actual -lt $script:predicted) {
 	"A file is missing, please check the log"
 	sleep 1
 	gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
