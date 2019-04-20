@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSkilen.txt" -Force
-$Host.UI.RawUI.WindowTitle = $title = "KilenFeed"
+$Host.UI.RawUI.WindowTitle = "KilenFeed"
 
 cd "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\KilenFeed\Scripts"
 If (Test-Path -Path kilen.csv) {del kilen.csv}

@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSdecco.txt" -Force  -ErrorAction SilentlyContinue
-$Host.UI.RawUI.WindowTitle = $title = "DeccoFeed"
+$Host.UI.RawUI.WindowTitle = "DeccoFeed"
 
 Function alter($sku,$edit) {
   (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\DeccoFeed\decco.txt'

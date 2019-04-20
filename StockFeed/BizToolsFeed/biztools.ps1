@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSbiztools.txt" -Force
-$Host.UI.RawUI.WindowTitle = $title = 'BizToolsFeed'
+$Host.UI.RawUI.WindowTitle = 'BizToolsFeed'
 
 Function alter($sku,$edit) {
   (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\BizToolsFeed\bixtools.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\BizToolsFeed\biztools.txt'

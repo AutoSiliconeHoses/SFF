@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolstream.txt" -Force
-$Host.UI.RawUI.WindowTitle = $title = "ToolStreamFeed"
+$Host.UI.RawUI.WindowTitle = "ToolStreamFeed"
 
 Function alter($sku,$edit) {
   (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\ToolStreamFeed\toolstream.txt'

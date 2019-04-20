@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANStoolbankprime.txt" -Force
-$Host.UI.RawUI.WindowTitle = $title = 'ToolBankPrimeFeed'
+$Host.UI.RawUI.WindowTitle = 'ToolBankPrimeFeed'
 
 
 Function alter($sku,$edit) {

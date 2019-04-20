@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSdeccoprime.txt" -Force  -ErrorAction SilentlyContinue
-$Host.UI.RawUI.WindowTitle = $title = "DeccoPrimeFeed"
+$Host.UI.RawUI.WindowTitle = "DeccoPrimeFeed"
 
 # Time check conditions
 $thistime = (Get-Date).Hour

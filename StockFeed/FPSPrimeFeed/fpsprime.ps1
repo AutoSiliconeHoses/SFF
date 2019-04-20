@@ -1,6 +1,6 @@
 If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfpsprime.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfpsprime.txt" -ErrorAction SilentlyContinue}
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSfpsprime.txt" -Force  -ErrorAction SilentlyContinue
-$Host.UI.RawUI.WindowTitle = $title = "FPSPrimeFeed"
+$Host.UI.RawUI.WindowTitle = "FPSPrimeFeed"
 
 Function alter($sku,$edit) {
   (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fpsleedsprime.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\FPSFeed\fpsleedsprime.txt'

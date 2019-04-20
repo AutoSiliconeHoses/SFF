@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSmintex.txt" -Force  -ErrorAction SilentlyContinue
-$Host.UI.RawUI.WindowTitle = $title = "MintexFeed"
+$Host.UI.RawUI.WindowTitle = "MintexFeed"
 
 Function alter($sku,$edit) {
   (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\mintex.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit`targreplace" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\MintexFeed\mintex.txt'

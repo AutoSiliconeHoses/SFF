@@ -1,5 +1,5 @@
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSstaxprime.txt" -Force
-$Host.UI.RawUI.WindowTitle = $title = "StaxPrimeFeed"
+$Host.UI.RawUI.WindowTitle = "StaxPrimeFeed"
 
 Function alter($sku,$edit) {
   (gc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt') -replace "$sku`t`t`t`t.+", "$sku`t`t`t`t$edit" | sc '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\StaxPrimeFeed\staxprime.txt'

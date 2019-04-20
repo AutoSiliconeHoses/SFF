@@ -1,4 +1,4 @@
-$Host.UI.RawUI.WindowTitle = $title = "StockFeed"
+$Host.UI.RawUI.WindowTitle = "StockFeed"
 # Time check conditions
 $time = (Get-Date).Hour
 $day = (Get-Date).DayOfWeek.Value__
