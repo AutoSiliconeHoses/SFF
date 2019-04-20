@@ -3,6 +3,12 @@ Set-PSDebug -Trace 0
 If (Test-Path -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt") {del "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -ErrorAction SilentlyContinue}
 Start-Transcript -Path "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\Transcripts\TRANSOutlookScraper.txt" -Force  -ErrorAction SilentlyContinue
 
+$Outlook = ps | ? {$_.processname -eq 'Outlook'}
+If($Outlook) {
+  "Outlook Already Running. Killing Process."
+  ps | ? {$_.processname -eq 'Outlook'}| % {spps $_.id}
+}
+
 #Open Outlook
 saps 'Outlook' -WindowStyle Hidden -ErrorAction SilentlyContinue -ArgumentList '/profile "Stocks" '
 
@@ -76,12 +82,12 @@ foreach ($supplier in $inbox) {
   }
 }
 # Stop Outlook
-$Outlook = ps outlook -ErrorAction SilentlyContinue
+$Outlook = ps | ? {$_.processname -eq 'Outlook'}
 $Outlook.CloseMainWindow()
 While ($Outlook) {
   $Outlook.CloseMainWindow()
   sleep 2
-  $Outlook = ps outlook -ErrorAction SilentlyContinue
+  $Outlook = ps | ? {$_.processname -eq 'Outlook'}
 }
 rv Outlook
 
