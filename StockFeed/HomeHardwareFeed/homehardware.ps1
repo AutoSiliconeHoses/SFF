@@ -17,7 +17,7 @@ Catch {
 	Catch {
 		. "\\Diskstation\Feeds\SDK\Scripts\PowerBullet.ps1"
 		gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
-			% {Send-PushMessage -Type Email -Recipient $_ -Title "FTP Issue" -msg "2nd Attempt at running $title FTP failed."}
+			% {Send-PushMessage -Type Email -Recipient $_ -Title "FTP Issue" -msg "2nd Attempt at running HomeHardware FTP failed."}
 		sleep 3
 		EXIT
 	}
@@ -32,7 +32,7 @@ Catch {
 	Catch {
 		. "\\Diskstation\Feeds\SDK\Scripts\PowerBullet.ps1"
 		gc "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\GUI\subscribed.txt" |
-			% {Send-PushMessage -Type Email -Recipient $_ -Title "FTP Issue" -msg "2nd Attempt at running $title FTP failed."}
+			% {Send-PushMessage -Type Email -Recipient $_ -Title "FTP Issue" -msg "2nd Attempt at running HomeHardware FTP failed."}
 		sleep 3
 		EXIT
 	}

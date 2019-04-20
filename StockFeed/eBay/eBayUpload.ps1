@@ -1,3 +1,4 @@
+$Host.UI.RawUI.WindowTitle = "eBay Upload"
 $functions = {
   function BinarySearch {
      Param ($YourOrderedArray, $ItemSearched)
