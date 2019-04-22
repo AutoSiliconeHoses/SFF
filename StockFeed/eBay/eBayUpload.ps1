@@ -156,7 +156,6 @@ Foreach ($store in $StoreList) {
   If (Test-Path $replenish) {
     "`tCreating ASH file"
     Start-Job -InitializationScript $functions -name ($store.'Store Code'+"-ash") -ScriptBlock {
-      #TODO: Create new file with alterations
       $store = $args[0]
       alter $store.'Store Code'
 

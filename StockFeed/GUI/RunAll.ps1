@@ -64,7 +64,7 @@ Function Run-Supplier($supplier, $id) {
 }
 
 #Runs supplier when given name and ID
-Function Run-All($supplier, $id) {
+Function Run-NoArg($supplier, $id) {
 	"Loading $supplier"
 	# $loadString = "& '\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1'"
 	$loadString = "\\DISKSTATION\Feeds\Stock File Fetcher\StockFeed\$supplier`Feed\$supplier.ps1"
@@ -90,15 +90,23 @@ If (Test-Path -Path *.txt) {del *.txt}
 
 "Loading Supplier Scripts"
 $RunAll = String-Search $argString all-
+$RunPrime = String-Search $argString 'prime-'
+
 If ($RunAll) {
-	Run-All BizTools 'bz-'
-	Run-All Draper 'dp-'
-	Run-All HomeHardware 'hh-'
-	Run-All ToolBank 'tb-'
-	Run-All ToolBankPrime 'tbp-'
-	Run-All ToolStream 'ts-'
+	Run-NoArg BizTools 'bz-'
+	Run-NoArg Draper 'dp-'
+	Run-NoArg HomeHardware 'hh-'
+	Run-NoArg ToolBank 'tb-'
+	Run-NoArg ToolStream 'ts-'
 }
-If (!$RunAll) {
+If ($RunPrime) {
+	Run-NoArg DeccoPrime 'dcp-'
+	# Run-NoArg DraperPrime 'dpp-'
+	# Run-NoArg FPSPrime 'fpsp-'
+	Run-NoArg StaxPrime 'sxp-'
+	# Run-NoArg ToolBankPrime 'tbp-'
+}
+If (!$RunAll -and !$RunPrime) {
 	Run-Supplier BizTools 'bz-'
 	Run-Supplier Decco 'dc-'
 	Run-Supplier DeccoPrime 'dcp-'
